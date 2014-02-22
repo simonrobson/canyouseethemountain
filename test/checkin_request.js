@@ -47,4 +47,19 @@ describe('Checkin handling', function() {
     request.end();
     assert.equal(true, true);
   });
+
+  it("rejects badly fomred payloads", function(done) {
+    var request = http.request({hostname: 'localhost', port: 8008, path: '/checkins', method: 'POST',
+                                headers: {'Content-type': 'application/json'}});
+    request.write(JSON.stringify({checkin: {coords: {}}}));
+
+    request.on('response', function(response) {
+      assert.equal(response.statusCode, 403);
+      assert(!mockDb.storeCheckin.called, "StoreCheckin should not be called");
+      done();
+    });
+
+    request.end();
+    assert.equal(true, true);
+  });
 });
