@@ -1,0 +1,14 @@
+{ "name": "gs-upload-server",
+  "version": "0.0.1",
+  "os": [ "linux" ],
+  "dependencies": {
+    "mysql": "~2.1.0",
+    "sinon": "~1.8.2",
+    "express": "~3.4.8",
+    "db-migrate": "~0.6.3",
+    "dotenv": "~0.2.4",
+    "minimist": "~0.0.7",
+    "daemon": "~1.1.0",
+    "winston": "~0.7.2"
+  }
+}
