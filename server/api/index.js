@@ -28,6 +28,7 @@ function configureServer(db) {
   app.use(express.static(__dirname + '/../../public'));
 
   app.post('/checkins', function(req, res) {
+    console.log(req.param('checkin'))
     var checkin = req.param('checkin');
     if (checkin && checkinIsValid(checkin)) {
       db.storeCheckin(checkin);

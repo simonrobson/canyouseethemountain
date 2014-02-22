@@ -79,7 +79,7 @@
 
 				//new coordinates = navigator.geolocation.getCurrentPosition();
 
-				$.post( "/checkins", { coords: 'coords', landmark_id: 1, visibility: 50 }, function() {
+        $.post( "/checkins", {checkin: { coords: 'coords', landmark_id: 1, visibility: 50 }}, function() {
 					alert( "Submitted your results" );
 				})
 				.fail(function() {
