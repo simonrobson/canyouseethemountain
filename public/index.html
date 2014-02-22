@@ -77,14 +77,18 @@
 
 			function sendVisibility(map, radius, visibility){
 
-				//new coordinates = navigator.geolocation.getCurrentPosition();
-
-        $.post( "/checkins", {checkin: { coords: 'coords', landmark_id: 1, visibility: 50 }}, function() {
-					alert( "Submitted your results" );
-				})
-				.fail(function() {
-					alert( "Error submitting your results" );
-				})
+        navigator.geolocation.getCurrentPosition(
+          function(data) {
+            $.post( "/checkins", {checkin: { coords: data.coords, timestamp: data.timestamp, landmark_id: 1, visibility: 50 }}, function() {
+              alert( "Submitted your results" );
+            })
+            .fail(function() {
+              alert( "Error submitting your results" );
+            })
+          }, 
+          function(errors) {
+            alert("Not able to find your location");
+          });
 			}
 
 			map.on('locationfound', onLocationFound);
