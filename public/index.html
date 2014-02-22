@@ -7,6 +7,8 @@
 
 		<link rel="stylesheet" href="leaflet/leaflet.css" />
 		<link rel="stylesheet" href="boostrap/css/bootstrap.min.css">
+
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 		<script src="leaflet/leaflet.js"></script>
 
 		<style>
@@ -29,27 +31,25 @@
 
 		<div class="container">
 			<h1>Can you see Doi Suthep?</h1>
-			<div class="row">
+			<div class="row well">
 				<div class="col-md-2">
-					<button type="button" class="btn btn-success btn-lg">Clear</button>
+					<button type="button" class="btn btn-success btn-lg" onclick="sendVisibility(100)">It's Clear</button>
 				</div>
 				<div class="col-md-8">
 					<img src="images/DoiSuthep100.jpg">
 				</div>
 			</div>
-			<br />
-			<div class="row">
+			<div class="row well">
 				<div class="col-md-2">
-					<button type="button" class="btn btn-warning btn-lg">Messy</button>
+					<button type="button" class="btn btn-warning btn-lg" onclick="sendVisibility(50)">It's Hazy</button>
 				</div>
 				<div class="col-md-8">
 					<img src="images/DoiSuthep050.jpg">
 				</div>
 			</div>
-			<br />
-			<div class="row">
+			<div class="row well">
 				<div class="col-md-2">
-					<button type="button" class="btn btn-danger btn-lg">Meh</button>
+					<button type="button" class="btn btn-danger btn-lg" onclick="sendVisibility(0)">Can't See It</button>
 				</div>
 				<div class="col-md-8">
 					<img src="images/DoiSuthep000.jpg">
@@ -60,13 +60,14 @@
 		<script>
 			var map = L.map('map');
 
+
 			L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', {
 				maxZoom: 18,
 				attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>'
 			}).addTo(map);
 
 			function onLocationFound(e) {
-				var radius = e.accuracy / 2;
+				radius = e.accuracy / 2;
 
 				L.marker(e.latlng).addTo(map)
 					.bindPopup("You are within " + radius + " meters from this point").openPopup();
@@ -78,8 +79,18 @@
 				alert(e.message);
 			}
 
-			function send(){
+			function sendVisibility(map, radius, visibility){
 
+				//navigator.geolocation.getCurrentPosition();
+
+				alert(map.latlng);
+
+				$.post( "/checkins", { coords: 'coords', landmark_id: 1, visibility: 50 }, function() {
+					alert( "Submitted your results" );
+				})
+				.fail(function() {
+					alert( "Error submitting your results" );
+				})
 			}
 
 			map.on('locationfound', onLocationFound);
