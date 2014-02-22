@@ -32,27 +32,24 @@
 		<div class="container">
 			<h1>Can you see Doi Suthep?</h1>
 			<div class="row well">
-				<div class="col-md-2">
+				<div class="col-md-12 text-center">
+					<img class="img-responsive" src="images/DoiSuthep100.jpg">
+					<br>
 					<button type="button" class="btn btn-success btn-lg" onclick="sendVisibility(100)">It's Clear</button>
 				</div>
-				<div class="col-md-8">
-					<img src="images/DoiSuthep100.jpg">
-				</div>
 			</div>
 			<div class="row well">
-				<div class="col-md-2">
+				<div class="col-md-12 text-center">
+					<img class="img-responsive" src="images/DoiSuthep050.jpg">
+					<br>
 					<button type="button" class="btn btn-warning btn-lg" onclick="sendVisibility(50)">It's Hazy</button>
 				</div>
-				<div class="col-md-8">
-					<img src="images/DoiSuthep050.jpg">
-				</div>
 			</div>
 			<div class="row well">
-				<div class="col-md-2">
+				<div class="col-md-12 text-center">
+					<img class="img-responsive" src="images/DoiSuthep000.jpg">
+					<br>
 					<button type="button" class="btn btn-danger btn-lg" onclick="sendVisibility(0)">Can't See It</button>
-				</div>
-				<div class="col-md-8">
-					<img src="images/DoiSuthep000.jpg">
 				</div>
 			</div>
 		</div>
@@ -63,14 +60,13 @@
 
 			L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', {
 				maxZoom: 18,
-				attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>'
+				attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="http://cloudmade.com">CloudMade</a>'
 			}).addTo(map);
 
 			function onLocationFound(e) {
 				radius = e.accuracy / 2;
 
-				L.marker(e.latlng).addTo(map)
-					.bindPopup("You are within " + radius + " meters from this point").openPopup();
+				L.marker(e.latlng).addTo(map);
 
 				L.circle(e.latlng, radius).addTo(map);
 			}
