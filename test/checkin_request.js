@@ -14,6 +14,7 @@ describe('Checkin handling', function() {
       longitude: 98.94661500000001,
       speed: null
     },
+  timestamp: 1393072693081,
   landmark_id: 1,
   visibility: 50
   },

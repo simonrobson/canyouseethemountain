@@ -1,24 +1,11 @@
-var express = require('express'),
-    schema = require('validate');
-
-var checkinSchema = schema(
-    {coords: {
-               // latitude: {type: 'number', required: false},
-               // latitudeAccuracy: {type: 'number', required: false},
-               // heading: {type: 'number', required: false},
-               accuracy: {required: false},
-               latitude: {required: true},
-               longitude: {required: true},
-               // speed: {type: 'number', required: false}
-             },
-      landmark_id: {required: true},
-      visibility: {required: true}
-    });
+var express = require('express');
 
 
 function checkinIsValid(checkin) {
-  var result = checkinSchema.validate(checkin);
-  return (result.errors.length === 0) ? true : false;
+  if (!(checkin.coords && checkin.timestamp && checkin.landmark_id && checkin.visibility)) { return false; }
+  var c = checkin.coords;
+  if (!(c.latitude && c.longitude)) { return false; }
+  return true;
 }
 
 function configureServer(db) {
@@ -28,7 +15,6 @@ function configureServer(db) {
   app.use(express.static(__dirname + '/../../public'));
 
   app.post('/checkins', function(req, res) {
-    console.log(req.param('checkin'))
     var checkin = req.param('checkin');
     if (checkin && checkinIsValid(checkin)) {
       db.storeCheckin(checkin);

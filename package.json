@@ -9,7 +9,6 @@
     "dotenv": "~0.2.4",
     "minimist": "~0.0.7",
     "daemon": "~1.1.0",
-    "winston": "~0.7.2",
-    "validate": "~2.1.2"
+    "winston": "~0.7.2"
   }
 }
