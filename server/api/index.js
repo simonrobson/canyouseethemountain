@@ -6,6 +6,7 @@ function configureServer(db) {
   app.use(express.bodyParser());
 
   app.post('/checkins', function(req, res){
+    /* need to validate */
     db.storeCheckin(req.param('checkin'));
     res.send(200);
   });
