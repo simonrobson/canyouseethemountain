@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Leaflet mobile example</title>
+		<title>Can You See The Mountain: Doi Suthep</title>
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 		<link rel="stylesheet" href="leaflet/leaflet.css" />
-
+		<link rel="stylesheet" href="boostrap/css/bootstrap.min.css">
 		<script src="leaflet/leaflet.js"></script>
 
 		<style>
@@ -14,13 +14,48 @@
 				padding: 0;
 				margin: 0;
 			}
-			html, body, #map {
+			html, body {
 				height: 100%;
 			}
+
+			#map {
+				height:200px;
+			}
+
 		</style>
 	</head>
 	<body>
 		<div id="map"></div>
+
+		<div class="container">
+			<h1>Can you see Doi Suthep?</h1>
+			<div class="row">
+				<div class="col-md-2">
+					<button type="button" class="btn btn-success btn-lg">Clear</button>
+				</div>
+				<div class="col-md-8">
+					<img src="images/DoiSuthep100.jpg">
+				</div>
+			</div>
+			<br />
+			<div class="row">
+				<div class="col-md-2">
+					<button type="button" class="btn btn-warning btn-lg">Messy</button>
+				</div>
+				<div class="col-md-8">
+					<img src="images/DoiSuthep050.jpg">
+				</div>
+			</div>
+			<br />
+			<div class="row">
+				<div class="col-md-2">
+					<button type="button" class="btn btn-danger btn-lg">Meh</button>
+				</div>
+				<div class="col-md-8">
+					<img src="images/DoiSuthep000.jpg">
+				</div>
+			</div>
+		</div>
 
 		<script>
 			var map = L.map('map');
@@ -41,6 +76,10 @@
 
 			function onLocationError(e) {
 				alert(e.message);
+			}
+
+			function send(){
+
 			}
 
 			map.on('locationfound', onLocationFound);
