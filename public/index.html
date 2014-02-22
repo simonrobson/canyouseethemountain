@@ -77,9 +77,7 @@
 
 			function sendVisibility(map, radius, visibility){
 
-				//navigator.geolocation.getCurrentPosition();
-
-				alert(map.latlng);
+				//new coordinates = navigator.geolocation.getCurrentPosition();
 
 				$.post( "/checkins", { coords: 'coords', landmark_id: 1, visibility: 50 }, function() {
 					alert( "Submitted your results" );
