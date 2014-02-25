@@ -2,99 +2,129 @@
 <html>
 	<head>
 		<title>Can You See The Mountain: Doi Suthep</title>
-
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-		<link rel="stylesheet" href="leaflet/leaflet.css" />
-		<link rel="stylesheet" href="boostrap/css/bootstrap.min.css">
-
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-		<script src="leaflet/leaflet.js"></script>
-
 		<style>
-			body {
-				padding: 0;
-				margin: 0;
+		body {
+			font-family: 'Lucida Grande', 'Helvetica Neue', sans-serif;
+			font-size: 13px;
+			overflow-x: hidden;
+			background-color: #333;
+			text-align: center;
+		}
+
+		.question {
+			font-size: 152px;
+			color: rgba(175, 175, 175, 1);
+			padding: 0;
+			margin: 0;
+			margin-top: 40px;
+			border-radius: 50%;
+			width: 200px;
+			height: 200px;
+			line-height: 200px;
+			background-color: rgba(165, 165, 165, .5);
+			border: 4px solid rgba(100, 110, 100, 1);
+			box-shadow: 0px 0px 30px 10px rgba(165, 175, 172, 0.75);
+			display: inline-block;
+		}
+
+		.pulse {
+			-webkit-animation: pulse 3s linear infinite;
+			-moz-animation: pulse 3s linear infinite;
+			-ms-animation: pulse 3s linear infinite;
+			animation: pulse 3s linear infinite;
+		}
+
+		@keyframes "pulse" {
+			0% {
+				-webkit-transform: scale(1);
+				-moz-transform: scale(1);
+				-o-transform: scale(1);
+				-ms-transform: scale(1);
+				transform: scale(1);
 			}
-			html, body {
-				height: 100%;
+			50% {
+				-webkit-transform: scale(0.95);
+				-moz-transform: scale(0.95);
+				-o-transform: scale(0.95);
+				-ms-transform: scale(0.95);
+				transform: scale(0.95);
+			}
+			100% {
+				-webkit-transform: scale(1);
+				-moz-transform:
+				scale(1);
+				-o-transform:
+				scale(1);
+				-ms-transform:
+				scale(1);
+				transform:
+				scale(1);
 			}
 
-			#map {
-				height:200px;
+		}
+
+		@-moz-keyframes pulse {
+			0% {
+				-moz-transform: scale(1);
+				transform: scale(1);
 			}
+			50% {
+				-moz-transform: scale(0.95);
+				transform: scale(0.95);
+			}
+			100% {
+				-moz-transform: scale(1);
+				transform: scale(1);
+			}
+
+		}
+
+		@-webkit-keyframes "pulse" {
+			0% {
+				-webkit-transform: scale(1);
+				transform: scale(1);
+			}
+			50% {
+				-webkit-transform: scale(0.95);
+				transform: scale(0.95);
+			}
+			100% {
+				-webkit-transform: scale(1);
+				transform: scale(1);
+			}
+
+		}
+
+		@-ms-keyframes "pulse" {
+			0% {
+				-ms-transform: scale(1);
+				transform: scale(1);
+			}
+			50% {
+				-ms-transform: scale(0.95);
+				transform: scale(0.95);
+			}
+			100% {
+				-ms-transform: scale(1);
+				transform: scale(1);
+			}
+
+		}
+
+		h3 {
+			color: rgba(175, 175, 175, 1);
+			margin-top: 80px;
+			font-size: 22px;
+			text-transform: uppercase;
+		}
 
 		</style>
 	</head>
 	<body>
-		<div id="map"></div>
 
-		<div class="container">
-			<h1>Can you see Doi Suthep?</h1>
-			<div class="row well">
-				<div class="col-md-12 text-center">
-					<img class="img-responsive" src="images/DoiSuthep100.jpg">
-					<br>
-					<button type="button" class="btn btn-success btn-lg" onclick="sendVisibility(100)">It's Clear</button>
-				</div>
-			</div>
-			<div class="row well">
-				<div class="col-md-12 text-center">
-					<img class="img-responsive" src="images/DoiSuthep050.jpg">
-					<br>
-					<button type="button" class="btn btn-warning btn-lg" onclick="sendVisibility(50)">It's Hazy</button>
-				</div>
-			</div>
-			<div class="row well">
-				<div class="col-md-12 text-center">
-					<img class="img-responsive" src="images/DoiSuthep000.jpg">
-					<br>
-					<button type="button" class="btn btn-danger btn-lg" onclick="sendVisibility(0)">Can't See It</button>
-				</div>
-			</div>
-		</div>
+	<h3>Can you see the mountain</h3>
+	<div class="question pulse">?</div>
 
-		<script>
-			var map = L.map('map');
-
-
-			L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', {
-				maxZoom: 18,
-				attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="http://cloudmade.com">CloudMade</a>'
-			}).addTo(map);
-
-			function onLocationFound(e) {
-				radius = e.accuracy / 2;
-
-				L.marker(e.latlng).addTo(map);
-
-				L.circle(e.latlng, radius).addTo(map);
-			}
-
-			function onLocationError(e) {
-				alert(e.message);
-			}
-
-			function sendVisibility(map, radius, visibility){
-
-        navigator.geolocation.getCurrentPosition(
-          function(data) {
-            $.post( "/checkins", {checkin: { coords: data.coords, timestamp: data.timestamp, landmark_id: 1, visibility: 50 }}, function() {
-              alert( "Submitted your results" );
-            })
-            .fail(function() {
-              alert( "Error submitting your results" );
-            })
-          }, 
-          function(errors) {
-            alert("Not able to find your location");
-          });
-			}
-
-			map.on('locationfound', onLocationFound);
-			map.on('locationerror', onLocationError);
-
-			map.locate({setView: true, maxZoom: 16});
-		</script>
 	</body>
 </html>
