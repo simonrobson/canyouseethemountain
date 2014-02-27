@@ -9,6 +9,7 @@ CREATE TABLE `checkin` (
 	`landmark_id` int(10) unsigned,
 	`lat` float,
 	`lng` float,
+	`accuracy` int(10),
 	`visibility` int(10) unsigned,
 	PRIMARY KEY `id` (`timestamp`,`landmark_id`,`lat`,`lng`),
 	FOREIGN KEY (landmark_id) REFERENCES landmark(id)
