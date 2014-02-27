@@ -35,28 +35,39 @@
 				<div class="col-md-12 text-center">
 					<img class="img-responsive" src="images/DoiSuthep100.jpg">
 					<br>
-					<button type="button" class="btn btn-success btn-lg" onclick="sendVisibility(100)">It's Clear</button>
+					<button type="button"
+							class="btn btn-success btn-lg"
+							onclick="sendVisibility(100)">
+							It's Clear
+					</button>
 				</div>
 			</div>
 			<div class="row well">
 				<div class="col-md-12 text-center">
 					<img class="img-responsive" src="images/DoiSuthep050.jpg">
 					<br>
-					<button type="button" class="btn btn-warning btn-lg" onclick="sendVisibility(50)">It's Hazy</button>
+					<button type="button"
+							class="btn btn-warning btn-lg"
+							onclick="sendVisibility(50)">
+							It's Hazy
+					</button>
 				</div>
 			</div>
 			<div class="row well">
 				<div class="col-md-12 text-center">
 					<img class="img-responsive" src="images/DoiSuthep000.jpg">
 					<br>
-					<button type="button" class="btn btn-danger btn-lg" onclick="sendVisibility(0)">Can't See It</button>
+					<button type="button"
+							class="btn btn-danger btn-lg"
+							onclick="sendVisibility(0)">
+							Can't See It
+					</button>
 				</div>
 			</div>
 		</div>
 
 		<script>
 			var map = L.map('map');
-
 
 			L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', {
 				maxZoom: 18,
@@ -65,9 +76,7 @@
 
 			function onLocationFound(e) {
 				radius = e.accuracy / 2;
-
 				L.marker(e.latlng).addTo(map);
-
 				L.circle(e.latlng, radius).addTo(map);
 			}
 
@@ -76,19 +85,23 @@
 			}
 
 			function sendVisibility(map, radius, visibility){
-
-        navigator.geolocation.getCurrentPosition(
-          function(data) {
-            $.post( "/checkins", {checkin: { coords: data.coords, timestamp: data.timestamp, landmark_id: 1, visibility: 50 }}, function() {
-              alert( "Submitted your results" );
-            })
-            .fail(function() {
-              alert( "Error submitting your results" );
-            })
-          }, 
-          function(errors) {
-            alert("Not able to find your location");
-          });
+				navigator.geolocation.getCurrentPosition( function(data) {
+					$.post( "/checkins", {
+						checkin: {
+							coords: data.coords,
+							timestamp: data.timestamp,
+							landmark_id: 1, visibility: 50
+						}
+					}, function() {
+						alert( "Submitted your results" );
+					})
+					.fail(function() {
+						alert( "Error submitting your results" );
+					})
+				},
+				function(errors) {
+					alert("Not able to find your location");
+				});
 			}
 
 			map.on('locationfound', onLocationFound);
