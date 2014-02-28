@@ -5,7 +5,8 @@ CREATE TABLE `landmark` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
 CREATE TABLE `checkin` (
-	`timestamp` datetime,
+	`timestamp` int(11) unsigned,
+	`timezone` int(2),
 	`landmark_id` int(10) unsigned,
 	`lat` float,
 	`lng` float,

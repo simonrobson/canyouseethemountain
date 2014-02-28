@@ -1,7 +1,28 @@
-var mysql = require('mysql');
+var mysql = require('mysql')
+	config = require('../config/db.js');
 
-function storeCheckin() {
+var db = mysql.createConnection(config.db);
 
+function storeCheckin(checkin, next) {
+	var fields, values;
+
+	next = next || function() {};
+
+	fields = [
+		'timestamp', 'timezone', 'landmark_id', 'lat', 'lng', 'accuracy', 'visibility'
+	].join(','),
+
+	values = [
+		Math.floor((new Date()).getTime() / 1000),
+		checkin.timezone,
+		checkin.landmark_id,
+		checkin.coords.latitude,
+		checkin.coords.longitude,
+		checkin.coords.accuracy,
+		checkin.visibility
+	].join(','),
+
+	db.query('INSERT INTO checkin (' + fields + ') VALUES (' + values + ')', next);
 }
 
 exports.storeCheckin = storeCheckin;
