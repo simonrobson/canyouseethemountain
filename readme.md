@@ -16,7 +16,7 @@ POST /checkins
       longitude: 98.94661500000001,
       speed: null
     },
-    timestamp: 1393072693081,
+    timezone: -7,
     landmark_id: 1,
     visibility: 50
   }
