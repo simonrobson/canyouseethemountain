@@ -89,8 +89,9 @@
 					$.post( "/checkins", {
 						checkin: {
 							coords: data.coords,
-							timestamp: data.timestamp,
-							landmark_id: 1, visibility: 50
+							timezone: (new Date().getTimezoneOffset() / 60);
+							landmark_id: 1,
+							visibility: 50
 						}
 					}, function() {
 						alert( "Submitted your results" );

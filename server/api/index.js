@@ -2,7 +2,7 @@ var express = require('express');
 
 
 function checkinIsValid(checkin) {
-  if (!(checkin.coords && checkin.timestamp && checkin.landmark_id && checkin.visibility)) { return false; }
+  if (!(checkin.coords && checkin.timezone && checkin.landmark_id && checkin.visibility)) { return false; }
   var c = checkin.coords;
   if (!(c.latitude && c.longitude)) { return false; }
   return true;
