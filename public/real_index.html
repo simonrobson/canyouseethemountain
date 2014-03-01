@@ -84,13 +84,13 @@
 			}
 
 			function sendVisibility(map, radius, visibility){
-				navigator.geolocation.getCurrentPosition( function(data) {
+				navigator.geolocation.getCurrentPosition( function(geo) {
 					ajax({
 						type: 'POST',
 						url: '/checkins',
 						data: {
 							checkin: {
-								coords: {latitude: 34, longitude: 23},
+								coords: geo.coords,
 								timezone: (new Date().getTimezoneOffset() / 60),
 								landmark_id: 1,
 								visibility: 50
