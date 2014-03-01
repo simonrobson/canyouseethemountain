@@ -118,7 +118,7 @@
 				alert(e.message);
 			}
 
-			function sendVisibility(map, radius, visibility){
+			function sendVisibility(visibility){
 				navigator.geolocation.getCurrentPosition( function(geo) {
 					ajax({
 						type: 'POST',
@@ -128,7 +128,7 @@
 								coords: geo.coords,
 								timezone: (new Date().getTimezoneOffset() / 60),
 								landmark_id: 1,
-								visibility: 50
+								visibility: visibility
 							}
 						},
 						success: function() {
