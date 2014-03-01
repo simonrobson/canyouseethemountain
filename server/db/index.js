@@ -9,20 +9,17 @@ function storeCheckin(checkin, next) {
 	next = next || function() {};
 
 	fields = [
-		'timestamp', 'timezone', 'landmark_id', 'lat', 'lng', 'accuracy', 'visibility'
+		'timestamp', 'timezone', 'landmark_id', 'location', 'accuracy', 'visibility'
 	].join(','),
 
 	values = [
 		Math.floor((new Date()).getTime() / 1000),
 		checkin.timezone,
 		checkin.landmark_id,
-		checkin.coords.latitude,
-		checkin.coords.longitude,
+		'GeomFromText("POINT(' + checkin.coords.latitude + ' ' + checkin.coords.longitude + ')")',
 		checkin.coords.accuracy || 'NULL',
 		checkin.visibility
 	].join(','),
-
-	console.log('query', 'INSERT INTO checkin (' + fields + ') VALUES (' + values + ')');
 
 	db.query('INSERT INTO checkin (' + fields + ') VALUES (' + values + ')', next);
 }
