@@ -8,8 +8,7 @@
 		<link rel="stylesheet" href="leaflet/leaflet.css" />
 		<link rel="stylesheet" href="boostrap/css/bootstrap.min.css">
 
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-		<script src="leaflet/leaflet.js"></script>
+		<script src="js/lib.js"></script>
 
 		<style>
 			body {
@@ -68,6 +67,7 @@
 
 		<script>
 			var map = L.map('map');
+			var ajax = require('ajax');
 
 			L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', {
 				maxZoom: 18,
@@ -86,19 +86,24 @@
 
 			function sendVisibility(map, radius, visibility){
 				navigator.geolocation.getCurrentPosition( function(data) {
-					$.post( "/checkins", {
-						checkin: {
-							coords: data.coords,
-							timezone: (new Date().getTimezoneOffset() / 60);
-							landmark_id: 1,
-							visibility: 50
-						}
-					}, function() {
-						alert( "Submitted your results" );
-					})
-					.fail(function() {
-						alert( "Error submitting your results" );
-					})
+					ajax({
+						type: 'POST',
+						url: '/checkins',
+						data: {
+							checkin: {
+								coords: {latitude: 34, longitude: 23},
+								timezone: (new Date().getTimezoneOffset() / 60),
+								landmark_id: 1,
+								visibility: 50
+							}
+						},
+						success: function() {
+							alert( "Submitted your results" );
+						},
+						error: function() {
+							alert( "Error submitting your results" );
+						},
+					});
 				},
 				function(errors) {
 					alert("Not able to find your location");
