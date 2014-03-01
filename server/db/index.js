@@ -18,9 +18,11 @@ function storeCheckin(checkin, next) {
 		checkin.landmark_id,
 		checkin.coords.latitude,
 		checkin.coords.longitude,
-		checkin.coords.accuracy,
+		checkin.coords.accuracy || 'NULL',
 		checkin.visibility
 	].join(','),
+
+	console.log('query', 'INSERT INTO checkin (' + fields + ') VALUES (' + values + ')');
 
 	db.query('INSERT INTO checkin (' + fields + ') VALUES (' + values + ')', next);
 }
