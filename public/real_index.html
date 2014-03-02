@@ -22,6 +22,10 @@
 				height: 100%;
 			}
 
+			body.locale-th {
+				font-size: 120%;
+			}
+
 			#map {
 				height:160px;
 			}
@@ -72,28 +76,28 @@
 			}
 		</style>
 	</head>
-	<body>
+	<body class="localel-th">
 		<div id="map"></div>
 
-		<h1 class="question">Can you see Doi Suthep?</h1>
+		<h1 class="question">มองเห็นดอยสุเทพนั้นไหม</h1>
 
 		<div class="buttons">
 			<button type="button"
 					class="btn btn-clear"
 					onclick="sendVisibility(100)">
-					It's Clear
+					ชัดเจน
 			</button>
 
 			<button type="button"
 					class="btn btn-hazy"
 					onclick="sendVisibility(50)">
-					It's Hazy
+					เห็นบ้าง
 			</button>
 
 			<button type="button"
 					class="btn btn-terrible"
 					onclick="sendVisibility(0)">
-					Can't See It
+					ไม่เลย
 			</button>
 		</div>
 
