@@ -107,6 +107,8 @@
 			var map = L.map('map');
 			var ajax = require('ajax');
 
+			L.Icon.Default.imagePath = '/leaflet/images';
+
 			L.tileLayer('http://{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpg ', {
 				subdomains: ['otile1', 'otile2', 'otile3', 'otile4'],
 				maxZoom: 18,
