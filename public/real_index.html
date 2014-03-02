@@ -43,6 +43,9 @@
 			#map {
 				height:160px;
 			}
+			#map.response {
+				height:300px;
+			}
 			.buttons, .question {
 				max-width: 600px;
 				margin-left: auto;
@@ -174,6 +177,9 @@
 					success: function() {
 						document.querySelector('.content').classList.add('hide');
 						document.querySelector('.response').classList.remove('hide');
+						document.querySelector('#map').classList.add('response');
+						map.invalidateSize();
+						map.setZoom(12);
 					},
 					error: function() {
 						alert( "Error submitting your results" );
