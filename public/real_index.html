@@ -106,55 +106,47 @@
 		<script>
 			var map = L.map('map');
 			var ajax = require('ajax');
+			var coords = {};
 
 			L.Icon.Default.imagePath = '/leaflet/images';
 
 			L.tileLayer('http://{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpg ', {
 				subdomains: ['otile1', 'otile2', 'otile3', 'otile4'],
-				maxZoom: 18,
+				maxZoom: 16,
 				attribution: '<a href="">MapQuest</a>, <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> and contributors, <a href="http://wiki.openstreetmap.org/wiki/Legal_FAQ#I_would_like_to_use_OpenStreetMap_maps._How_should_I_credit_you">ODbL</a>.'
 			}).addTo(map);
 
-			function onLocationFound(e) {
-				radius = e.accuracy / 2;
-				L.marker(e.latlng).addTo(map);
-				L.circle(e.latlng, radius).addTo(map);
-			}
-
-			function onLocationError(e) {
-				alert(e.message);
-			}
-
 			function sendVisibility(visibility){
-				navigator.geolocation.getCurrentPosition( function(geo) {
-					ajax({
-						type: 'POST',
-						url: '/checkins',
-						data: {
-							checkin: {
-								coords: geo.coords,
-								timezone: (new Date().getTimezoneOffset() / 60),
-								landmark_id: 1,
-								visibility: visibility
-							}
-						},
-						success: function() {
-							alert( "Submitted your results" );
-						},
-						error: function() {
-							alert( "Error submitting your results" );
-						},
-					});
-				},
-				function(errors) {
-					alert("Not able to find your location");
+				ajax({
+					type: 'POST',
+					url: '/checkins',
+					data: {
+						checkin: {
+							coords: coords,
+							timezone: (new Date().getTimezoneOffset() / 60),
+							landmark_id: 1,
+							visibility: visibility
+						}
+					},
+					success: function() {
+						alert( "Submitted your results" );
+					},
+					error: function() {
+						alert( "Error submitting your results" );
+					},
 				});
 			}
 
-			map.on('locationfound', onLocationFound);
-			map.on('locationerror', onLocationError);
-
-			map.locate({setView: true, maxZoom: 16});
+			navigator.geolocation.getCurrentPosition(function(pos) {
+				var latLng = L.latLng(pos.coords.latitude, pos.coords.longitude);
+				coords = pos.coords;
+				map.setView(latLng, 14);
+				L.marker(latLng).addTo(map);
+				L.circle(latLng, coords.accuracy / 2).addTo(map);
+			},
+			function(errors) {
+				alert("Not able to find your location");
+			});
 		</script>
 	</body>
 </html>
