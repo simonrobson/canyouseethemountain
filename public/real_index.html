@@ -106,7 +106,6 @@
 		<script>
 			var map = L.map('map');
 			var ajax = require('ajax');
-			var coords = {};
 
 			L.Icon.Default.imagePath = '/leaflet/images';
 
@@ -117,7 +116,6 @@
 			}).addTo(map);
 
 			function onLocationFound(e) {
-				coords = e;
 				radius = e.accuracy / 2;
 				L.marker(e.latlng).addTo(map);
 				L.circle(e.latlng, radius).addTo(map);
@@ -128,23 +126,28 @@
 			}
 
 			function sendVisibility(visibility){
-				ajax({
-					type: 'POST',
-					url: '/checkins',
-					data: {
-						checkin: {
-							coords: coords,
-							timezone: (new Date().getTimezoneOffset() / 60),
-							landmark_id: 1,
-							visibility: visibility
-						}
-					},
-					success: function() {
-						alert( "Submitted your results" );
-					},
-					error: function() {
-						alert( "Error submitting your results" );
-					},
+				navigator.geolocation.getCurrentPosition( function(geo) {
+					ajax({
+						type: 'POST',
+						url: '/checkins',
+						data: {
+							checkin: {
+								coords: geo.coords,
+								timezone: (new Date().getTimezoneOffset() / 60),
+								landmark_id: 1,
+								visibility: visibility
+							}
+						},
+						success: function() {
+							alert( "Submitted your results" );
+						},
+						error: function() {
+							alert( "Error submitting your results" );
+						},
+					});
+				},
+				function(errors) {
+					alert("Not able to find your location");
 				});
 			}
 
