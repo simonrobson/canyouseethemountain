@@ -28,6 +28,9 @@
 			.hide {
 				display: none;
 			}
+			.show {
+				display: block;
+			}
 			.geo-spinner {
 				opacity: 0.8;
 				-webkit-animation: geo-spinner 3s linear infinite;
@@ -36,12 +39,6 @@
 				animation: geo-spinner 3s linear infinite;
 				margin-top: 60px;
 				width: 100px;
-			}
-			.content {
-				display: none;
-			}
-			.content.show {
-				display: block;
 			}
 			#map {
 				height:160px;
@@ -90,6 +87,10 @@
 			.btn-terrible {
 				background-image: url(/images/DoiSuthep000.jpg);
 			}
+			.response h1 {
+				margin: 40px;
+				text-align: left;
+			}
 			@keyframes "geo-spinner" {
 				0% { opacity: 0.8; }
 				50% { opacity: 0.4; }
@@ -121,7 +122,7 @@
 			<img class="geo-spinner" src="/images/geolocate.png"/>
 		</div>
 
-		<div class="content">
+		<div class="content hide">
 			<h1 class="question">มองเห็นดอยสุเทพนั้นไหม</h1>
 
 			<div class="buttons">
@@ -137,6 +138,10 @@
 					ไม่เลย
 				</button>
 			</div>
+		</div>
+
+		<div class="response hide">
+			<h1>ขอบคุณสำหรับข้อมูล แล้วคุณจะพบสิ่งพิเศษที่ซ่อนอยู่ โปรดกลับมาติดตามครั้งต่อไป</a>
 		</div>
 
 		<script src="js/lib.js"></script>
@@ -167,7 +172,8 @@
 						}
 					},
 					success: function() {
-						alert( "Submitted your results" );
+						document.querySelector('.content').classList.add('hide');
+						document.querySelector('.response').classList.remove('hide');
 					},
 					error: function() {
 						alert( "Error submitting your results" );
@@ -182,7 +188,7 @@
 				L.marker(latLng).addTo(map);
 				L.circle(latLng, coords.accuracy / 2).addTo(map);
 				document.querySelector('.splash').classList.add('hide');
-				document.querySelector('.content').classList.add('show');
+				document.querySelector('.content').classList.remove('hide');
 			},
 			function(errors) {
 				alert("Not able to find your location");
