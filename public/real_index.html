@@ -43,7 +43,7 @@
 			#map {
 				height:160px;
 			}
-			#map.response {
+			#map.response-state {
 				height:220px;
 			}
 			.buttons, .question {
@@ -90,7 +90,7 @@
 			.btn-terrible {
 				background-image: url(/images/DoiSuthep000.jpg);
 			}
-			.response h1 {
+			.response, .location-error h1 {
 				margin: 40px;
 			}
 			@keyframes "geo-spinner" {
@@ -122,6 +122,10 @@
 		<div class="splash">
 			<h1>ค้นหาตำแหน่งปัจจุบัน</h1>
 			<img class="geo-spinner" src="/images/geolocate.png"/>
+		</div>
+
+		<div class="location-error hide">
+			<h1>อุ๊บส์ เล่นไม่ได้เพราะไม่สามารถระบุตำแหน่ง</h1>
 		</div>
 
 		<div class="content hide">
@@ -176,7 +180,7 @@
 					success: function() {
 						document.querySelector('.content').classList.add('hide');
 						document.querySelector('.response').classList.remove('hide');
-						document.querySelector('#map').classList.add('response');
+						document.querySelector('#map').classList.add('response-state');
 						map.invalidateSize();
 						map.setZoom(12);
 					},
@@ -196,7 +200,9 @@
 				document.querySelector('.content').classList.remove('hide');
 			},
 			function(errors) {
-				alert("Not able to find your location");
+				document.querySelector('.splash').classList.add('hide');
+				document.querySelector('.location-error').classList.remove('hide');
+				document.querySelector('#map').classList.add('hide');
 			});
 		</script>
 	</body>
