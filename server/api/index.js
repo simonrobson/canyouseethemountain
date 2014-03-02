@@ -17,7 +17,15 @@ function configureServer(db) {
   app.post('/checkins', function(req, res) {
     var checkin = req.param('checkin');
     if (checkin && checkinIsValid(checkin)) {
-      db.storeCheckin(checkin);
+      db.storeCheckin(checkin, function(err, response) {
+		if( err ) {
+			console.log(
+				'Unable to store \'valid\' response: ' +
+				JSON.stringify(checkin) + ' DB Error: ' +
+				JSON.stringify(err)
+			);
+		}
+	  });
       res.send(200);
     } else {
       res.send(403);
