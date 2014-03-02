@@ -37,7 +37,7 @@
 				-moz-animation: geo-spinner 3s linear infinite;
 				-ms-animation: geo-spinner 3s linear infinite;
 				animation: geo-spinner 3s linear infinite;
-				margin-top: 60px;
+				margin-top: 30px;
 				width: 100px;
 			}
 			#map {
@@ -46,6 +46,12 @@
 			#map.response-state {
 				height:220px;
 			}
+
+			@media (max-height: 420px) {
+				#map { height: 100px; }
+				#map.response-state { height: 180px; }
+			}
+
 			.buttons, .question {
 				max-width: 600px;
 				margin-left: auto;
@@ -81,6 +87,10 @@
 				.btn { height: 65px; font-size: 1.2em; }
 			}
 
+			@media (max-height: 420px) {
+				.btn { height: 55px; }
+			}
+
 			.btn-clear {
 				background-image: url(/images/DoiSuthep100.jpg);
 			}
@@ -92,6 +102,11 @@
 			}
 			.response, .location-error h1 {
 				margin: 40px;
+			}
+			@media (max-height: 420px) {
+				.response, .location-error h1 {
+					margin-top: 20px;
+				}
 			}
 			@keyframes "geo-spinner" {
 				0% { opacity: 0.8; }
