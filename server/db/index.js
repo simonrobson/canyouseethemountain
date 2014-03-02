@@ -16,12 +16,13 @@ function storeCheckin(checkin, next) {
 		Math.floor((new Date()).getTime() / 1000),
 		checkin.timezone,
 		checkin.landmark_id,
-		'GeomFromText("POINT(' + checkin.coords.latitude + ' ' + checkin.coords.longitude + ')")',
+		checkin.coords.latitude,
+		checkin.coords.longitude,
 		checkin.coords.accuracy || 'NULL',
 		checkin.visibility
-	].join(','),
+	];
 
-	db.query('INSERT INTO checkin (' + fields + ') VALUES (' + values + ')', next);
+	db.query('INSERT INTO checkin (' + fields + ') VALUES (?, ?, ?, POINT(?,?), ?, ?)', values, next);
 }
 
 exports.storeCheckin = storeCheckin;
