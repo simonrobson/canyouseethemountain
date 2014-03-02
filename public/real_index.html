@@ -17,15 +17,32 @@
 				text-align: center;
 				font-family: arial, sans serif;
 				background-color: #f8f8f8;
+				color: #444;
 			}
 			html, body {
 				height: 100%;
 			}
-
 			body.locale-th {
-				font-size: 120%;
+				font-size: 110%;
 			}
-
+			.hide {
+				display: none;
+			}
+			.geo-spinner {
+				opacity: 0.8;
+				-webkit-animation: geo-spinner 3s linear infinite;
+				-moz-animation: geo-spinner 3s linear infinite;
+				-ms-animation: geo-spinner 3s linear infinite;
+				animation: geo-spinner 3s linear infinite;
+				margin-top: 60px;
+				width: 100px;
+			}
+			.content {
+				display: none;
+			}
+			.content.show {
+				display: block;
+			}
 			#map {
 				height:160px;
 			}
@@ -34,8 +51,7 @@
 				margin-left: auto;
 				margin-right: auto;
 			}
-			.question {
-				color: #444;
+			h1 {
 				font-weight: normal;
 				font-size: 1.8em;
 			}
@@ -61,7 +77,7 @@
 			}
 
 			@media (max-width: 350px) {
-				.question { font-size: 1.4em; }
+				h1 { font-size: 1.4em; }
 				.btn { height: 65px; font-size: 1.2em; }
 			}
 
@@ -74,31 +90,53 @@
 			.btn-terrible {
 				background-image: url(/images/DoiSuthep000.jpg);
 			}
+			@keyframes "geo-spinner" {
+				0% { opacity: 0.8; }
+				50% { opacity: 0.4; }
+				100% { opacity: 0.8; }
+			}
+			@-moz-keyframes geo-spinner {
+				0% { opacity: 0.8; }
+				50% { opacity: 0.4; }
+				100% { opacity: 0.8; }
+			}
+			@-webkit-keyframes "geo-spinner" {
+				0% { opacity: 0.8; }
+				50% { opacity: 0.4; }
+				100% { opacity: 0.8; }
+			}
+			@-ms-keyframes "geo-spinner" {
+				0% { opacity: 0.8; }
+				50% { opacity: 0.4; }
+				100% { opacity: 0.8; }
+			}
 		</style>
 	</head>
-	<body class="localel-th">
+	<body class="locale-th">
+
 		<div id="map"></div>
 
-		<h1 class="question">มองเห็นดอยสุเทพนั้นไหม</h1>
+		<div class="splash">
+			<h1>ค้นหาตำแหน่งปัจจุบัน</h1>
+			<img class="geo-spinner" src="/images/geolocate.png"/>
+		</div>
 
-		<div class="buttons">
-			<button type="button"
-					class="btn btn-clear"
-					onclick="sendVisibility(100)">
+		<div class="content">
+			<h1 class="question">มองเห็นดอยสุเทพนั้นไหม</h1>
+
+			<div class="buttons">
+				<button type="button" class="btn btn-clear" onclick="sendVisibility(100)">
 					ชัดเจน
-			</button>
+				</button>
 
-			<button type="button"
-					class="btn btn-hazy"
-					onclick="sendVisibility(50)">
+				<button type="button" class="btn btn-hazy" onclick="sendVisibility(50)">
 					เห็นบ้าง
-			</button>
+				</button>
 
-			<button type="button"
-					class="btn btn-terrible"
-					onclick="sendVisibility(0)">
+				<button type="button" class="btn btn-terrible" onclick="sendVisibility(0)">
 					ไม่เลย
-			</button>
+				</button>
+			</div>
 		</div>
 
 		<script src="js/lib.js"></script>
@@ -143,6 +181,8 @@
 				map.setView(latLng, 14);
 				L.marker(latLng).addTo(map);
 				L.circle(latLng, coords.accuracy / 2).addTo(map);
+				document.querySelector('.splash').classList.add('hide');
+				document.querySelector('.content').classList.add('show');
 			},
 			function(errors) {
 				alert("Not able to find your location");
