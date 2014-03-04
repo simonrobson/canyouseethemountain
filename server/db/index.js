@@ -22,7 +22,8 @@ function storeCheckin(checkin, next) {
 		checkin.visibility
 	];
 
-	db.query('INSERT INTO checkin (' + fields + ') VALUES (?, ?, ?, POINT(?,?), ?, ?)', values, next);
+	db.query('INSERT INTO checkin (' + fields + ') ' +
+			 'VALUES (?, ?, ?, POINT(?,?), ?, ?)', values, next);
 }
 
 function nearLandmark(lat, lng, id, next) {
