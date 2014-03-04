@@ -25,4 +25,25 @@ function storeCheckin(checkin, next) {
 	db.query('INSERT INTO checkin (' + fields + ') VALUES (?, ?, ?, POINT(?,?), ?, ?)', values, next);
 }
 
+function nearLandmark(lat, lng, id, next) {
+	var processResult, values;
+
+	values= [lat, lng, id];
+	next = next || function() {};
+
+	processResult = function(err, result) {
+		if( err ) {
+			next(err);
+		} else if( result.length == 0 ) {
+			next(null, false);
+		} else {
+			next(null, !!(result[0].near));
+		}
+	};
+
+	db.query("SELECT MBRContains(area, GeomFromText('POINT(? ?)')) AS near " +
+			 "FROM landmark WHERE id = ?", values, processResult);
+}
+
 exports.storeCheckin = storeCheckin;
+exports.nearLandmark = nearLandmark;
