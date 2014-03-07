@@ -18,6 +18,8 @@ function storeCheckin(checkin, next) {
 		checkin.landmark_id,
 		checkin.coords.latitude,
 		checkin.coords.longitude,
+		checkin.coords.accuracy || 'NULL',
+		checkin.visibility
 	];
 
 	db.query('INSERT INTO checkin (' + fields + ') ' +
@@ -40,11 +42,11 @@ function nearLandmark(lat, lng, id, next) {
 		} else if( result.length == 0 ) {
 			next(null, false);
 		} else {
-			next(null, !!(result[0].near));
+			next(null, !!(result[0].near, result[0].area));
 		}
 	};
 
-	db.query("SELECT MBRContains(area, GeomFromText('POINT(? ?)')) AS near " +
+	db.query("SELECT AsText(area) as area, MBRContains(area, GeomFromText('POINT(? ?)')) AS near " +
 			 "FROM landmark WHERE id = ?", values, processResult);
 }
 
