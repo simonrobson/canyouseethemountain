@@ -42,7 +42,7 @@ function nearLandmark(lat, lng, id, next) {
 		} else if( result.length == 0 ) {
 			next(null, false);
 		} else {
-			next(null, !!(result[0].near, result[0].area));
+			next(null, !!(result[0].near), result[0].area);
 		}
 	};
 
