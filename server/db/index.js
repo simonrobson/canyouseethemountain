@@ -18,12 +18,14 @@ function storeCheckin(checkin, next) {
 		checkin.landmark_id,
 		checkin.coords.latitude,
 		checkin.coords.longitude,
-		checkin.coords.accuracy || 'NULL',
-		checkin.visibility
 	];
 
 	db.query('INSERT INTO checkin (' + fields + ') ' +
 			 'VALUES (?, ?, ?, POINT(?,?), ?, ?)', values, next);
+}
+
+function getCheckinsForDay(timestamp, landmark, next) {
+	next = next || function() {};
 }
 
 function nearLandmark(lat, lng, id, next) {
