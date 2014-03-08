@@ -27,7 +27,26 @@ function storeCheckin(checkin, next) {
 }
 
 function getCheckinsForDay(timestamp, landmark, next) {
+	var values, fields
+
+	fields = [
+		'TIMESTAMPADD(HOUR, timezone, FROM_UNIXTIME(timestamp)) AS timestamp',
+		'DATE(TIMESTAMPADD(HOUR, timezone, FROM_UNIXTIME(?))) AS day',
+		'AsText(location) AS location',
+		'accuracy',
+		'visibility'
+	].join(',');
+
+	values = [timestamp, landmark];
+
 	next = next || function() {};
+
+	db.query('' +
+		'SELECT ' + fields + ' FROM checkin WHERE landmark_id = ? ' +
+		'HAVING ' +
+			'timestamp > TIMESTAMPADD(HOUR, 6, day) AND ' +
+			'timestamp < TIMESTAMPADD(HOUR, 18, day)',
+	values, next);
 }
 
 function nearLandmark(coords, id, next) {
@@ -51,4 +70,5 @@ function nearLandmark(coords, id, next) {
 }
 
 exports.storeCheckin = storeCheckin;
+exports.getCheckinsForDay = getCheckinsForDay;
 exports.nearLandmark = nearLandmark;
