@@ -36,40 +36,22 @@ function updateVisibilityLayerWithCheckins(timestamp, landmark) {
 	};
 }
 
-function cellForCheckin(checkin, area) {
-  var areaPolygon = areaFromWKT(area);
-  var interval = 0.002;
-  
-  var lat = checkin.coords.latitude;
-  var lng = checkin.coords.longitude;
-  
-  var left = areaPolygon[0][1] + (Math.abs((lng - areaPolygon[0][1]) / interval)* interval);
-  var top = areaPolygon[0][0] + (Math.abs((lat - areaPolygon[0][0]) / interval)* interval);
-  
-  console.log('areaPolygon', areaPolygon);
-  console.log("calculated lat", top);
-  console.log("calculated lng:", left);
-
-  return [ [top,left], [top, left+interval], [top-interval, left+interval], [top+interval, left] ];
-}
-
 function areaFromWKT(area) {
   return wktparse(area).coordinates[0].slice(0,4);
 }
 
-updateVisibilityLayer(new Date().getTime(), 1, { 
-  coords: {
-      accuracy: 25000,
-      altitude: null,
-      altitudeAccuracy: null,
-      heading: null,
-      latitude: 18.75,
-      longitude: 99,
-      speed: null
-      },
-    timezone: -7,
-    landmark_id: 1,
-    visibility: 50
-  });
+function cellForCheckin(checkin, precision) {
+	var left = roundDown(checkin.coords.longitude, precision),
+		right = roundDown(left + Math.pow(10, precision * -1), precision),
+		bottom = roundDown(checkin.coords.latitude, precision),
+		top = roundDown(bottom +  Math.pow(10, precision * -1), precision);
+	return [[left, top], [right, top], [right, bottom], [left, bottom], [left, top]];
+}
+
+function roundDown(number, precision) {
+	var mantissa = Math.pow(10, precision);
+	return Math.floor(number * mantissa) / mantissa;
+}
 
 exports.visibilityLayer = visibilityLayer;
+exports.cellForCheckin = cellForCheckin;
