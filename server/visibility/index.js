@@ -36,16 +36,16 @@ function updateVisibilityLayerWithCheckins(timestamp, landmark) {
 	};
 }
 
-function areaFromWKT(area) {
-  return wktparse(area).coordinates[0].slice(0,4);
-}
-
 function cellForCheckin(checkin, precision) {
 	var left = roundDown(checkin.coords.longitude, precision),
 		right = roundDown(left + Math.pow(10, precision * -1), precision),
 		bottom = roundDown(checkin.coords.latitude, precision),
 		top = roundDown(bottom +  Math.pow(10, precision * -1), precision);
 	return [[left, top], [right, top], [right, bottom], [left, bottom], [left, top]];
+}
+
+function areaFromWKT(area) {
+  return wktparse(area).coordinates[0].slice(0,4);
 }
 
 function roundDown(number, precision) {
