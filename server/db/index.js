@@ -30,10 +30,10 @@ function getCheckinsForDay(timestamp, landmark, next) {
 	next = next || function() {};
 }
 
-function nearLandmark(lat, lng, id, next) {
+function nearLandmark(coords, id, next) {
 	var processResult, values;
 
-	values= [lat, lng, id];
+	values= [coords.latitude, coords.longitude, id];
 	next = next || function() {};
 
 	processResult = function(err, result) {
@@ -42,11 +42,11 @@ function nearLandmark(lat, lng, id, next) {
 		} else if( result.length == 0 ) {
 			next(null, false);
 		} else {
-			next(null, !!(result[0].near), result[0].area);
+			next(null, !!(result[0].near));
 		}
 	};
 
-	db.query("SELECT AsText(area) as area, MBRContains(area, GeomFromText('POINT(? ?)')) AS near " +
+	db.query("SELECT MBRContains(area, GeomFromText('POINT(? ?)')) AS near " +
 			 "FROM landmark WHERE id = ?", values, processResult);
 }
 

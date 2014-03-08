@@ -11,14 +11,14 @@ function initVisibilityLayer(timestamp, landmark) {
 }
 
 function updateVisibilityLayer(timestamp, landmark, checkin, next) {
-	db.nearLandmark(checkin.coords.latitude, checkin.coords.longitude, landmark, function(err, near, area) {
-    next = next || function() {};
-    console.log(near);
+	db.nearLandmark(checkin.coords, landmark, function(err, near) {
+		next = next || function() {};
+
 		if( !near ) {
 			next(null, layers[landmark]);
 			return;
 		}
-    
+
 		cell = cellForCheckin(checkin, area);
 
 /*		getCheckinsInCellForDay(timestamp, landmark, cell, function(err, checkins) {
