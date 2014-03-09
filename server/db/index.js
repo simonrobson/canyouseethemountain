@@ -3,6 +3,11 @@ var mysql = require('mysql')
 
 var db = mysql.createConnection(config.db);
 
+db.query('SET time_zone = "UTC"', function(err, success){
+	if( err ) { console.log('unable to set time zone to UTC'); }
+	else { console.log('set time zone to UTC'); }
+});
+
 function storeCheckin(checkin, next) {
 	var fields, values;
 
