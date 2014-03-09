@@ -7,13 +7,13 @@ CREATE TABLE `landmark` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
 CREATE TABLE `checkin` (
-	`timestamp` int(11) unsigned,
+	`timestamp` timestamp default current_timestamp,
 	`timezone` int(2),
 	`landmark_id` int(10) unsigned,
 	`location` point,
 	`accuracy` int(10),
 	`visibility` int(10) unsigned,
-	PRIMARY KEY `id` (`timestamp`,`landmark_id`,`location`),
+	PRIMARY KEY `id` (`timestamp`,`location`),
 	FOREIGN KEY (landmark_id) REFERENCES landmark(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
