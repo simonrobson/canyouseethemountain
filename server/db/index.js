@@ -14,11 +14,10 @@ function storeCheckin(checkin, next) {
 	next = next || function() {};
 
 	fields = [
-		'timestamp', 'timezone', 'landmark_id', 'location', 'accuracy', 'visibility'
+		'timezone', 'landmark_id', 'location', 'accuracy', 'visibility'
 	].join(','),
 
 	values = [
-		Math.floor((new Date()).getTime() / 1000),
 		checkin.timezone,
 		checkin.landmark_id,
 		checkin.coords.latitude,
@@ -28,7 +27,7 @@ function storeCheckin(checkin, next) {
 	];
 
 	db.query('INSERT INTO checkin (' + fields + ') ' +
-			 'VALUES (?, ?, ?, POINT(?,?), ?, ?)', values, next);
+			 'VALUES (?, ?, POINT(?,?), ?, ?)', values, next);
 }
 
 function getCheckinsForDay(timestamp, landmark, next) {
