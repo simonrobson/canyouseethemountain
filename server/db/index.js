@@ -34,8 +34,8 @@ function getCheckinsForDay(timestamp, landmark, next) {
 	var values, fields
 
 	fields = [
-		'TIMESTAMPADD(HOUR, timezone, FROM_UNIXTIME(timestamp)) AS timestamp',
-		'DATE(TIMESTAMPADD(HOUR, timezone, FROM_UNIXTIME(?))) AS day',
+		'TIMESTAMPADD(HOUR, timezone, timestamp) AS timestamp',
+		'DATE(TIMESTAMPADD(HOUR, timezone * -1, FROM_UNIXTIME(?))) AS date',
 		'AsText(location) AS location',
 		'accuracy',
 		'visibility'
@@ -48,8 +48,8 @@ function getCheckinsForDay(timestamp, landmark, next) {
 	db.query('' +
 		'SELECT ' + fields + ' FROM checkin WHERE landmark_id = ? ' +
 		'HAVING ' +
-			'timestamp > TIMESTAMPADD(HOUR, 6, day) AND ' +
-			'timestamp < TIMESTAMPADD(HOUR, 18, day)',
+			'timestamp > TIMESTAMPADD(HOUR, 6, date) AND ' +
+			'timestamp < TIMESTAMPADD(HOUR, 18, date)',
 	values, next);
 }
 
