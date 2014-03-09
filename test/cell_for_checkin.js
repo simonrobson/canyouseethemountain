@@ -21,19 +21,19 @@ describe('cellForCheckin', function() {
 
 	it("produces a cell with dimension .001 for precision of three", function() {
 		var result = visibility.cellForCheckin(checkin, 3);
-		assert.deepEqual(result[0],[98.946, 18.807]);
-		assert.deepEqual(result[1],[98.947, 18.807]);
-		assert.deepEqual(result[2],[98.947, 18.806]);
-		assert.deepEqual(result[3],[98.946, 18.806]);
-		assert.deepEqual(result[4],[98.946, 18.807]);
+		assert.deepEqual(result.coordinates[0][0],[98.946, 18.807]);
+		assert.deepEqual(result.coordinates[0][1],[98.947, 18.807]);
+		assert.deepEqual(result.coordinates[0][2],[98.947, 18.806]);
+		assert.deepEqual(result.coordinates[0][3],[98.946, 18.806]);
+		assert.deepEqual(result.coordinates[0][4],[98.946, 18.807]);
 	});
 
 	it("produces a cell with dimension .0001 for precision of four", function() {
 		var result = visibility.cellForCheckin(checkin, 4);
-		assert.deepEqual(result[0],[98.9466, 18.8065]);
-		assert.deepEqual(result[1],[98.9467, 18.8065]);
-		assert.deepEqual(result[2],[98.9467, 18.8064]);
-		assert.deepEqual(result[3],[98.9466, 18.8064]);
-		assert.deepEqual(result[4],[98.9466, 18.8065]);
+		assert.deepEqual(result.coordinates[0][0],[98.9466, 18.8065]);
+		assert.deepEqual(result.coordinates[0][1],[98.9467, 18.8065]);
+		assert.deepEqual(result.coordinates[0][2],[98.9467, 18.8064]);
+		assert.deepEqual(result.coordinates[0][3],[98.9466, 18.8064]);
+		assert.deepEqual(result.coordinates[0][4],[98.9466, 18.8065]);
 	});
 });

@@ -41,7 +41,12 @@ function cellForCheckin(checkin, precision) {
 		right = roundDown(left + Math.pow(10, precision * -1), precision),
 		bottom = roundDown(checkin.coords.latitude, precision),
 		top = roundDown(bottom +  Math.pow(10, precision * -1), precision);
-	return [[left, top], [right, top], [right, bottom], [left, bottom], [left, top]];
+	return {
+		type: "Polygon",
+		coordinates: [
+			[[left, top], [right, top], [right, bottom], [left, bottom], [left, top]]
+		]
+	};
 }
 
 function areaFromWKT(area) {
