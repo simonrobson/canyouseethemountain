@@ -1,6 +1,7 @@
-var db = require('../db')
+var wktparse = require('wellknown'),
+	db = require('../db');
+
 var layers = {};
-var wktparse = require('wellknown');
 
 function visibilityLayer(timestamp, landmark) {
 	return layers[landmark] || {};
