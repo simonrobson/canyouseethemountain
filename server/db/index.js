@@ -1,4 +1,5 @@
-var mysql = require('mysql')
+var mysql = require('mysql'),
+	geojson = require('../../node_modules/geojson2wkt/Geojson2Wkt.js'),
 	config = require('../config/db.js');
 
 var db = mysql.createConnection(config.db);
@@ -73,6 +74,31 @@ function nearLandmark(coords, id, next) {
 			 "FROM landmark WHERE id = ?", values, processResult);
 }
 
+function getCheckinsForDayInCell(timestamp, landmark, cell, next) {
+	var fields, values;
+
+	fields = [
+		'TIMESTAMPADD(HOUR, timezone, timestamp) AS timestamp',
+		'DATE(TIMESTAMPADD(HOUR, timezone * -1, FROM_UNIXTIME(?))) AS date',
+		'HOUR(TIMEDIFF(TIMESTAMPADD(HOUR, timezone * -1, FROM_UNIXTIME(?)), timestamp)) AS age',
+		'accuracy',
+		'visibility'
+	].join(',');
+
+	values = [timestamp, timestamp, landmark, geojson.convert(cell)];
+
+	next = next || function() {};
+
+	db.query('' +
+		'SELECT ' + fields + ' FROM checkin ' +
+		'WHERE landmark_id = ? AND MBRContains(GeomFromText(?), location) ' +
+		'HAVING ' +
+			'timestamp > TIMESTAMPADD(HOUR, 6, date) AND ' +
+			'timestamp < TIMESTAMPADD(HOUR, 18, date)',
+	values, next);
+}
+
 exports.storeCheckin = storeCheckin;
 exports.getCheckinsForDay = getCheckinsForDay;
 exports.nearLandmark = nearLandmark;
+exports.getCheckinsForDayInCell = getCheckinsForDayInCell;
