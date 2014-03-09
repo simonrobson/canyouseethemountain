@@ -8,7 +8,7 @@ function visibilityLayer(timestamp, landmark) {
 }
 
 function initVisibilityLayer(timestamp, landmark) {
-	getCheckinsForDay(timestamp, landmark, updateVibilityLayerWithCheckins(timestamp, landmark));
+	db.getCheckinsForDay(timestamp, landmark, updateVibilityLayerWithCheckins(timestamp, landmark));
 }
 
 function updateVisibilityLayer(timestamp, landmark, checkin, next) {
