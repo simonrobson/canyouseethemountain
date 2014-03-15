@@ -45,7 +45,7 @@ function cellForCheckin(checkin, precision) {
 	return {
 		type: "Polygon",
 		coordinates: [
-			[[left, top], [right, top], [right, bottom], [left, bottom], [left, top]]
+			[[top, left], [top, right], [bottom, right], [bottom, left], [top, left]]
 		]
 	};
 }
