@@ -35,7 +35,7 @@ function getCheckinsForDay(timestamp, landmark, next) {
 	var values, fields
 
 	fields = [
-		'TIMESTAMPADD(HOUR, timezone, timestamp) AS timestamp',
+		'TIMESTAMPADD(HOUR, timezone * -1, timestamp) AS time',
 		'DATE(TIMESTAMPADD(HOUR, timezone * -1, FROM_UNIXTIME(?))) AS date',
 		'AsText(location) AS location',
 		'accuracy',
@@ -49,8 +49,8 @@ function getCheckinsForDay(timestamp, landmark, next) {
 	db.query('' +
 		'SELECT ' + fields + ' FROM checkin WHERE landmark_id = ? ' +
 		'HAVING ' +
-			'timestamp > TIMESTAMPADD(HOUR, 6, date) AND ' +
-			'timestamp < TIMESTAMPADD(HOUR, 18, date)',
+			'time > TIMESTAMPADD(HOUR, 6, date) AND ' +
+			'time < TIMESTAMPADD(HOUR, 18, date)',
 	values, next);
 }
 
@@ -78,7 +78,7 @@ function getCheckinsForDayInCell(timestamp, landmark, cell, next) {
 	var fields, values;
 
 	fields = [
-		'TIMESTAMPADD(HOUR, timezone, timestamp) AS timestamp',
+		'TIMESTAMPADD(HOUR, timezone, timestamp) AS time',
 		'DATE(TIMESTAMPADD(HOUR, timezone * -1, FROM_UNIXTIME(?))) AS date',
 		'HOUR(TIMEDIFF(TIMESTAMPADD(HOUR, timezone * -1, FROM_UNIXTIME(?)), timestamp)) AS age',
 		'accuracy',
@@ -93,8 +93,8 @@ function getCheckinsForDayInCell(timestamp, landmark, cell, next) {
 		'SELECT ' + fields + ' FROM checkin ' +
 		'WHERE landmark_id = ? AND MBRContains(GeomFromText(?), location) ' +
 		'HAVING ' +
-			'timestamp > TIMESTAMPADD(HOUR, 6, date) AND ' +
-			'timestamp < TIMESTAMPADD(HOUR, 18, date)',
+			'time > TIMESTAMPADD(HOUR, 6, date) AND ' +
+			'time < TIMESTAMPADD(HOUR, 18, date)',
 	values, next);
 }
 
