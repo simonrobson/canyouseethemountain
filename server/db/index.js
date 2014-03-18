@@ -57,7 +57,7 @@ function getCheckinsForDay(timestamp, landmark, next) {
 function nearLandmark(coords, id, next) {
 	var processResult, values;
 
-	values = [coords.latitude, coords.longitude, id];
+	values = [parseFloat(coords.latitude), parseFloat(coords.longitude), id];
 	next = next || function() {};
 
 	processResult = function(err, result) {
