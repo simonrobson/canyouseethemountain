@@ -184,6 +184,7 @@
 				ajax({
 					type: 'POST',
 					url: '/checkins',
+					dataType: 'json',
 					data: {
 						checkin: {
 							coords: coords,
@@ -192,7 +193,8 @@
 							visibility: visibility
 						}
 					},
-					success: function() {
+					success: function(response) {
+						L.geoJson(response.visibility_layer, {style: styleFeature}).addTo(map);
 						document.querySelector('.content').classList.add('hide');
 						document.querySelector('.response').classList.remove('hide');
 						document.querySelector('#map').classList.add('response-state');
@@ -203,6 +205,10 @@
 						alert( "Error submitting your results" );
 					},
 				});
+			}
+
+			function styleFeature(feature) {
+				return {color: '#ff8822' /*feature.properties.color*/};
 			}
 
 			navigator.geolocation.getCurrentPosition(function(pos) {
