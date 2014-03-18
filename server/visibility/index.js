@@ -1,5 +1,4 @@
-var wktparse = require('wellknown'),
-	db = require('../db');
+var wktparse = require('wellknown');
 
 var db = null;
 var grid_size = 4;
