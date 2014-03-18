@@ -10,6 +10,17 @@ var layerTmpl = {
 	features: []
 }
 
+function init(database) {
+	db = database;
+	initVisibilityLayer((new Date()).getTime(), 1, function(err, layer){
+		if( err ) {
+			console.log('error initializing visibility layer: ' + err);
+		} else {
+			console.log('visibility layer initialized');
+		}
+	});
+}
+
 function visibilityLayer(timestamp, landmark) {
 	return layers[landmark] || {};
 }

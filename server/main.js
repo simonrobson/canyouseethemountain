@@ -2,4 +2,5 @@ var api = require('./api'),
     db = require('./db'),
     visibility = require('./visibility');
 
-api.startServer(15150, db)
+visibility.init(db);
+api.startServer(15150, db, visibility);
