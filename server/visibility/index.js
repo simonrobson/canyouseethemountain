@@ -151,5 +151,6 @@ function roundDown(number, precision) {
   return Math.floor(number * mantissa) / mantissa;
 }
 
-exports.visibilityLayer = visibilityLayer;
+exports.init = init;
+exports.updateVisibilityLayer = updateVisibilityLayer;
 exports.cellForCheckin = cellForCheckin;
