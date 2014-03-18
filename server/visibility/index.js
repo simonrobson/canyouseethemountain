@@ -36,7 +36,15 @@ function initVisibilityLayer(timestamp, landmark, next) {
 function updateVisibilityLayerWithCheckins(timestamp, landmark, next) {
 	return function(err, checkins) {
 		var i = 0;
-		if( err ) { next(err,null); }
+
+		if( err ) {
+			next(err,null);
+			return;
+		}
+
+		if( checkins.length === 0 ) {
+			next(null, layers[landmark]);
+		}
 
 		checkins.forEach(function(checkin) {
 			checkin.coords = {
@@ -58,12 +66,14 @@ function updateVisibilityLayer(timestamp, landmark, checkin, next) {
 	db.nearLandmark(checkin.coords, landmark, function(err, near) {
 		next = next || function() {};
 
-		if( !near ) {
-			next(null, layers[landmark]);
+		if( err ) {
+			next(err);
 			return;
 		}
 
-		if( !layers[landmark] ) {
+		if( !near ) {
+			next(null, layers[landmark]);
+			return;
 		}
 
 		cell = cellForCheckin(checkin, grid_size);
