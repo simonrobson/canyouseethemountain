@@ -1,4 +1,5 @@
-var express = require('express');
+var express = require('express'),
+  errors = require('./errors.js');
 
 function checkinIsValid(checkin) {
   if (!(checkin.coords && checkin.timezone && checkin.landmark_id && checkin.visibility)) {
@@ -20,23 +21,11 @@ function configureServer(db, visibility) {
     if (checkin && checkinIsValid(checkin)) {
       var now = (new Date()).getTime();
       db.storeCheckin(checkin, function(err, response) {
-        if( err ) {
-          console.log(
-            'Unable to store \'valid\' response: ' +
-            JSON.stringify(checkin) + ' DB Error: ' +
-            JSON.stringify(err)
-          );
-        }
+        if( err ) { errors.checkin(err, checkin); }
       });
       visibility.updateVisibilityLayer(now, checkin.landmark_id, checkin, function(err, layer) {
-        if( err ) {
-          console.log(
-            'Error occured while updating layer: ' +
-            JSON.stringify(checkin) + ' Layer Error: ' +
-            JSON.stringify(err)
-          );
-        }
-        res.send(200, layer);
+        if( err ) { errors.layerUpdate(err, checkin); }
+        res.send(200, {visibility_layer: layer});
 	  });
     } else {
       res.send(403);
