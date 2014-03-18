@@ -8,7 +8,7 @@ function checkinIsValid(checkin) {
   return true;
 }
 
-function configureServer(db) {
+function configureServer(db, visibility) {
   var app = express();
 
   app.use(express.bodyParser());
@@ -17,16 +17,26 @@ function configureServer(db) {
   app.post('/checkins', function(req, res) {
     var checkin = req.param('checkin');
     if (checkin && checkinIsValid(checkin)) {
+      var now = (new Date()).getTime();
       db.storeCheckin(checkin, function(err, response) {
-		if( err ) {
-			console.log(
-				'Unable to store \'valid\' response: ' +
-				JSON.stringify(checkin) + ' DB Error: ' +
-				JSON.stringify(err)
-			);
-		}
+        if( err ) {
+          console.log(
+            'Unable to store \'valid\' response: ' +
+            JSON.stringify(checkin) + ' DB Error: ' +
+            JSON.stringify(err)
+          );
+        }
+      });
+      visibility.updateVisibilityLayer(now, checkin.landmark_id, checkin, function(err, layer) {
+        if( err ) {
+          console.log(
+            'Error occured while updating layer: ' +
+            JSON.stringify(checkin) + ' Layer Error: ' +
+            JSON.stringify(err)
+          );
+        }
+        res.send(200, layer);
 	  });
-      res.send(200);
     } else {
       res.send(403);
     }
@@ -36,7 +46,7 @@ function configureServer(db) {
 }
 
 exports.configureServer = configureServer;
-exports.startServer = function(port, db) {
-  app = exports.configureServer(db);
+exports.startServer = function(port, db, visibility) {
+  app = exports.configureServer(db, visibility);
   app.listen(port);
 }
