@@ -1,14 +1,16 @@
-var express = require('express');
-
+var express = require('express'),
+  errors = require('./errors.js');
 
 function checkinIsValid(checkin) {
-  if (!(checkin.coords && checkin.timezone && checkin.landmark_id && checkin.visibility)) { return false; }
+  if (!(checkin.coords && checkin.timezone && checkin.landmark_id && checkin.visibility)) {
+	  return false;
+  }
   var c = checkin.coords;
   if (!(c.latitude && c.longitude)) { return false; }
   return true;
 }
 
-function configureServer(db) {
+function configureServer(db, visibility) {
   var app = express();
 
   app.use(express.bodyParser());
@@ -17,16 +19,14 @@ function configureServer(db) {
   app.post('/checkins', function(req, res) {
     var checkin = req.param('checkin');
     if (checkin && checkinIsValid(checkin)) {
+      var now = (new Date()).getTime();
       db.storeCheckin(checkin, function(err, response) {
-		if( err ) {
-			console.log(
-				'Unable to store \'valid\' response: ' +
-				JSON.stringify(checkin) + ' DB Error: ' +
-				JSON.stringify(err)
-			);
-		}
+        if( err ) { errors.checkin(err, checkin); }
+      });
+      visibility.updateVisibilityLayer(now, checkin.landmark_id, checkin, function(err, layer) {
+        if( err ) { errors.layerUpdate(err, checkin); }
+        res.send(200, {visibility_layer: layer});
 	  });
-      res.send(200);
     } else {
       res.send(403);
     }
@@ -36,7 +36,7 @@ function configureServer(db) {
 }
 
 exports.configureServer = configureServer;
-exports.startServer = function(port, db) {
-  app = exports.configureServer(db);
+exports.startServer = function(port, db, visibility) {
+  app = exports.configureServer(db, visibility);
   app.listen(port);
 }
