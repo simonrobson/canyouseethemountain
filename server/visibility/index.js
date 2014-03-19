@@ -9,9 +9,10 @@ var layerTmpl = {
 }
 
 function init(database) {
+  var now = Math.round((new Date()).getTime() / 1000);
   db = database;
 
-  initVisibilityLayer((new Date()).getTime() / 1000, 1, function(err, layer){
+  initVisibilityLayer(now, 1, function(err, layer){
     if( err ) {
       console.log('error initializing visibility layer: ' + err);
     } else {
