@@ -1,7 +1,7 @@
 var wktparse = require('wellknown');
 
 var db = null;
-var grid_size = 4;
+var grid_size = 2;
 var layers = {};
 var layerTmpl = {
 	type: 'FeatureCollection',
