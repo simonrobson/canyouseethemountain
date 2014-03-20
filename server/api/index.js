@@ -19,7 +19,7 @@ function configureServer(db, visibility) {
   app.post('/checkins', function(req, res) {
     var checkin = req.param('checkin');
     if (checkin && checkinIsValid(checkin)) {
-      var now = (new Date()).getTime();
+      var now = Math.round((new Date()).getTime() / 1000);
       db.storeCheckin(checkin, function(err, response) {
         if( err ) { errors.checkin(err, checkin); }
       });
