@@ -110,9 +110,14 @@ function aggregateVisibility(checkins) {
 }
 
 function updateGeoJSON(layer, cell, visibility) {
-  var index, id;
+  var clientCell, index, id;
 
-  id =  cellId(cell);
+  clientCell = {
+	  type: 'Polygon',
+	  coordinates: [swapCoordinates(cell.coordinates[0])]
+  };
+
+  id =  cellId(clientCell);
   existing = objById(layer.features, id);
 
   if( existing == null ) {
@@ -120,11 +125,19 @@ function updateGeoJSON(layer, cell, visibility) {
       type: 'Feature',
       id: id,
       properties: {visibility: visibility},
-      geometry: cell
+      geometry: clientCell
     });
   } else {
     existing.properties.visibility = visibility;
   }
+}
+
+function swapCoordinates(coordinates){
+  if ( !coordinates[0][0] ) { coordinates = [coordinates]; }
+   return coordinates.reduce(function(memo, coordinate){
+     memo.push([coordinate[1], coordinate[0]]);
+     return memo;
+   }, []);
 }
 
 function cellId(cell) {
