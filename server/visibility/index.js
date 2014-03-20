@@ -95,7 +95,7 @@ function cellForCheckin(checkin, precision) {
   var left = roundDown(checkin.coords.longitude, precision),
     right = roundDown(left + Math.pow(10, precision * -1), precision),
     bottom = roundDown(checkin.coords.latitude, precision),
-    top = roundDown(bottom +  Math.pow(10, precision * -1), precision);
+    top = roundDown(bottom + Math.pow(10, precision * -1), precision);
   return {
     type: "Polygon",
     coordinates: [
