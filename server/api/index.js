@@ -26,7 +26,7 @@ function configureServer(db, visibility) {
       visibility.updateVisibilityLayer(now, checkin.landmark_id, checkin, function(err, layer) {
         if( err ) { errors.layerUpdate(err, checkin); }
         res.send(200, {visibility_layer: layer});
-	  });
+      });
     } else {
       res.send(403);
     }
