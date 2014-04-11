@@ -64,6 +64,8 @@ function updateVisibilityLayerWithCheckins(timestamp, landmark, next) {
 
 function updateVisibilityLayer(timestamp, landmark, checkin, next) {
   db.nearLandmark(checkin.coords, landmark, function(err, near) {
+    var cell;
+
     next = next || function() {};
 
     if( err ) {
