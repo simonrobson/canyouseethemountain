@@ -106,21 +106,21 @@ function cellForCheckin(checkin, precision) {
 
 function aggregateVisibility(checkins) {
   var weights = [10, 9, 8 , 7, 6, 5, 4, 3, 2 , 1, 0];
-  return checkins.reduce(weightedSum(weights), 0) / checkins.length / 10
+  return checkins.reduce(weightedSum(weights), 0) / checkins.length / 10;
 }
 
 function updateGeoJSON(layer, cell, visibility) {
   var clientCell, index, id;
 
   clientCell = {
-	  type: 'Polygon',
-	  coordinates: [swapCoordinates(cell.coordinates[0])]
+    type: 'Polygon',
+    coordinates: [swapCoordinates(cell.coordinates[0])]
   };
 
   id =  cellId(clientCell);
   existing = objById(layer.features, id);
 
-  if( existing == null ) {
+  if( existing === null ) {
     layer.features.push({
       type: 'Feature',
       id: id,
