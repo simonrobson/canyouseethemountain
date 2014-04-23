@@ -85,12 +85,21 @@ function updateVisibilityLayer(timestamp, landmark, checkin, next) {
         next(err, null);
         return;
       }
+
       if( checkins.length ) {
-        updateGeoJSON(layers[landmark], cell, aggregateVisibility(checkins));
+        updateGeoJSON(layers[landmark], cell, aggregateVisibility(checkins), aggregateAccuracy(checkins));
       }
       next(null, layers[landmark]);
     });
   });
+}
+
+function aggregateAccuracy(checkins){
+  var avgAge = function(memo, checkin) {
+    memo += checkin.age;
+    return memo;
+  };
+  return avgAge / checkins.length;
 }
 
 function cellForCheckin(checkin, precision) {
@@ -111,7 +120,7 @@ function aggregateVisibility(checkins) {
   return checkins.reduce(weightedSum(weights), 0) / checkins.length / 10;
 }
 
-function updateGeoJSON(layer, cell, visibility) {
+function updateGeoJSON(layer, cell, visibility, accuracy) {
   var clientCell, index, id;
 
   clientCell = {
@@ -120,17 +129,19 @@ function updateGeoJSON(layer, cell, visibility) {
   };
 
   id =  cellId(clientCell);
+
   existing = objById(layer.features, id);
 
   if( existing === null ) {
     layer.features.push({
       type: 'Feature',
       id: id,
-      properties: {visibility: visibility},
+      properties: {visibility: visibility, accuracy: accuracy},
       geometry: clientCell
     });
   } else {
     existing.properties.visibility = visibility;
+    existing.properties.accuracy = accuracy;
   }
 }
 
