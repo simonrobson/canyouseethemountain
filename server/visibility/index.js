@@ -169,7 +169,7 @@ function objById(collection, id) {
 
 function weightedSum(weights) {
   return function(memo, checkin) {
-    memo += weights[checkin.age] || 0 * checkin.visibility;
+    memo += (weights[checkin.age] || 0) * checkin.visibility;
     return memo;
   };
 }
