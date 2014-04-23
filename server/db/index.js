@@ -35,8 +35,8 @@ function getCheckinsForDay(timestamp, landmark, next) {
   var values, fields
 
   fields = [
-    'TIMESTAMPADD(HOUR, timezone * -1, timestamp) AS time',
-    'DATE(TIMESTAMPADD(HOUR, timezone * -1, FROM_UNIXTIME(?))) AS date',
+    'TIMESTAMPADD(HOUR, timezone, timestamp) AS time',
+    'DATE(TIMESTAMPADD(HOUR, timezone, FROM_UNIXTIME(?))) AS date',
     'AsText(location) AS location',
     'accuracy',
     'visibility'
@@ -79,8 +79,8 @@ function getCheckinsForDayInCell(timestamp, landmark, cell, next) {
 
   fields = [
     'TIMESTAMPADD(HOUR, timezone, timestamp) AS time',
-    'DATE(TIMESTAMPADD(HOUR, timezone * -1, FROM_UNIXTIME(?))) AS date',
-    'HOUR(TIMEDIFF(TIMESTAMPADD(HOUR, timezone * -1, FROM_UNIXTIME(?)), timestamp)) AS age',
+    'DATE(TIMESTAMPADD(HOUR, timezone, FROM_UNIXTIME(?))) AS date',
+    'HOUR(TIMEDIFF(TIMESTAMPADD(HOUR, timezone, FROM_UNIXTIME(?)), timestamp)) AS age',
     'accuracy',
     'visibility'
   ].join(',');
