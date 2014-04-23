@@ -188,7 +188,7 @@
 					data: {
 						checkin: {
 							coords: coords,
-							timezone: (new Date().getTimezoneOffset() / 60),
+							timezone: (new Date().getTimezoneOffset() / 60) * -1,
 							landmark_id: 1,
 							visibility: visibility
 						}
