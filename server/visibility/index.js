@@ -85,7 +85,6 @@ function updateVisibilityLayer(timestamp, landmark, checkin, next) {
         next(err, null);
         return;
       }
-
       if( checkins.length ) {
         updateGeoJSON(layers[landmark], cell, aggregateVisibility(checkins), aggregateAccuracy(checkins));
       }
@@ -95,10 +94,10 @@ function updateVisibilityLayer(timestamp, landmark, checkin, next) {
 }
 
 function aggregateAccuracy(checkins){
-  var avgAge = function(memo, checkin) {
+  var avgAge = checkins.reduce(function(memo, checkin) {
     memo += checkin.age;
     return memo;
-  };
+  }, 0);
   return avgAge / checkins.length;
 }
 
