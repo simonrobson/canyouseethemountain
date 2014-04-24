@@ -1,6 +1,6 @@
 var fs = require('fs'),
   geojson = require('../node_modules/geojson2wkt/Geojson2Wkt.js'),
-	lines = fs.readFileSync('../db/flood_checkins/foo.txt', 'utf8').split('\n'),
+	lines = fs.readFileSync('../db/foo.txt', 'utf8').split('\n'),
 	values = [];
 
 lines.pop(); //remove gabage
@@ -9,7 +9,7 @@ lines.forEach(function(line){
 	values.push(getValue(line));
 });
 
-fs.writeFileSync('../db/flood_checkins/mock_data.sql', generateSQL(values));
+fs.writeFileSync('../db/mock_data.sql', generateSQL(values));
 
 function generateSQL(values){
 	var lock = 'LOCK TABLES `checkin` WRITE;\n',
@@ -22,13 +22,20 @@ function generateSQL(values){
 
 function getValue(line){
 	var sec = 0;
-	var values = [ 7, 1, getLocation(line), getAccuracy(), getVisibility() ,getTimeStamp() ];
+	var values = [ areaOption.timezone, areaOption.landmark_id, getLocation(line), getAccuracy(), getVisibility() ,getTimeStamp() ];
 	return '(' + values.join(',') + ')';
 }
 
 function getCoordinate(line){
 	var latLong = line.split('\t');
 	return [latLong[1], latLong[3]];
+}
+
+function areaOption(){
+	return {
+		timezone: 7,
+		landmark_id: 1
+	};
 }
 
 function getLocation(line){
@@ -67,4 +74,3 @@ function dateConverter(ictDate){
 
 	return year + '-' + month + '-' + day;
 }
-
