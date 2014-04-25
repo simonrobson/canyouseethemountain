@@ -1,6 +1,10 @@
 var fs = require('fs'),
   geojson = require('../node_modules/geojson2wkt/Geojson2Wkt.js'),
 	lines = fs.readFileSync('../db/foo.txt', 'utf8').split('\n'),
+	areaOption = {
+		timezone: 7,
+		landmark_id: 1
+	};
 	values = [];
 
 lines.pop(); //remove gabage
@@ -29,13 +33,6 @@ function getValue(line){
 function getCoordinate(line){
 	var latLong = line.split('\t');
 	return [latLong[1], latLong[3]];
-}
-
-function areaOption(){
-	return {
-		timezone: 7,
-		landmark_id: 1
-	};
 }
 
 function getLocation(line){
