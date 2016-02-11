@@ -15,7 +15,7 @@ function dbConnected(next) {
 		if( err ) {
 			next(err);
 		} else {
-			client.query('SET time_zone = "UTC"', function(err, success){
+			client.query("SET TIMEZONE TO 'UTC'", function(err, success){
 				if( err ) {
 					next(err);
 				} else {
@@ -58,7 +58,7 @@ function storeCheckin(checkin, next) {
   ];
 
   connect(query('INSERT INTO checkin (' + fields + ') ' +
-			    'VALUES (?, ?, POINT(?,?), ?, ?)', values, next));
+			    'VALUES ($1, $2, POINT($3,$4), $5, $6)', values, next));
 }
 
 function getCheckinsForDay(timestamp, landmark, next) {
@@ -66,7 +66,7 @@ function getCheckinsForDay(timestamp, landmark, next) {
 
   fields = [
     'TIMESTAMPADD(HOUR, timezone, timestamp) AS time',
-    'DATE(TIMESTAMPADD(HOUR, timezone, FROM_UNIXTIME(?))) AS date',
+    'DATE(TIMESTAMPADD(HOUR, timezone, FROM_UNIXTIME($1))) AS date',
     'AsText(location) AS location',
     'accuracy',
     'visibility'
@@ -76,7 +76,7 @@ function getCheckinsForDay(timestamp, landmark, next) {
 
   next = next || function() {};
 
-  connect(query('SELECT ' + fields + ' FROM checkin WHERE landmark_id = ? ' +
+  connect(query('SELECT ' + fields + ' FROM checkin WHERE landmark_id = $2 ' +
 				'HAVING ' +
 				'time > TIMESTAMPADD(HOUR, 6, date) AND ' +
 				'time < TIMESTAMPADD(HOUR, 18, date)',
@@ -99,8 +99,8 @@ function nearLandmark(coords, id, next) {
     }
   };
 
-  connect(query("SELECT MBRContains(area, GeomFromText('POINT(? ?)')) AS near " +
-                "FROM landmark WHERE id = ?", values, processResult));
+  connect(query("SELECT MBRContains(area, GeomFromText('POINT($1 $2)')) AS near " +
+                "FROM landmark WHERE id = $3", values, processResult));
 }
 
 function getCheckinsForDayInCell(timestamp, landmark, cell, next) {
@@ -108,8 +108,8 @@ function getCheckinsForDayInCell(timestamp, landmark, cell, next) {
 
   fields = [
     'TIMESTAMPADD(HOUR, timezone, timestamp) AS time',
-    'DATE(TIMESTAMPADD(HOUR, timezone, FROM_UNIXTIME(?))) AS date',
-    'HOUR(TIMEDIFF(TIMESTAMPADD(HOUR, timezone, FROM_UNIXTIME(?)), timestamp)) AS age',
+    'DATE(TIMESTAMPADD(HOUR, timezone, FROM_UNIXTIME($1))) AS date',
+    'HOUR(TIMEDIFF(TIMESTAMPADD(HOUR, timezone, FROM_UNIXTIME($2)), timestamp)) AS age',
     'accuracy',
     'visibility'
   ].join(',');
@@ -119,7 +119,7 @@ function getCheckinsForDayInCell(timestamp, landmark, cell, next) {
   next = next || function() {};
 
   connect(query('SELECT ' + fields + ' FROM checkin ' +
-                'WHERE landmark_id = ? AND MBRContains(GeomFromText(?), location) ' +
+                'WHERE landmark_id = $3 AND MBRContains(GeomFromText($4), location) ' +
                 'HAVING ' +
                   'time > TIMESTAMPADD(HOUR, 6, date) AND ' +
                   'time < TIMESTAMPADD(HOUR, 18, date)',
