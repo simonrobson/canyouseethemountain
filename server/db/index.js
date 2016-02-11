@@ -3,14 +3,14 @@ var pg = require('pg'),
   config = require('../config/db.js');
 
 function connect(next) {
-	pg.connect(connectionString(config.db), dbConnected(next));
+	pg.connect(connectionString(config.db), connected(next));
 }
 
-function connectionString(config) {
-	return "postgres://" + config.user + ":" + config.password + "@" + config.host + "/" + config.database;
+function connectionString(conf) {
+	return "postgres://" + conf.user + ":" + conf.password + "@" + conf.host + "/" + conf.database;
 }
 
-function dbConnected(next) {
+function connected(next) {
 	return function(err, client, done) {
 		if( err ) {
 			next(err);
