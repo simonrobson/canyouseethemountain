@@ -19,7 +19,7 @@ function dbConnected(next) {
 				if( err ) {
 					next(err);
 				} else {
-					next(nil, client, done);
+					next(null, client, done);
 				}
 			});
 		}
@@ -32,7 +32,7 @@ function query(query, values, next) {
 			next(err);
 		} else {
 			client.query(query, values, function(err, result) {
-				done()
+				done();
 				next(err, result);
 			});
 		}
