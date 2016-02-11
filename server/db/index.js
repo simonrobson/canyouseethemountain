@@ -99,7 +99,7 @@ function nearLandmark(coords, id, next) {
     }
   };
 
-  connect(query("SELECT MBRContains(area, GeomFromText('POINT($1 $2)')) AS near " +
+  connect(query("SELECT ST_Contains(area, ST_GeomFromText('POINT($1 $2)')) AS near " +
                 "FROM landmark WHERE id = $3", values, processResult));
 }
 
@@ -119,7 +119,7 @@ function getCheckinsForDayInCell(timestamp, landmark, cell, next) {
   next = next || function() {};
 
   connect(query('SELECT ' + fields + ' FROM checkin ' +
-                'WHERE landmark_id = $3 AND MBRContains(GeomFromText($4), location) ' +
+                'WHERE landmark_id = $3 AND ST_Contains(ST_GeomFromText($4), location) ' +
                 'HAVING ' +
                   'time > TIMESTAMPADD(HOUR, 6, date) AND ' +
                   'time < TIMESTAMPADD(HOUR, 18, date)',
