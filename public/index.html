@@ -6,145 +6,33 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 		<link rel="stylesheet" href="leaflet/leaflet.css" />
+		<link rel="stylesheet" href="style.css" />
 
-		<style>
-			body {
-				padding: 0;
-				margin: 0;
-				-webkit-box-sizing: border-box;
-				-moz-box-sizing: border-box;
-				box-sizing: border-box;
-				text-align: center;
-				font-family: arial, sans serif;
-				background-color: #f8f8f8;
-				color: #444;
-			}
-			html, body {
-				height: 100%;
-			}
-			body.locale-th {
-				font-size: 110%;
-			}
-			.hide {
-				display: none;
-			}
-			.show {
-				display: block;
-			}
-			.geo-spinner {
-				opacity: 0.8;
-				-webkit-animation: geo-spinner 3s linear infinite;
-				-moz-animation: geo-spinner 3s linear infinite;
-				-ms-animation: geo-spinner 3s linear infinite;
-				animation: geo-spinner 3s linear infinite;
-				margin-top: 30px;
-				width: 100px;
-			}
-			#map {
-				height:160px;
-			}
-			#map.response-state {
-				height:100%;
-			}
-
-			@media (max-height: 420px) {
-				#map { height: 100px; }
-				#map.response-state { height: 180px; }
-			}
-
-			.buttons, .question {
-				max-width: 600px;
-				margin-left: auto;
-				margin-right: auto;
-			}
-			h1 {
-				font-weight: normal;
-				font-size: 1.8em;
-			}
-			.buttons {
-				padding: 0 10px;
-				margin-top: 0;
-				margin-bottom: 0;
-			}
-			.btn {
-				background-size: cover;
-				background-position: 50% 50%;
-				background-repeat: no-repeat;;
-				width: 100%;
-				height: 80px;
-				margin-bottom: 10px;
-				color: #fff;
-				font-weight: bold;
-				text-shadow: 1px 1px 6px rgba(150, 150, 150, 1);
-				font-size: 1.5em;
-				cursor: pointer;
-				border: none;
-				border-radius: 4px;
-			}
-
-			@media (max-width: 350px) {
-				h1 { font-size: 1.4em; }
-				.btn { height: 65px; font-size: 1.2em; }
-			}
-
-			@media (max-height: 420px) {
-				.btn { height: 55px; }
-			}
-
-			.btn-clear {
-				background-image: url(/images/DoiSuthep100.jpg);
-			}
-			.btn-hazy {
-				background-image: url(/images/DoiSuthep050.jpg);
-			}
-			.btn-terrible {
-				background-image: url(/images/DoiSuthep000.jpg);
-			}
-			.response, .location-error h1 {
-				margin: 40px;
-			}
-			@media (max-height: 420px) {
-				.response, .location-error h1 {
-					margin-top: 20px;
-				}
-			}
-			@keyframes "geo-spinner" {
-				0% { opacity: 0.8; }
-				50% { opacity: 0.4; }
-				100% { opacity: 0.8; }
-			}
-			@-moz-keyframes geo-spinner {
-				0% { opacity: 0.8; }
-				50% { opacity: 0.4; }
-				100% { opacity: 0.8; }
-			}
-			@-webkit-keyframes "geo-spinner" {
-				0% { opacity: 0.8; }
-				50% { opacity: 0.4; }
-				100% { opacity: 0.8; }
-			}
-			@-ms-keyframes "geo-spinner" {
-				0% { opacity: 0.8; }
-				50% { opacity: 0.4; }
-				100% { opacity: 0.8; }
-			}
-		</style>
+		<link rel="icon" href="/favicon.ico" type="image/x-icon">
 	</head>
 	<body class="locale-th">
+
+		<div id="title-project">
+			<h1>Can you see the mountain?<span>Doi Suthep</span></h1>
+		</div>
 
 		<div id="map"></div>
 
 		<div class="splash">
-			<h1>ค้นหาตำแหน่งปัจจุบัน</h1>
-			<img class="geo-spinner" src="/images/geolocate.png"/>
+			<img class="geo-spinner" src="/images/Preloader_1	.gif"/>
+			<p>กำลังค้นหาตำแหน่งของคุณ</p>
 		</div>
 
 		<div class="location-error hide">
-			<h1>อุ๊บส์ เล่นไม่ได้เพราะไม่สามารถระบุตำแหน่ง</h1>
+
+
+
+			<h1>ไม่สามารถระบุตำแหน่งของคุณได้</h1>
+			<p>กรุณา Refresh หน้าเว็บไซต์อีกครั้ง</p>
 		</div>
 
 		<div class="content hide">
-			<h1 class="question">มองเห็นดอยสุเทพนั้นไหม</h1>
+			<h1 class="question">วันนี้คุณมองเห็นดอยสุเทพไหม?</h1>
 
 			<div class="buttons">
 				<button type="button" class="btn btn-clear" onclick="sendVisibility(100)">
@@ -162,7 +50,7 @@
 		</div>
 
 		<div class="response hide">
-			<h1>ขอบคุณสำหรับข้อมูล แล้วคุณจะพบสิ่งพิเศษที่ซ่อนอยู่ โปรดกลับมาติดตามครั้งต่อไป</a>
+			<p>ขอบคุณสำหรับข้อมูลค่ะ</p>
 		</div>
 
 		<script src="js/lib.js"></script>
@@ -226,6 +114,7 @@
 				document.querySelector('.content').classList.remove('hide');
 			},
 			function(errors) {
+				document.querySelector('body').classList.add('no-location');
 				document.querySelector('.splash').classList.add('hide');
 				document.querySelector('.location-error').classList.remove('hide');
 				document.querySelector('#map').classList.add('hide');
