@@ -1,13 +1,43 @@
-var mysql = require('mysql'),
+var pg = require('pg'),
   geojson = require('../../node_modules/geojson2wkt/Geojson2Wkt.js'),
   config = require('../config/db.js');
 
-var db = mysql.createConnection(config.db);
+function connect(next) {
+	pg.connect(connectionString(config.db), dbConnected(next));
+}
 
-db.query('SET time_zone = "UTC"', function(err, success){
-  if( err ) { console.log('unable to set time zone to UTC'); }
-  else { console.log('set time zone to UTC'); }
-});
+function connectionString(config) {
+	return "postgres://" + config.user + ":" + config.password + "@" + config.host + "/" + config.database;
+}
+
+function dbConnected(next) {
+	return function(err, client, done) {
+		if( err ) {
+			next(err);
+		} else {
+			client.query('SET time_zone = "UTC"', function(err, success){
+				if( err ) {
+					next(err);
+				} else {
+					next(nil, client, done);
+				}
+			});
+		}
+	}
+}
+
+function query(query, values, next) {
+	return function(err, client, done) {
+		if( err ) {
+			next(err);
+		} else {
+			client.query(query, values, function(err, result) {
+				done()
+				next(err, result);
+			});
+		}
+	};
+}
 
 function storeCheckin(checkin, next) {
   var fields, values;
@@ -27,8 +57,8 @@ function storeCheckin(checkin, next) {
     checkin.visibility
   ];
 
-  db.query('INSERT INTO checkin (' + fields + ') ' +
-           'VALUES (?, ?, POINT(?,?), ?, ?)', values, next);
+  connect(query('INSERT INTO checkin (' + fields + ') ' +
+			    'VALUES (?, ?, POINT(?,?), ?, ?)', values, next));
 }
 
 function getCheckinsForDay(timestamp, landmark, next) {
@@ -46,12 +76,11 @@ function getCheckinsForDay(timestamp, landmark, next) {
 
   next = next || function() {};
 
-  db.query('' +
-    'SELECT ' + fields + ' FROM checkin WHERE landmark_id = ? ' +
-    'HAVING ' +
-      'time > TIMESTAMPADD(HOUR, 6, date) AND ' +
-      'time < TIMESTAMPADD(HOUR, 18, date)',
-  values, next);
+  connect(query('SELECT ' + fields + ' FROM checkin WHERE landmark_id = ? ' +
+				'HAVING ' +
+				'time > TIMESTAMPADD(HOUR, 6, date) AND ' +
+				'time < TIMESTAMPADD(HOUR, 18, date)',
+				values, next));
 }
 
 function nearLandmark(coords, id, next) {
@@ -70,8 +99,8 @@ function nearLandmark(coords, id, next) {
     }
   };
 
-  db.query("SELECT MBRContains(area, GeomFromText('POINT(? ?)')) AS near " +
-           "FROM landmark WHERE id = ?", values, processResult);
+  connect(query("SELECT MBRContains(area, GeomFromText('POINT(? ?)')) AS near " +
+                "FROM landmark WHERE id = ?", values, processResult));
 }
 
 function getCheckinsForDayInCell(timestamp, landmark, cell, next) {
@@ -89,13 +118,12 @@ function getCheckinsForDayInCell(timestamp, landmark, cell, next) {
 
   next = next || function() {};
 
-  db.query('' +
-    'SELECT ' + fields + ' FROM checkin ' +
-    'WHERE landmark_id = ? AND MBRContains(GeomFromText(?), location) ' +
-    'HAVING ' +
-      'time > TIMESTAMPADD(HOUR, 6, date) AND ' +
-      'time < TIMESTAMPADD(HOUR, 18, date)',
-  values, next);
+  connect(query('SELECT ' + fields + ' FROM checkin ' +
+                'WHERE landmark_id = ? AND MBRContains(GeomFromText(?), location) ' +
+                'HAVING ' +
+                  'time > TIMESTAMPADD(HOUR, 6, date) AND ' +
+                  'time < TIMESTAMPADD(HOUR, 18, date)',
+			     values, next));
 }
 
 exports.storeCheckin = storeCheckin;
