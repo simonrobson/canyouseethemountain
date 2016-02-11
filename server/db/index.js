@@ -33,7 +33,7 @@ function query(query, values, next) {
 		} else {
 			client.query(query, values, function(err, result) {
 				done();
-				next(err, result);
+				next(err, result ? result.rows : null);
 			});
 		}
 	};
@@ -57,36 +57,42 @@ function storeCheckin(checkin, next) {
     checkin.visibility
   ];
 
-  connect(query('INSERT INTO checkin (' + fields + ') ' +
-			    'VALUES ($1, $2, POINT($3,$4), $5, $6)', values, next));
+  connect(query("INSERT INTO checkin (" + fields + ") " +
+			    "VALUES ($1, $2, ST_SetSRID(ST_Point($3, $4), 4326), $5, $6)", values, next));
 }
 
 function getCheckinsForDay(timestamp, landmark, next) {
-  var values, fields
+  var values, fields, where, time;
+
+  time = "timestamp + (timezone || ' HOURS')::INTERVAL";
 
   fields = [
-    'TIMESTAMPADD(HOUR, timezone, timestamp) AS time',
-    'DATE(TIMESTAMPADD(HOUR, timezone, FROM_UNIXTIME($1))) AS date',
-    'AsText(location) AS location',
+	time + " AS time",
+    'ST_AsText(location) AS location',
     'accuracy',
     'visibility'
   ].join(',');
 
-  values = [timestamp, landmark];
+  where = [
+	"landmark_id = $1",
+	time + " > (DATE_TRUNC('DAY', TO_TIMESTAMP($2)) + (timezone || ' HOURS')::INTERVAL) + '6 HOURS'::INTERVAL",
+	time + " < (DATE_TRUNC('DAY', TO_TIMESTAMP($3)) + (timezone || ' HOURS')::INTERVAL) + '18 HOURS'::INTERVAL"
+  ].join(' AND ');
+
+  values = [landmark, timestamp, timestamp];
 
   next = next || function() {};
 
-  connect(query('SELECT ' + fields + ' FROM checkin WHERE landmark_id = $2 ' +
-				'HAVING ' +
-				'time > TIMESTAMPADD(HOUR, 6, date) AND ' +
-				'time < TIMESTAMPADD(HOUR, 18, date)',
-				values, next));
+  connect(query('SELECT ' + fields + ' FROM checkin WHERE ' + where, values, next));
 }
 
 function nearLandmark(coords, id, next) {
   var processResult, values;
 
+  field = "ST_Contains(area::geometry, ST_SetSRID(ST_Point($1, $2), 4326)::geometry) AS near";
+
   values = [parseFloat(coords.latitude), parseFloat(coords.longitude), id];
+
   next = next || function() {};
 
   processResult = function(err, result) {
@@ -99,31 +105,33 @@ function nearLandmark(coords, id, next) {
     }
   };
 
-  connect(query("SELECT ST_Contains(area, ST_GeomFromText('POINT($1 $2)')) AS near " +
-                "FROM landmark WHERE id = $3", values, processResult));
+  connect(query("SELECT " + field + " FROM landmark WHERE id = $3", values, processResult));
 }
 
 function getCheckinsForDayInCell(timestamp, landmark, cell, next) {
-  var fields, values;
+  var fields, values, where, time;
+
+  time = "timestamp + (timezone || ' HOURS')::INTERVAL";
 
   fields = [
-    'TIMESTAMPADD(HOUR, timezone, timestamp) AS time',
-    'DATE(TIMESTAMPADD(HOUR, timezone, FROM_UNIXTIME($1))) AS date',
-    'HOUR(TIMEDIFF(TIMESTAMPADD(HOUR, timezone, FROM_UNIXTIME($2)), timestamp)) AS age',
-    'accuracy',
-    'visibility'
+	time + " AS time",
+    "EXTRACT(HOURS FROM (TO_TIMESTAMP($1) + (timezone || ' HOURS')::INTERVAL) - (" + time + ")) AS age",
+    "accuracy",
+    "visibility"
   ].join(',');
 
-  values = [timestamp, timestamp, landmark, geojson.convert(cell)];
+  where = [
+	"landmark_id = $2",
+	"ST_Contains(ST_GeogFromText($3)::geometry, location::geometry)",
+	time + " > (DATE_TRUNC('DAY', TO_TIMESTAMP($4)) + (timezone || ' HOURS')::INTERVAL) + '6 HOURS'::INTERVAL",
+	time + " < (DATE_TRUNC('DAY', TO_TIMESTAMP($5)) + (timezone || ' HOURS')::INTERVAL) + '18 HOURS'::INTERVAL"
+  ].join(' AND ');
+
+  values = [timestamp, landmark, geojson.convert(cell), timestamp, timestamp];
 
   next = next || function() {};
 
-  connect(query('SELECT ' + fields + ' FROM checkin ' +
-                'WHERE landmark_id = $3 AND ST_Contains(ST_GeomFromText($4), location) ' +
-                'HAVING ' +
-                  'time > TIMESTAMPADD(HOUR, 6, date) AND ' +
-                  'time < TIMESTAMPADD(HOUR, 18, date)',
-			     values, next));
+  connect(query('SELECT ' + fields + ' FROM checkin WHERE ' + where, values, next));
 }
 
 exports.storeCheckin = storeCheckin;
