@@ -15,6 +15,7 @@ function configureServer(db, visibility) {
   var app = express();
 
   app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded());
   app.use(express.static(__dirname + '/../../public'));
 
   app.post('/checkins', function(req, res) {
