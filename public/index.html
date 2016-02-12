@@ -112,6 +112,7 @@
 				L.circle(latLng, coords.accuracy / 2).addTo(map);
 				document.querySelector('.splash').classList.add('hide');
 				document.querySelector('.content').classList.remove('hide');
+				map.panBy([0, adjustedLat()]);
 			},
 			function(errors) {
 				document.querySelector('body').classList.add('no-location');
@@ -119,6 +120,12 @@
 				document.querySelector('.location-error').classList.remove('hide');
 				document.querySelector('#map').classList.add('hide');
 			});
+
+			function adjustedLat() {
+				var mapHeight = document.querySelector('#map').clientHeight;
+				var contentHeight = document.querySelector('.content').clientHeight - 60 //padding;
+				return (mapHeight / 2) - ((mapHeight - contentHeight) / 2);
+			}
 		</script>
 	</body>
 </html>
