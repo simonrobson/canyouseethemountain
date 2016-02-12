@@ -1,4 +1,5 @@
 var express = require('express'),
+  bodyParser = require('body-parser'),
   errors = require('./errors.js');
 
 function checkinIsValid(checkin) {
@@ -13,11 +14,11 @@ function checkinIsValid(checkin) {
 function configureServer(db, visibility) {
   var app = express();
 
-  app.use(express.bodyParser());
+  app.use(bodyParser.json());
   app.use(express.static(__dirname + '/../../public'));
 
   app.post('/checkins', function(req, res) {
-    var checkin = req.param('checkin');
+    var checkin = req.body.checkin;
     if (checkin && checkinIsValid(checkin)) {
       var now = Math.round((new Date()).getTime() / 1000);
       db.storeCheckin(checkin, function(err, response) {
@@ -25,10 +26,10 @@ function configureServer(db, visibility) {
       });
       visibility.updateVisibilityLayer(now, checkin.landmark_id, checkin, function(err, layer) {
         if( err ) { errors.layerUpdate(err, checkin); }
-        res.send(200, {visibility_layer: layer});
+        res.status(200).send({visibility_layer: layer});
       });
     } else {
-      res.send(403);
+      res.sendStatus(403);
     }
   });
 
