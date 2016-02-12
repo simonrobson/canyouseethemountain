@@ -122,8 +122,6 @@ function aggregateVisibility(checkins) {
 function updateGeoJSON(layer, cell, visibility, accuracy) {
   var clientCell, index, id;
 
-  console.log('cell', cell);
-
   clientCell = {
     type: 'Polygon',
     coordinates: [cell.coordinates[0]]
