@@ -19,12 +19,15 @@ describe('Checkin handling', function() {
   visibility: 50
   },
   server,
-  mockDb;
+  mockDb,
+  mockVis;
 
   beforeEach(function(done) {
     mockDb = {}
     mockDb.storeCheckin = sinon.spy();
-    var config = api.configureServer(mockDb);
+    mockVis = {}
+    mockVis.updateVisibilityLayer = sinon.stub().callsArgWith(3, null, 'layer');
+    var config = api.configureServer(mockDb, mockVis);
     server = http.createServer(config);
     server.listen(8008, done);
   });
