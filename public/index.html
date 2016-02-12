@@ -82,7 +82,7 @@
 						}
 					},
 					success: function(response) {
-						L.geoJson(response.visibility_layer, {style: styleFeature}).addTo(map);
+						L.geoJson(response.visibility_layer, {style: styleFeature, clickable: false}).addTo(map);
 						document.querySelector('.content').classList.add('hide');
 						document.querySelector('.response').classList.remove('hide');
 						document.querySelector('#map').classList.add('response-state');
