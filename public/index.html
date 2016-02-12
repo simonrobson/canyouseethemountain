@@ -82,12 +82,14 @@
 						}
 					},
 					success: function(response) {
+						var chiangMaiCenter = L.latLng(18.788218, 98.985872);
 						L.geoJson(response.visibility_layer, {style: styleFeature, clickable: false}).addTo(map);
 						document.querySelector('.content').classList.add('hide');
 						document.querySelector('.response').classList.remove('hide');
 						document.querySelector('#map').classList.add('response-state');
 						map.invalidateSize();
-						map.setZoom(12);
+						map.setView(chiangMaiCenter, 12)
+						setTimeout(function(){map.panBy([0, adjustedLat('.response')]);}, 500);
 					},
 					error: function() {
 						alert( "Error submitting your results" );
@@ -112,7 +114,7 @@
 				L.circle(latLng, coords.accuracy / 2).addTo(map);
 				document.querySelector('.splash').classList.add('hide');
 				document.querySelector('.content').classList.remove('hide');
-				map.panBy([0, adjustedLat()]);
+				map.panBy([0, adjustedLat('.content')]);
 			},
 			function(errors) {
 				document.querySelector('body').classList.add('no-location');
@@ -121,9 +123,9 @@
 				document.querySelector('#map').classList.add('hide');
 			});
 
-			function adjustedLat() {
+			function adjustedLat(content) {
 				var mapHeight = document.querySelector('#map').clientHeight;
-				var contentHeight = document.querySelector('.content').clientHeight - 60 //padding;
+				var contentHeight = document.querySelector(content).clientHeight - 60 //padding;
 				return (mapHeight / 2) - ((mapHeight - contentHeight) / 2);
 			}
 		</script>
