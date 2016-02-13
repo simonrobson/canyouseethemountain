@@ -53,7 +53,7 @@ function storeCheckin(checkin, next) {
     checkin.landmark_id,
     checkin.coords.longitude,
     checkin.coords.latitude,
-    checkin.coords.accuracy || 'NULL',
+    checkin.coords.accuracy ? parseInt(checkin.coords.accuracy) : 'NULL',
     checkin.visibility
   ];
 
