@@ -48,8 +48,8 @@ function updateVisibilityLayerWithCheckins(timestamp, landmark, next) {
 
     checkins.forEach(function(checkin) {
       checkin.coords = {
-        latitude: wktparse(checkin.location).coordinates[0],
-        longitude: wktparse(checkin.location).coordinates[1]
+        longitude: wktparse(checkin.location).coordinates[0],
+        latitude: wktparse(checkin.location).coordinates[1]
       };
       updateVisibilityLayer(timestamp, landmark, checkin, done);
     });
@@ -109,7 +109,7 @@ function cellForCheckin(checkin, precision) {
   return {
     type: "Polygon",
     coordinates: [
-      [[top, left], [top, right], [bottom, right], [bottom, left], [top, left]]
+      [[left, top], [right, top], [right, bottom], [left, bottom], [left, top]]
     ]
   };
 }
@@ -124,7 +124,7 @@ function updateGeoJSON(layer, cell, visibility, accuracy) {
 
   clientCell = {
     type: 'Polygon',
-    coordinates: [swapCoordinates(cell.coordinates[0])]
+    coordinates: [cell.coordinates[0]]
   };
 
   id =  cellId(clientCell);
@@ -142,14 +142,6 @@ function updateGeoJSON(layer, cell, visibility, accuracy) {
     existing.properties.visibility = visibility;
     existing.properties.accuracy = accuracy;
   }
-}
-
-function swapCoordinates(coordinates){
-  if ( !coordinates[0][0] ) { coordinates = [coordinates]; }
-   return coordinates.reduce(function(memo, coordinate){
-     memo.push([coordinate[1], coordinate[0]]);
-     return memo;
-   }, []);
 }
 
 function cellId(cell) {
