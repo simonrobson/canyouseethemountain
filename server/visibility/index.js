@@ -94,11 +94,11 @@ function updateVisibilityLayer(timestamp, landmark, checkin, next) {
 }
 
 function aggregateAccuracy(checkins){
-  var avgAge = checkins.reduce(function(memo, checkin) {
-    memo += checkin.age;
+  var accuracy = checkins.reduce(function(memo, checkin) {
+    memo += 100 - (checkin.age * 10);
     return memo;
   }, 0);
-  return avgAge / checkins.length;
+  return accuracy / checkins.length;
 }
 
 function cellForCheckin(checkin, precision) {
