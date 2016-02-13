@@ -75,8 +75,8 @@ function getCheckinsForDay(timestamp, landmark, next) {
 
   where = [
 	"landmark_id = $1",
-	time + " > (DATE_TRUNC('DAY', TO_TIMESTAMP($2)) + (timezone || ' HOURS')::INTERVAL) + '6 HOURS'::INTERVAL",
-	time + " < (DATE_TRUNC('DAY', TO_TIMESTAMP($3)) + (timezone || ' HOURS')::INTERVAL) + '18 HOURS'::INTERVAL"
+	time + " > (DATE_TRUNC('DAY', TO_TIMESTAMP($2)) + '6 HOURS'::INTERVAL)",
+	time + " < (DATE_TRUNC('DAY', TO_TIMESTAMP($3)) + '18 HOURS'::INTERVAL)"
   ].join(' AND ');
 
   values = [landmark, timestamp, timestamp];
@@ -124,8 +124,8 @@ function getCheckinsForDayInCell(timestamp, landmark, cell, next) {
   where = [
 	"landmark_id = $2",
 	"ST_Contains(ST_GeogFromText($3)::geometry, location::geometry)",
-	time + " > (DATE_TRUNC('DAY', TO_TIMESTAMP($4)) + (timezone || ' HOURS')::INTERVAL) + '6 HOURS'::INTERVAL",
-	time + " < (DATE_TRUNC('DAY', TO_TIMESTAMP($5)) + (timezone || ' HOURS')::INTERVAL) + '18 HOURS'::INTERVAL"
+	time + " > (DATE_TRUNC('DAY', TO_TIMESTAMP($4)) + '6 HOURS'::INTERVAL)",
+	time + " < (DATE_TRUNC('DAY', TO_TIMESTAMP($5)) + '18 HOURS'::INTERVAL)"
   ].join(' AND ');
 
   values = [timestamp, landmark, geojson.convert(cell), timestamp, timestamp];
