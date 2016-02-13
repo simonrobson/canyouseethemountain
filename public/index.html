@@ -32,28 +32,30 @@
 			<h1 class="question">วันนี้คุณมองเห็นดอยสุเทพไหม?</h1>
 
 			<div class="buttons">
-				<button type="button" class="btn btn-clear" onclick="sendVisibility(100)">
+				<button type="button" class="btn btn-response btn-clear" onclick="sendVisibility(100)">
 					ชัดเจน
 				</button>
-
-				<button type="button" class="btn btn-hazy" onclick="sendVisibility(50)">
+				<button type="button" class="btn btn-response btn-hazy" onclick="sendVisibility(50)">
 					เห็นบ้าง
 				</button>
-
-				<button type="button" class="btn btn-terrible" onclick="sendVisibility(0)">
+				<button type="button" class="btn btn-response btn-terrible" onclick="sendVisibility(0)">
 					ไม่เลย
 				</button>
 			</div>
 		</div>
 
 		<div class="response hide">
+			<div class="social-buttons">
+				<a class="btn btn-social btn-face" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fcanyouseethemountain.com%2F">share</a>
+				<a class="btn btn-social btn-tweet" href="https://twitter.com/intent/tweet?text=Can%20you%20see%20Doi%20Suthep%20today%3F&url=http%3A%2F%2Fcanyouseethemountain.com%2F&hashtags=cnxsmoke">tweet</a>
+			</div>
 			<p>ขอบคุณค่ะ</p>
 		</div>
 
 		<script src="js/lib.js"></script>
 
 		<script>
-			var map = L.map('map', {zoomControl: false});
+			var map = L.map('map', {zoomControl: false, attributionControl: false});
 			var ajax = require('ajax');
 			var coords = {};
 
