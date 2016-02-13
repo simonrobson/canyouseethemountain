@@ -42,15 +42,19 @@ p {
 	background-color: #fff;
 }
 
-.content, .splash, .response {
+.content, .response {
 	position: absolute;
 	bottom: 0;
 	width: 100%;
 	background: rgba(255, 255, 255, 0.8);
 }
 
-.question, .geo-spinner {
+.question {
 	margin-top: 25px;
+}
+
+.geo-spinner {
+	padding-top: 140px;
 }
 
 .location-error h1 {
@@ -126,7 +130,7 @@ p {
 /* special case for short screens. eg landscape on a phone */
 
 @media only screen and (max-device-height: 400px) and (orientation: landscape) {
-	.content, .splash {
+	.content {
 		position: absolute;
 		top: 0;
 		bottom: 0;
@@ -157,6 +161,10 @@ p {
 
 	#title-project span {
 		font-size: 32px;
+	}
+
+	.geo-spinner {
+		padding-top: 240px;
 	}
 
 	.buttons {

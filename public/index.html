@@ -16,7 +16,7 @@
 			<h1>Can you see the mountain?<span>Doi Suthep</span></h1>
 		</div>
 
-		<div id="map"></div>
+		<div id="map" class="hide"></div>
 
 		<div class="splash">
 			<img class="geo-spinner" src="/images/Preloader_1	.gif"/>
@@ -103,6 +103,7 @@
 			}
 
 			navigator.geolocation.getCurrentPosition(function(pos) {
+				document.querySelector('#map').classList.remove('hide');
 				var latLng = L.latLng(pos.coords.latitude, pos.coords.longitude);
 				coords = pos.coords;
 				map.setView(latLng, 14);
