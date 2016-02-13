@@ -26,7 +26,7 @@ h1 {
 }
 
 p {
-	margin-top: 0;
+	margin: 5px 0 20px;
 }
 
 .hide {
@@ -45,10 +45,12 @@ p {
 .content, .splash, .response {
 	position: absolute;
 	bottom: 0;
-	background: rgba(255, 255, 255, 0.9);
 	width: 100%;
-	min-height: 150px;
-	padding: 30px 0;
+	background: rgba(255, 255, 255, 0.8);
+}
+
+.question, .geo-spinner {
+	margin-top: 25px;
 }
 
 .location-error h1 {
@@ -86,8 +88,7 @@ p {
 }
 
 .buttons {
-	margin: 0 auto;
-	padding: 0 10px;
+	margin: 15px auto;
 	overflow: hidden;
 }
 
@@ -125,7 +126,7 @@ p {
 /* special case for short screens. eg landscape on a phone */
 
 @media only screen and (max-device-height: 400px) and (orientation: landscape) {
-	.content, .splash, .response {
+	.content, .splash {
 		position: absolute;
 		top: 0;
 		bottom: 0;
@@ -169,7 +170,7 @@ p {
 		margin: 20px;
 		padding-top: 78px;
 		padding-left: 0;
-		border-radius: 50%
+		border-radius: 50%;
 		font-size: 17px;
 		font-weight: normal;
 		cursor: pointer;

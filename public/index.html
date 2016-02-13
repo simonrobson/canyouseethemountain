@@ -47,7 +47,7 @@
 		</div>
 
 		<div class="response hide">
-			<p>ขอบคุณสำหรับข้อมูลค่ะ</p>
+			<p>ขอบคุณค่ะ</p>
 		</div>
 
 		<script src="js/lib.js"></script>
@@ -85,7 +85,7 @@
 						document.querySelector('#map').classList.add('response-state');
 						map.invalidateSize();
 						map.setView(chiangMaiCenter, 12)
-						setTimeout(function(){ map.panBy(centerAdjustment('.response')); }, 500);
+						setTimeout(function(){ map.panBy([0, adjustedLat('.response')]); }, 500);
 					},
 					error: function() {
 						alert( "Error submitting your results" );
@@ -132,7 +132,7 @@
 
 			function adjustedLat(content) {
 				var mapHeight = document.querySelector('#map').clientHeight;
-				var contentHeight = document.querySelector(content).clientHeight - 60 //padding;
+				var contentHeight = document.querySelector(content).clientHeight;
 				return (mapHeight / 2) - ((mapHeight - contentHeight) / 2);
 			}
 
