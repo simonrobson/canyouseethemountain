@@ -5,15 +5,15 @@
     "linux"
   ],
   "dependencies": {
-    "daemon": "~1.1.0",
-    "db-migrate": "~0.6.3",
-    "dotenv": "~0.2.4",
-    "express": "~3.4.8",
-    "geojson2wkt": "^1.0.0",
-    "minimist": "~0.0.7",
     "pg": "^4.4.4",
-    "sinon": "~1.8.2",
-    "wellknown": "~0.1.2",
-    "winston": "~0.7.2"
+    "sinon": "~1.17.3",
+    "express": "~4.13.4",
+    "body-parser": "~1.15.0",
+    "dotenv": "~2.0.0",
+    "minimist": "~1.2.0",
+    "daemon": "~1.1.0",
+    "winston": "~2.1.1",
+    "wellknown": "~0.4.1",
+    "geojson2wkt": "^1.0.0"
   }
 }
