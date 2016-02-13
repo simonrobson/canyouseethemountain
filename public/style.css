@@ -15,12 +15,18 @@ body {
 	position: relative;
 }
 
-p {
-	margin-top: 0;
-}
-
 body.locale-th {
 	font-size: 110%;
+}
+
+h1 {
+	margin: 0 auto;
+	font-weight: normal;
+	font-size: 1.2em;
+}
+
+p {
+	margin-top: 0;
 }
 
 .hide {
@@ -33,10 +39,7 @@ body.locale-th {
 
 #map {
 	height: 100%;
-}
-
-#map.response-state {
-	height: 100%;
+	background-color: #fff;
 }
 
 .content, .splash, .response {
@@ -48,117 +51,103 @@ body.locale-th {
 	padding: 30px 0;
 }
 
-.splash {
-	background-color: #fff;
-}
-
-@media (max-height: 420px) {
-	#map { height: 100px; }
-	#map.response-state { height: 180px; }
-}
-
-h1 {
-	font-weight: normal;
-	font-size: 1.8em;
-	margin-top: 0;
-}
-
-.buttons {
-	padding: 0 10px;
-	margin-top: 0;
-	margin-bottom: 0;
-}
-
-.buttons {
-	overflow: hidden;
-	margin: 0 auto;
-	width: 504px;
-}
-
-.btn {
-	display: block;
-	width: 128px;
-	height: 128px;
-	border: 0;
-	background: none;
-	float: left;
-	margin: 20px;
-	font-size: 17px;
-	color: #fff;
-	padding-top: 78px;
-	cursor: pointer;
-}
-
-.btn:hover {
-	-webkit-transform: translate(0, -5px);
-	transform: translate(0,-5px);
-	transition-timing-function: ease-out;
-	transition-duration: .1s;
-}
-
-@media (max-width: 350px) {
-	h1 { font-size: 1.4em; }
-	.btn { height: 65px; font-size: 1.2em; }
-}
-
-@media (max-height: 420px) {
-	.btn { height: 55px; }
-}
-
-.btn-clear {
-	background-image: url(/images/level1.png);
-}
-
-.btn-hazy {
-	background-image: url(/images/level2.png);
-}
-
-.btn-terrible {
-	background-image: url(/images/level3.png);
-}
-
 .location-error h1 {
-	padding-top: 40px;
-}
-
-@media (max-height: 420px) {
-	.response, .location-error h1 {
-		margin-top: 20px;
-	}
+	padding-top: 60px;
 }
 
 #title-project {
-	font-family: "Helvetica CY";
-	text-align: left;
-	color: #fff;
-	background-color: #E95644;
-	padding: 7px;
 	position: absolute;
 	top: 0;
 	left: 10px;
+	padding: 7px;
 	z-index: 1;
+	text-align: left;
+	font-family: "Helvetica CY";
+	color: #fff;
+	background-color: #E95644;
 }
 
 #title-project h1 {
 	font-size: 14px;
-	margin-bottom: 0;
 }
 
 #title-project span {
+	display: block;
 	font-size: 19px;
 	font-family: "Futura";
-	display: block;
 }
 
 .no-location #title-project {
-	margin: 0 auto;
-	padding: 20px 20px 40px;
 	position: relative;
 	width: 200px;
 	left: 0;
+	margin: 0 auto;
+	padding: 20px 20px 40px;
 }
 
+.buttons {
+	margin: 0 auto;
+	padding: 0 10px;
+	overflow: hidden;
+}
+
+.btn {
+	display: block;
+	height: 55px;
+	width: 250px;
+	margin: 15px auto;
+	padding-left: 30px;
+	border: 0;
+	border-radius: 6px;
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position-x: 10px;
+	font-size: 1.3em;
+	font-weight: bold;
+	color: #fff;
+}
+
+.btn-clear {
+	background-color: #2b4e5b;
+	background-image: url(/images/level1-nb.png);
+}
+
+.btn-hazy {
+	background-color: #14b59e;
+	background-image: url(/images/level2-nb.png);
+}
+
+.btn-terrible {
+	background-color: #f8c55d;
+	background-image: url(/images/level3-nb.png);
+}
+
+/* special case for short screens. eg landscape on a phone */
+
+@media only screen and (max-device-height: 400px) and (orientation: landscape) {
+	.content, .splash, .response {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		right: 0;
+		width: 50%;
+	}
+
+	.btn {
+		height: 40px;
+		margin: 10px auto;
+		font-size: 1em;
+		font-weight: normal;
+	}
+}
+
+/* tablet and desktop adjustments */
+
 @media only screen and (min-device-width: 768px) {
+	h1 {
+		font-size: 1.6em;
+	}
+
 	#title-project {
 		font-size: 16px;
 		padding: 20px 20px 40px;
@@ -167,5 +156,29 @@ h1 {
 
 	#title-project span {
 		font-size: 32px;
+	}
+
+	.buttons {
+		width: 520px;
+	}
+
+	.btn {
+		display: inline-block;
+		width: 128px;
+		height: 128px;
+		margin: 20px;
+		padding-top: 78px;
+		padding-left: 0;
+		border-radius: 50%
+		font-size: 17px;
+		font-weight: normal;
+		cursor: pointer;
+	}
+
+	.btn:hover {
+		-webkit-transform: translate(0, -5px);
+		transform: translate(0,-5px);
+		transition-timing-function: ease-out;
+		transition-duration: .1s;
 	}
 }

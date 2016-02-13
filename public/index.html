@@ -85,7 +85,7 @@
 						document.querySelector('#map').classList.add('response-state');
 						map.invalidateSize();
 						map.setView(chiangMaiCenter, 12)
-						setTimeout(function(){map.panBy([0, adjustedLat('.response')]);}, 500);
+						setTimeout(function(){ map.panBy(centerAdjustment('.response')); }, 500);
 					},
 					error: function() {
 						alert( "Error submitting your results" );
@@ -110,7 +110,7 @@
 				L.circle(latLng, coords.accuracy / 2).addTo(map);
 				document.querySelector('.splash').classList.add('hide');
 				document.querySelector('.content').classList.remove('hide');
-				map.panBy([0, adjustedLat('.content')]);
+				map.panBy(centerAdjustment('.content'));
 			},
 			function(errors) {
 				document.querySelector('body').classList.add('no-location');
@@ -119,10 +119,25 @@
 				document.querySelector('#map').classList.add('hide');
 			});
 
+			function centerAdjustment(content) {
+				if( isPortrait() ) { return [0, adjustedLat(content)]; }
+				else { return [adjustedLng(content), 0]; }
+			}
+
+			function adjustedLng(content) {
+				var mapWidth = document.querySelector('#map').clientWidth;
+				var contentWidth = document.querySelector(content).clientWidth;
+				return (mapWidth / 2) - ((mapWidth - contentWidth) / 2);
+			}
+
 			function adjustedLat(content) {
 				var mapHeight = document.querySelector('#map').clientHeight;
 				var contentHeight = document.querySelector(content).clientHeight - 60 //padding;
 				return (mapHeight / 2) - ((mapHeight - contentHeight) / 2);
+			}
+
+			function isPortrait() {
+				return window.innerHeight > 400; // magic number taken from a css breakpoint
 			}
 		</script>
 	</body>
