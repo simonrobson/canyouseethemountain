@@ -179,7 +179,7 @@ p {
 
 /* special case for short screens. eg landscape on a phone */
 
-@media only screen and (max-device-height: 400px) and (orientation: landscape) {
+@media only screen and (max-device-width: 600px) and (orientation: landscape) {
 	.content {
 		position: absolute;
 		top: 0;
