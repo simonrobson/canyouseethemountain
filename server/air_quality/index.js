@@ -1,24 +1,20 @@
 var http = require('http');
 var qs = require('qs');
 
-var delay = 10;
+var aq = {}
 
-var aq = {
-	pm10: null,
-	pm25: null
+function init(sensors, delay) {
+	update(sensors, delay)();
 }
 
-function init() {
-	update();
+function update(sensors, delay) {
+	return function _update() {
+		sensors.forEach(function(s) { fetch_aq(s.sensor, s.metric); });
+		setTimeout(_update, next_update(delay));
+	};
 }
 
-function update() {
-	fetch_aq('36t', 'pm25');
-	fetch_aq('36t', 'pm10');
-	setTimeout(update, next_update());
-}
-
-function next_update() {
+function next_update(delay) {
 	return (60 - (new Date().getMinutes()) + delay) * 60 * 1000;
 }
 
