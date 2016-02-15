@@ -140,7 +140,8 @@
 			}
 
 			function isPortrait() {
-				return window.innerHeight > 600; // magic number taken from a css breakpoint
+				// query needs to be kept in sync with css
+				return window.matchMedia("not all and (min-device-width: 375px) and (max-device-height: 667px) and (orientation: landscape)").matches;
 			}
 		</script>
 	</body>
