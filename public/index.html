@@ -110,7 +110,7 @@
 				coords = pos.coords;
 				map.setView(latLng, 14);
 				L.marker(latLng).addTo(map);
-				L.circle(latLng, coords.accuracy / 2).addTo(map);
+				// L.circle(latLng, coords.accuracy / 2).addTo(map);
 				document.querySelector('.splash').classList.add('hide');
 				document.querySelector('.content').classList.remove('hide');
 				map.panBy(centerAdjustment('.content'));
