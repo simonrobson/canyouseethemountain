@@ -1,34 +1,36 @@
-var express = require('express');
-
+var express = require('express'),
+  bodyParser = require('body-parser'),
+  errors = require('./errors.js');
 
 function checkinIsValid(checkin) {
-  if (!(checkin.coords && checkin.timezone && checkin.landmark_id && checkin.visibility)) { return false; }
+  if (!(checkin.coords && checkin.timezone && checkin.landmark_id && checkin.visibility)) {
+	  return false;
+  }
   var c = checkin.coords;
   if (!(c.latitude && c.longitude)) { return false; }
   return true;
 }
 
-function configureServer(db) {
+function configureServer(db, visibility) {
   var app = express();
 
-  app.use(express.bodyParser());
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded());
   app.use(express.static(__dirname + '/../../public'));
 
   app.post('/checkins', function(req, res) {
-    var checkin = req.param('checkin');
+    var checkin = req.body.checkin;
     if (checkin && checkinIsValid(checkin)) {
+      var now = Math.round((new Date()).getTime() / 1000);
       db.storeCheckin(checkin, function(err, response) {
-		if( err ) {
-			console.log(
-				'Unable to store \'valid\' response: ' +
-				JSON.stringify(checkin) + ' DB Error: ' +
-				JSON.stringify(err)
-			);
-		}
-	  });
-      res.send(200);
+        if( err ) { errors.checkin(err, checkin); }
+      });
+      visibility.updateVisibilityLayer(now, checkin.landmark_id, checkin, function(err, layer) {
+        if( err ) { errors.layerUpdate(err, checkin); }
+        res.status(200).send({visibility_layer: layer});
+      });
     } else {
-      res.send(403);
+      res.sendStatus(403);
     }
   });
 
@@ -36,7 +38,7 @@ function configureServer(db) {
 }
 
 exports.configureServer = configureServer;
-exports.startServer = function(port, db) {
-  app = exports.configureServer(db);
+exports.startServer = function(port, db, visibility) {
+  app = exports.configureServer(db, visibility);
   app.listen(port);
 }

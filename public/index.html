@@ -6,198 +6,88 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 		<link rel="stylesheet" href="leaflet/leaflet.css" />
+		<link rel="stylesheet" href="style.css" />
 
-		<style>
-			body {
-				padding: 0;
-				margin: 0;
-				-webkit-box-sizing: border-box;
-				-moz-box-sizing: border-box;
-				box-sizing: border-box;
-				text-align: center;
-				font-family: arial, sans serif;
-				background-color: #f8f8f8;
-				color: #444;
-			}
-			html, body {
-				height: 100%;
-			}
-			body.locale-th {
-				font-size: 110%;
-			}
-			.hide {
-				display: none;
-			}
-			.show {
-				display: block;
-			}
-			.geo-spinner {
-				opacity: 0.8;
-				-webkit-animation: geo-spinner 3s linear infinite;
-				-moz-animation: geo-spinner 3s linear infinite;
-				-ms-animation: geo-spinner 3s linear infinite;
-				animation: geo-spinner 3s linear infinite;
-				margin-top: 30px;
-				width: 100px;
-			}
-			#map {
-				height:160px;
-			}
-			#map.response-state {
-				height:220px;
-			}
-
-			@media (max-height: 420px) {
-				#map { height: 100px; }
-				#map.response-state { height: 180px; }
-			}
-
-			.buttons, .question {
-				max-width: 600px;
-				margin-left: auto;
-				margin-right: auto;
-			}
-			h1 {
-				font-weight: normal;
-				font-size: 1.8em;
-			}
-			.buttons {
-				padding: 0 10px;
-				margin-top: 0;
-				margin-bottom: 0;
-			}
-			.btn {
-				background-size: cover;
-				background-position: 50% 50%;
-				background-repeat: no-repeat;;
-				width: 100%;
-				height: 80px;
-				margin-bottom: 10px;
-				color: #fff;
-				font-weight: bold;
-				text-shadow: 1px 1px 6px rgba(150, 150, 150, 1);
-				font-size: 1.5em;
-				cursor: pointer;
-				border: none;
-				border-radius: 4px;
-			}
-
-			@media (max-width: 350px) {
-				h1 { font-size: 1.4em; }
-				.btn { height: 65px; font-size: 1.2em; }
-			}
-
-			@media (max-height: 420px) {
-				.btn { height: 55px; }
-			}
-
-			.btn-clear {
-				background-image: url(/images/DoiSuthep100.jpg);
-			}
-			.btn-hazy {
-				background-image: url(/images/DoiSuthep050.jpg);
-			}
-			.btn-terrible {
-				background-image: url(/images/DoiSuthep000.jpg);
-			}
-			.response, .location-error h1 {
-				margin: 40px;
-			}
-			@media (max-height: 420px) {
-				.response, .location-error h1 {
-					margin-top: 20px;
-				}
-			}
-			@keyframes "geo-spinner" {
-				0% { opacity: 0.8; }
-				50% { opacity: 0.4; }
-				100% { opacity: 0.8; }
-			}
-			@-moz-keyframes geo-spinner {
-				0% { opacity: 0.8; }
-				50% { opacity: 0.4; }
-				100% { opacity: 0.8; }
-			}
-			@-webkit-keyframes "geo-spinner" {
-				0% { opacity: 0.8; }
-				50% { opacity: 0.4; }
-				100% { opacity: 0.8; }
-			}
-			@-ms-keyframes "geo-spinner" {
-				0% { opacity: 0.8; }
-				50% { opacity: 0.4; }
-				100% { opacity: 0.8; }
-			}
-		</style>
+		<link rel="icon" href="/favicon.ico" type="image/x-icon">
 	</head>
 	<body class="locale-th">
 
-		<div id="map"></div>
+		<div id="title-project">
+			<h1>Can you see the mountain?<span>Doi Suthep</span></h1>
+		</div>
+
+		<div id="map" class="hide"></div>
 
 		<div class="splash">
-			<h1>ค้นหาตำแหน่งปัจจุบัน</h1>
-			<img class="geo-spinner" src="/images/geolocate.png"/>
+			<img class="geo-spinner" src="/images/Preloader_1	.gif"/>
+			<p>กำลังค้นหาตำแหน่งของคุณ</p>
 		</div>
 
 		<div class="location-error hide">
-			<h1>อุ๊บส์ เล่นไม่ได้เพราะไม่สามารถระบุตำแหน่ง</h1>
+			<h1>ไม่สามารถระบุตำแหน่งของคุณได้</h1>
+			<p>กรุณา Refresh หน้าเว็บไซต์อีกครั้ง</p>
 		</div>
 
 		<div class="content hide">
-			<h1 class="question">มองเห็นดอยสุเทพนั้นไหม</h1>
+			<h1 class="question">วันนี้คุณมองเห็นดอยสุเทพไหม?</h1>
 
 			<div class="buttons">
-				<button type="button" class="btn btn-clear" onclick="sendVisibility(100)">
+				<button type="button" class="btn btn-response btn-clear" onclick="sendVisibility(100)">
 					ชัดเจน
 				</button>
-
-				<button type="button" class="btn btn-hazy" onclick="sendVisibility(50)">
+				<button type="button" class="btn btn-response btn-hazy" onclick="sendVisibility(50)">
 					เห็นบ้าง
 				</button>
-
-				<button type="button" class="btn btn-terrible" onclick="sendVisibility(0)">
+				<button type="button" class="btn btn-response btn-terrible" onclick="sendVisibility(0)">
 					ไม่เลย
 				</button>
 			</div>
 		</div>
 
 		<div class="response hide">
-			<h1>ขอบคุณสำหรับข้อมูล แล้วคุณจะพบสิ่งพิเศษที่ซ่อนอยู่ โปรดกลับมาติดตามครั้งต่อไป</a>
+			<div class="social-buttons">
+				<a class="btn btn-social btn-face" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fcanyouseethemountain.com%2F">share</a>
+				<a class="btn btn-social btn-tweet" href="https://twitter.com/intent/tweet?text=Can%20you%20see%20Doi%20Suthep%20today%3F&url=http%3A%2F%2Fcanyouseethemountain.com%2F&hashtags=cnxsmoke">tweet</a>
+			</div>
+			<p>ขอบคุณค่ะ</p>
 		</div>
 
 		<script src="js/lib.js"></script>
 
 		<script>
-			var map = L.map('map');
+			var map = L.map('map', {zoomControl: false, attributionControl: false});
 			var ajax = require('ajax');
 			var coords = {};
 
 			L.Icon.Default.imagePath = '/leaflet/images';
 
-			L.tileLayer('http://{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpg ', {
-				subdomains: ['otile1', 'otile2', 'otile3', 'otile4'],
-				maxZoom: 16,
-				attribution: '<a href="">MapQuest</a>, <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> and contributors, <a href="http://wiki.openstreetmap.org/wiki/Legal_FAQ#I_would_like_to_use_OpenStreetMap_maps._How_should_I_credit_you">ODbL</a>.'
+			L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
+				maxZoom: 18,
+				attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 			}).addTo(map);
 
 			function sendVisibility(visibility){
 				ajax({
 					type: 'POST',
 					url: '/checkins',
+					dataType: 'json',
 					data: {
 						checkin: {
 							coords: coords,
-							timezone: (new Date().getTimezoneOffset() / 60),
+							timezone: (new Date().getTimezoneOffset() / 60) * -1,
 							landmark_id: 1,
 							visibility: visibility
 						}
 					},
-					success: function() {
+					success: function(response) {
+						var chiangMaiCenter = L.latLng(18.788218, 98.985872);
+						L.geoJson(response.visibility_layer, {style: styleFeature, clickable: false}).addTo(map);
 						document.querySelector('.content').classList.add('hide');
 						document.querySelector('.response').classList.remove('hide');
 						document.querySelector('#map').classList.add('response-state');
 						map.invalidateSize();
-						map.setZoom(12);
+						map.setView(chiangMaiCenter, 12)
+						setTimeout(function(){ map.panBy([0, adjustedLat('.response')]); }, 500);
 					},
 					error: function() {
 						alert( "Error submitting your results" );
@@ -205,20 +95,53 @@
 				});
 			}
 
+			function styleFeature(feature) {
+				return {
+					weight: 0,
+					opacity: 0,
+					fillColor: 'hsla(' + feature.properties.visibility + ', 70%, 40%, '+ feature.properties.accuracy +')',
+					fillOpacity: 0.4
+				};
+			}
+
 			navigator.geolocation.getCurrentPosition(function(pos) {
+				document.querySelector('#map').classList.remove('hide');
 				var latLng = L.latLng(pos.coords.latitude, pos.coords.longitude);
 				coords = pos.coords;
 				map.setView(latLng, 14);
 				L.marker(latLng).addTo(map);
-				L.circle(latLng, coords.accuracy / 2).addTo(map);
+				// L.circle(latLng, coords.accuracy / 2).addTo(map);
 				document.querySelector('.splash').classList.add('hide');
 				document.querySelector('.content').classList.remove('hide');
+				map.panBy(centerAdjustment('.content'));
 			},
 			function(errors) {
+				document.querySelector('body').classList.add('no-location');
 				document.querySelector('.splash').classList.add('hide');
 				document.querySelector('.location-error').classList.remove('hide');
 				document.querySelector('#map').classList.add('hide');
 			});
+
+			function centerAdjustment(content) {
+				if( isPortrait() ) { return [0, adjustedLat(content)]; }
+				else { return [adjustedLng(content), 0]; }
+			}
+
+			function adjustedLng(content) {
+				var mapWidth = document.querySelector('#map').clientWidth;
+				var contentWidth = document.querySelector(content).clientWidth;
+				return (mapWidth / 2) - ((mapWidth - contentWidth) / 2);
+			}
+
+			function adjustedLat(content) {
+				var mapHeight = document.querySelector('#map').clientHeight;
+				var contentHeight = document.querySelector(content).clientHeight;
+				return (mapHeight / 2) - ((mapHeight - contentHeight) / 2);
+			}
+
+			function isPortrait() {
+				return window.innerHeight > 600; // magic number taken from a css breakpoint
+			}
 		</script>
 	</body>
 </html>
