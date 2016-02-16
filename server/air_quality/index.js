@@ -1,10 +1,11 @@
 var http = require('http');
 var qs = require('qs');
+var config = require('../config/air_quality.js');
 
 var aq = {}
 
-function init(sensors, delay) {
-	update(sensors, delay)();
+function init() {
+	update(config.sensors, config.delay)();
 }
 
 function update(sensors, delay) {
