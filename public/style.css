@@ -138,6 +138,42 @@ p {
 	background-image: url(/images/level3-nb.png);
 }
 
+.air-quality {
+	position: absolute;
+	bottom: 50px;
+	left: 0;
+	margin-left: 10px;
+	margin-bottom: 10px;
+}
+
+.air-quality .metric {
+	display: inline-block;
+	background-color: #ddd;
+	padding: 0 10px 10px 10px;
+	width: 90px;
+	border-radius: 8px;
+	box-shadow: 0 1px 1px 1px #999;
+}
+
+.air-quality .pm10 {
+	margin-right: 10px;
+}
+
+.air-quality .label {
+	background-color: #f0f0f0;
+	margin-bottom: 7px;
+	margin-left: -10px;
+	width: 110px;
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
+	padding: 3px 0;
+	font-size: 16px;
+}
+
+.air-quality .value {
+	font-size: 1.6em;
+}
+
 .social-buttons {
 	float: right;
 	margin-top: 10px;

@@ -45,6 +45,18 @@
 		</div>
 
 		<div class="response hide">
+			<div class="air-quality hide">
+					<div class="metric pm10 hide">
+						<div class="label">pm10</div>
+						<div class="value"></div>
+						<div class="date"></div>
+					</div>
+					<div class="metric pm25 hide">
+						<div class="label">pm2.5</div>
+						<div class="value"></div>
+						<div class="date"></div>
+					</div>
+			</div>
 			<div class="social-buttons">
 				<a class="btn btn-social btn-face" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fcanyouseethemountain.com%2F">share</a>
 				<a class="btn btn-social btn-tweet" href="https://twitter.com/intent/tweet?text=Can%20you%20see%20Doi%20Suthep%20today%3F&url=http%3A%2F%2Fcanyouseethemountain.com%2F&hashtags=cnxsmoke">tweet</a>
@@ -81,6 +93,7 @@
 					},
 					success: function(response) {
 						var chiangMaiCenter = L.latLng(18.788218, 98.985872);
+						displayAirQuality(response.air_quality);
 						L.geoJson(response.visibility_layer, {style: styleFeature, clickable: false}).addTo(map);
 						document.querySelector('.content').classList.add('hide');
 						document.querySelector('.response').classList.remove('hide');
@@ -142,6 +155,21 @@
 			function isPortrait() {
 				// query needs to be kept in sync with css
 				return window.matchMedia("not all and (min-device-width: 375px) and (max-device-height: 667px) and (orientation: landscape)").matches;
+			}
+
+			function displayAirQuality(aq) {
+				if( !!aq.pm10 ) { displayAQMetric('.pm10', aq.pm10); }
+				if( !!aq.pm25 ) { displayAQMetric('.pm25', aq.pm25); }
+				if( !!aq.pm10 || !!aq.pm25 ) {
+					document.querySelector('.air-quality').classList.remove('hide');
+				}
+			}
+
+			function displayAQMetric(selector, data) {
+				var container = document.querySelector(selector);
+				//container.querySelector('.date')
+				container.querySelector('.value').textContent = data.value;
+				container.classList.remove('hide');
 			}
 		</script>
 	</body>
