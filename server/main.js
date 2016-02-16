@@ -7,4 +7,4 @@ process.env.TZ = 'UTC';
 
 air_quality.init();
 visibility.init(db);
-api.startServer(15150, db, visibility);
+api.startServer(15150, db, visibility, air_quality);

@@ -11,7 +11,7 @@ function checkinIsValid(checkin) {
   return true;
 }
 
-function configureServer(db, visibility) {
+function configureServer(db, visibility, air_quality) {
   var app = express();
 
   app.use(bodyParser.json());
@@ -27,7 +27,10 @@ function configureServer(db, visibility) {
       });
       visibility.updateVisibilityLayer(now, checkin.landmark_id, checkin, function(err, layer) {
         if( err ) { errors.layerUpdate(err, checkin); }
-        res.status(200).send({visibility_layer: layer});
+        res.status(200).send({
+			air_quality: air_quality.current(),
+			visibility_layer: layer
+		});
       });
     } else {
       res.sendStatus(403);
@@ -38,7 +41,7 @@ function configureServer(db, visibility) {
 }
 
 exports.configureServer = configureServer;
-exports.startServer = function(port, db, visibility) {
-  app = exports.configureServer(db, visibility);
+exports.startServer = function(port, db, visibility, air_quality) {
+  app = exports.configureServer(db, visibility, air_quality);
   app.listen(port);
 }
