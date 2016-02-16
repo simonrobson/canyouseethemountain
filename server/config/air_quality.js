@@ -1,4 +1,4 @@
-exports.delay = 30;
+exports.delay = 10;
 
 exports.sensors = [
 	{sensor: '36t', metric: 'pm10'},
