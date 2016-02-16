@@ -6,6 +6,6 @@ var api = require('./api'),
 process.env.TZ = 'UTC';
 
 visibility.init(db);
-air_quality.init([{sensor: '36t', metric: 'pm10'}, {sensor: '36t', metric: 'pm25'}], 10);
+air_quality.init([{sensor: '36t', metric: 'pm10'}, {sensor: '36t', metric: 'pm25'}], 20);
 
 api.startServer(15150, db, visibility);
