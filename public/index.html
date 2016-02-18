@@ -170,6 +170,27 @@
 				//container.querySelector('.date')
 				container.querySelector('.value').textContent = data.value;
 				container.classList.remove('hide');
+				container.classList.add(selector === '.pm10' ? pm10Level(data.value) : pm25Level(data.value));
+			}
+
+			function pm25Level(value) {
+				value = parseFloat(value);
+				if( value <= 12.0  ) { return 'good'; }
+				if( value <= 35.4  ) { return 'moderate'; }
+				if( value <= 55.4  ) { return 'unhealthy-sensitive'; }
+				if( value <= 150.4 ) { return 'unhealthy'; }
+				if( value <= 250.4 ) { return 'very-unhealthy'; }
+				return 'hazardous';
+			}
+
+			function pm10Level(value) {
+				value = parseInt(value);
+				if( value <= 54  ) { return 'good'; }
+				if( value <= 154 ) { return 'moderate'; }
+				if( value <= 254 ) { return 'unhealthy-sensitive'; }
+				if( value <= 354 ) { return 'unhealthy'; }
+				if( value <= 424 ) { return 'very-unhealthy'; }
+				return 'unhealthy';
 			}
 		</script>
 	</body>
