@@ -2,7 +2,7 @@ var assert = require('assert');
 var calculate = require('../server/air_quality/calculate.js');
 
 describe('genRange', function() {
-	it('produces ranges within a single day', function() {
+	it('returns ranges within a single day', function() {
 		var result = calculate.genRange({year: 2016, month: 2, date: 10, hour: 9}, 'hours', 5);
 		assert.deepEqual(result, [
 			{year: 2016, month: 2, date: 10, hour: 5},
@@ -12,7 +12,7 @@ describe('genRange', function() {
 			{year: 2016, month: 2, date: 10, hour: 9}
 		]);
 	});
-	it('produces ranges that span two days', function() {
+	it('returns ranges that span two days', function() {
 		var result = calculate.genRange({year: 2016, month: 2, date: 10, hour: 2}, 'hours', 5);
 		assert.deepEqual(result, [
 			{year: 2016, month: 2, date: 9, hour: 22},
@@ -22,7 +22,7 @@ describe('genRange', function() {
 			{year: 2016, month: 2, date: 10, hour: 2}
 		]);
 	})
-	it('produces ranges that span two months', function() {
+	it('returns ranges that span two months', function() {
 		var result = calculate.genRange({year: 2016, month: 2, date: 1, hour: 2}, 'hours', 5);
 		assert.deepEqual(result, [
 			{year: 2016, month: 1, date: 31, hour: 22},
@@ -32,7 +32,7 @@ describe('genRange', function() {
 			{year: 2016, month: 2, date: 1, hour: 2}
 		]);
 	});
-	it('produces ranges that span two years', function() {
+	it('returns ranges that span two years', function() {
 		var result = calculate.genRange({year: 2016, month: 1, date: 1, hour: 2}, 'hours', 5);
 		assert.deepEqual(result, [
 			{year: 2015, month: 12, date: 31, hour: 22},
