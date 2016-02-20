@@ -21,5 +21,25 @@ function genRange(end, unit, hours) {
 	return result;
 }
 
+function mergeValues(target, values) {
+	var targetTS = target.map(timestamp);
+	var valuesTS = values.map(timestamp);
+	var targetIndex;
+
+	valuesTS.forEach(function(timestamp, index) {
+		targetIndex = targetTS.indexOf(timestamp);
+		if( targetIndex !== -1 ) {
+			target[targetIndex].value = values[index].value;
+		}
+	});
+
+	return target;
+}
+
+function timestamp(elem) {
+	return [elem.year,elem.month,elem.date,elem.hour].join('|');
+}
+
 exports.average = average;
 exports.genRange = genRange;
+exports.mergeValues = mergeValues;

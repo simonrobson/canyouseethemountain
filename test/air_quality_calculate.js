@@ -43,3 +43,26 @@ describe('genRange', function() {
 		]);
 	});
 });
+
+describe('mergeValues', function() {
+	it('merges based on date', function() {
+		result = calculate.mergeValues([
+			{year: 2015, month: 12, date: 31, hour: 22},
+			{year: 2015, month: 12, date: 31, hour: 23},
+			{year: 2016, month: 1, date: 1, hour: 0},
+			{year: 2016, month: 1, date: 1, hour: 1},
+			{year: 2016, month: 1, date: 1, hour: 2}
+		], [
+			{year: 2015, month: 12, date: 31, hour: 22, value: 9},
+			{year: 2016, month: 1, date: 1, hour: 1, value: 10},
+			{year: 2016, month: 1, date: 1, hour: 2, value: 2}
+		])
+		assert.deepEqual(result, [
+			{year: 2015, month: 12, date: 31, hour: 22, value: 9},
+			{year: 2015, month: 12, date: 31, hour: 23},
+			{year: 2016, month: 1, date: 1, hour: 0},
+			{year: 2016, month: 1, date: 1, hour: 1, value: 10},
+			{year: 2016, month: 1, date: 1, hour: 2, value: 2}
+		]);
+	});
+});
