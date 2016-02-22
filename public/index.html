@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 		<link rel="stylesheet" href="leaflet/leaflet.css" />
-		<link rel="stylesheet" href="style.css?v=2" />
+		<link rel="stylesheet" href="style.css?v=3" />
 
 		<link rel="icon" href="/favicon.ico" type="image/x-icon">
 	</head>
@@ -19,7 +19,7 @@
 		<div id="map" class="hide"></div>
 
 		<div class="splash">
-			<img class="geo-spinner" src="/images/Preloader_1	.gif"/>
+			<img class="geo-spinner" src="/images/Preloader_1.gif"/>
 			<p>กำลังค้นหาตำแหน่งของคุณ</p>
 		</div>
 
@@ -49,11 +49,13 @@
 					<div class="metric pm10 hide">
 						<div class="label">pm10</div>
 						<div class="value"></div>
+						<div class="unit">&micro;g/m&sup3;</div>
 						<div class="date"></div>
 					</div>
 					<div class="metric pm25 hide">
 						<div class="label">pm2.5</div>
 						<div class="value"></div>
+						<div class="unit">&micro;g/m&sup3;</div>
 						<div class="date"></div>
 					</div>
 			</div>
@@ -167,10 +169,14 @@
 
 			function displayAQMetric(selector, data) {
 				var container = document.querySelector(selector);
-				//container.querySelector('.date')
+				// container.querySelector('.date').textContent = timestampFor(data);
 				container.querySelector('.value').textContent = Math.round(parseFloat(data.value));
 				container.classList.remove('hide');
 				container.classList.add(selector === '.pm10' ? pm10Level(data.value) : pm25Level(data.value));
+			}
+
+			function timestampFor(data) {
+				return [data.hour,':00 ',data.date,'.',data.month,'.', data.year].join('');
 			}
 
 			function pm25Level(value) {
@@ -190,7 +196,7 @@
 				if( value <= 254 ) { return 'unhealthy-sensitive'; }
 				if( value <= 354 ) { return 'unhealthy'; }
 				if( value <= 424 ) { return 'very-unhealthy'; }
-				return 'unhealthy';
+				return 'hazardous';
 			}
 		</script>
 	</body>

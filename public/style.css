@@ -172,10 +172,16 @@ p {
 	border-top-right-radius: 8px;
 	padding: 3px 0;
 	font-size: 16px;
+	color: black;
 }
 
 .air-quality .value {
 	font-size: 1.6em;
+}
+
+.air-quality .unit {
+	font-size: 12px;
+	color: #666;
 }
 
 .air-quality .metric.good .label { background-color: #00cc00; }
