@@ -158,9 +158,9 @@
 			}
 
 			function displayAirQuality(aq) {
-				if( !!aq.pm10 ) { displayAQMetric('.pm10', aq.pm10); }
-				if( !!aq.pm25 ) { displayAQMetric('.pm25', aq.pm25); }
-				if( !!aq.pm10 || !!aq.pm25 ) {
+				if( aq.pm10 !== undefined ) { displayAQMetric('.pm10', aq.pm10); }
+				if( aq.pm25 !== undefined ) { displayAQMetric('.pm25', aq.pm25); }
+				if( aq.pm10 !== undefined || aq.pm25 !== undefined ) {
 					document.querySelector('.air-quality').classList.remove('hide');
 				}
 			}

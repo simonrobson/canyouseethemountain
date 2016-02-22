@@ -155,6 +155,10 @@ p {
 	box-shadow: 0 1px 1px 1px #999;
 }
 
+.air-quality .metric.hide {
+	display: none;
+}
+
 .air-quality .pm10 {
 	margin-right: 10px;
 }
