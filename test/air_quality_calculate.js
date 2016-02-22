@@ -46,7 +46,7 @@ describe('genRange', function() {
 
 describe('mergeValues', function() {
 	it('merges based on date', function() {
-		result = calculate.mergeValues([
+		var result = calculate.mergeValues([
 			{year: 2015, month: 12, date: 31, hour: 22},
 			{year: 2015, month: 12, date: 31, hour: 23},
 			{year: 2016, month: 1, date: 1, hour: 0},
@@ -69,7 +69,7 @@ describe('mergeValues', function() {
 
 describe('fillGaps', function() {
 	it('fills value gaps with the average of their edges', function() {
-		result = calculate.fillGaps([
+		var result = calculate.fillGaps([
 			{year: 2015, month: 12, date: 31, hour: 22, value: 9},
 			{year: 2015, month: 12, date: 31, hour: 23},
 			{year: 2016, month: 1, date: 1, hour: 0},
@@ -85,7 +85,7 @@ describe('fillGaps', function() {
 		]);
 	});
 	it('uses the un-avergaged upper edge of a gap, when at the beginning of a range', function() {
-		result = calculate.fillGaps([
+		var result = calculate.fillGaps([
 			{year: 2015, month: 12, date: 31, hour: 22},
 			{year: 2015, month: 12, date: 31, hour: 23},
 			{year: 2016, month: 1, date: 1, hour: 0, value: 6},
@@ -101,7 +101,7 @@ describe('fillGaps', function() {
 		]);
 	});
 	it('uses the un-avergaged lower edge of a gap, when at the end of a range', function() {
-		result = calculate.fillGaps([
+		var result = calculate.fillGaps([
 			{year: 2015, month: 12, date: 31, hour: 22, value: 8},
 			{year: 2015, month: 12, date: 31, hour: 23, value: 12},
 			{year: 2016, month: 1, date: 1, hour: 0, value: 6},
@@ -120,7 +120,7 @@ describe('fillGaps', function() {
 
 describe('average', function() {
 	it('returns an average over of the specified [hours]', function() {
-		result = calculate.average([
+		var result = calculate.average([
 			{year: 2015, month: 12, date: 31, hour: 22, value: 8},
 			{year: 2015, month: 12, date: 31, hour: 23, value: 12},
 			{year: 2016, month: 1, date: 1, hour: 0, value: 1},
@@ -130,7 +130,7 @@ describe('average', function() {
 		assert.deepEqual(result, {year: 2016, month: 1, date: 1, hour: 2, value: 6.2});
 	});
 	it('it estimates missing data, before averaging', function() {
-		result = calculate.average([
+		var result = calculate.average([
 			{year: 2015, month: 12, date: 31, hour: 22, value: 8},
 			{year: 2016, month: 1, date: 1, hour: 1, value: 5},
 			{year: 2016, month: 1, date: 1, hour: 2, value: 4}
