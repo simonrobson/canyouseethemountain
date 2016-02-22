@@ -168,7 +168,7 @@
 			function displayAQMetric(selector, data) {
 				var container = document.querySelector(selector);
 				//container.querySelector('.date')
-				container.querySelector('.value').textContent = data.value;
+				container.querySelector('.value').textContent = Math.round(parseFloat(data.value));
 				container.classList.remove('hide');
 				container.classList.add(selector === '.pm10' ? pm10Level(data.value) : pm25Level(data.value));
 			}
