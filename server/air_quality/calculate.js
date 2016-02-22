@@ -36,10 +36,41 @@ function mergeValues(target, values) {
 	return target;
 }
 
+function fillGaps(values) {
+	var previous = null;
+	var gap = [];
+	var filling = false;
+
+	values.forEach(function(value) {
+		if( !value.value ) {
+			filling = true;
+			value.value = average(previous);
+			gap.push(value);
+		} else if( !!value && filling ) {
+			gap.forEach(function(empty) {
+				empty.value = empty.value(value.value);
+			});
+			gap = [];
+			filling = false;
+		} else {
+			previous = value.value;
+		}
+	});
+
+	return values;
+}
+
 function timestamp(elem) {
 	return [elem.year,elem.month,elem.date,elem.hour].join('|');
 }
 
+function average(a) {
+	return function(b) {
+		return (a + b) / 2;
+	};
+};
+
 exports.average = average;
 exports.genRange = genRange;
 exports.mergeValues = mergeValues;
+exports.fillGaps = fillGaps;
