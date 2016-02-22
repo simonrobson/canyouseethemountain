@@ -44,11 +44,11 @@ function fillGaps(values) {
 	values.forEach(function(value) {
 		if( !value.value ) {
 			filling = true;
-			value.value = average(previous);
+			value.value = previous ? average(previous) : null;
 			gap.push(value);
 		} else if( !!value && filling ) {
 			gap.forEach(function(empty) {
-				empty.value = empty.value(value.value);
+				empty.value = empty.value ? empty.value(value.value) : value.value;
 			});
 			gap = [];
 			filling = false;

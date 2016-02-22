@@ -84,4 +84,20 @@ describe('fillGaps', function() {
 			{year: 2016, month: 1, date: 1, hour: 2, value: 2}
 		]);
 	});
+	it('uses the un-avergaged upper edge of a gap, when at the beginning of a range', function() {
+		result = calculate.fillGaps([
+			{year: 2015, month: 12, date: 31, hour: 22},
+			{year: 2015, month: 12, date: 31, hour: 23},
+			{year: 2016, month: 1, date: 1, hour: 0, value: 6},
+			{year: 2016, month: 1, date: 1, hour: 1, value: 10},
+			{year: 2016, month: 1, date: 1, hour: 2, value: 2}
+		]);
+		assert.deepEqual(result, [
+			{year: 2015, month: 12, date: 31, hour: 22, value: 6},
+			{year: 2015, month: 12, date: 31, hour: 23, value: 6},
+			{year: 2016, month: 1, date: 1, hour: 0, value: 6},
+			{year: 2016, month: 1, date: 1, hour: 1, value: 10},
+			{year: 2016, month: 1, date: 1, hour: 2, value: 2}
+		]);
+	});
 });
