@@ -1,14 +1,22 @@
 var moment = require('moment');
 
 function average(values, hours) {
-	return values.pop();
+	var end = values[values.length - 1];
+	var result = {year: end.year, month: end.month, date: end.date, hour: end.hour};
+	var range = fillGaps(mergeValues(genRange(end, 'hours', 5), values));
+
+	result.value = range
+		.map(function(v) { return v.value; })
+		.reduce(function(sum, v) {  return sum += v; }, 0) / range.length;
+
+	return result;
 }
 
-function genRange(end, unit, hours) {
+function genRange(end, unit, quantity) {
 	var result = [end];
 	var current = moment(end).month(end.month - 1);
 
-	for(i = 1; i < hours; i++) {
+	for(i = 1; i < quantity; i++) {
 		current.subtract(1, unit);
 		result.unshift({
 			year: current.year(),

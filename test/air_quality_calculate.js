@@ -117,3 +117,24 @@ describe('fillGaps', function() {
 		]);
 	});
 });
+
+describe('average', function() {
+	it('returns an average over of the specified [hours]', function() {
+		result = calculate.average([
+			{year: 2015, month: 12, date: 31, hour: 22, value: 8},
+			{year: 2015, month: 12, date: 31, hour: 23, value: 12},
+			{year: 2016, month: 1, date: 1, hour: 0, value: 1},
+			{year: 2016, month: 1, date: 1, hour: 1, value: 2},
+			{year: 2016, month: 1, date: 1, hour: 2, value: 8}
+		], 5);
+		assert.deepEqual(result, {year: 2016, month: 1, date: 1, hour: 2, value: 6.2});
+	});
+	it('it estimates missing data, before averaging', function() {
+		result = calculate.average([
+			{year: 2015, month: 12, date: 31, hour: 22, value: 8},
+			{year: 2016, month: 1, date: 1, hour: 1, value: 5},
+			{year: 2016, month: 1, date: 1, hour: 2, value: 4}
+		], 5);
+		assert.deepEqual(result, {year: 2016, month: 1, date: 1, hour: 2, value: 6});
+	});
+});
