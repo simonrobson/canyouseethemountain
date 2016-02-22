@@ -1,5 +1,6 @@
 var http = require('http');
 var qs = require('qs');
+var moment = require('moment');
 
 function hourlyRequest(sensors, delay, next) {
 	return function _update() {
@@ -24,9 +25,10 @@ function fetch_aq(sensor, metric, next) {
 }
 
 function fetch_aq_query() {
-	var now = new Date();
-	var today = { year: 2016, month: now.getMonth() + 1, date: now.getDate() }
-	return qs.stringify({ begin: today, end: today, interval: 'hours' }, { encode: false });
+	var now = moment();
+	var today = { year: now.year() , month: now.month() + 1, date: now.date() }
+	var yesterday = { year: now.year(), month: now.month() + 1, date: now.subtract(1, 'day').date()};
+	return qs.stringify({ begin: yesterday, end: today, interval: 'hours' }, { encode: false });
 }
 
 function aq_response(metric, next) {
