@@ -37,38 +37,34 @@ function mergeValues(target, values) {
 }
 
 function fillGaps(values) {
-	var previous = null;
 	var gap = [];
-	var filling = false;
+	var leading = null;
 
-	values.forEach(function(value) {
+	values.forEach(function(value, index) {
 		if( !value.value ) {
-			filling = true;
-			value.value = previous ? average(previous) : null;
+			leading = gap.length === 0 && !!values[index -1] ? values[index - 1].value : leading;
 			gap.push(value);
-		} else if( !!value && filling ) {
-			gap.forEach(function(empty) {
-				empty.value = empty.value ? empty.value(value.value) : value.value;
-			});
-			gap = [];
-			filling = false;
 		} else {
-			previous = value.value;
+			fillGap(gap, leading, value.value);
+			leading = null;
+			gap = [];
 		}
 	});
 
+	if( gap.length > 0 ) { fillGap(gap, leading, null); }
+
 	return values;
+}
+
+function fillGap(gap, leading, trailing) {
+	gap.forEach(function(empty) {
+		empty.value = !leading ? trailing : !trailing ? leading : (leading + trailing) / 2;
+	});
 }
 
 function timestamp(elem) {
 	return [elem.year,elem.month,elem.date,elem.hour].join('|');
 }
-
-function average(a) {
-	return function(b) {
-		return (a + b) / 2;
-	};
-};
 
 exports.average = average;
 exports.genRange = genRange;
