@@ -3,7 +3,7 @@ var moment = require('moment');
 function average(values, hours) {
 	var end = values[values.length - 1];
 	var result = {year: end.year, month: end.month, date: end.date, hour: end.hour};
-	var range = fillGaps(mergeValues(genRange(end, 'hours', 5), values));
+	var range = fillGaps(mergeValues(genRange(end, 'hours', hours), values));
 
 	result.value = range
 		.map(function(v) { return v.value; })
