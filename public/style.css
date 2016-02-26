@@ -187,25 +187,23 @@ p {
 	position: absolute;
 	bottom: 50px;
 	left: 0;
-	margin-left: 10px;
-	margin-bottom: 30px;
+	right: 0;
+	margin-bottom: 50px;
+	padding: 0 10px;
 	text-align: left;
 }
 
 .air-quality .metric {
-	display: inline-block;
 	background-color: #ddd;
-	padding: 0 5px 5px 5px;
-	width: 130px;
 	border-radius: 8px;
 	box-shadow: 0 1px 1px 1px #999;
-	text-align: center;
+	text-align: left;
+	margin-bottom: 10px;
 }
 
 .air-quality .meta {
 	display: block;
 	text-align: left;
-	margin-top: 7px;
 	padding: 2px 5px;
 	font-size: 14px;
 	background-color: rgba(255,255,255,0.8);
@@ -215,25 +213,24 @@ p {
 	display: none;
 }
 
-.air-quality .pm10 {
-	margin-right: 10px;
-}
-
 .air-quality .label {
+	display: inline-block;
 	background-color: #f0f0f0;
-	margin-bottom: 7px;
-	margin-left: -5px;
-	width: 140px;
+	width: 45px;
 	border-top-left-radius: 8px;
-	border-top-right-radius: 8px;
-	padding: 3px 0;
+	border-bottom-left-radius: 8px;
+	padding: 0 12px;
 	font-size: 16px;
 	color: black;
+	vertical-align: middle;
+	line-height: 32px;
 }
 
 .air-quality .value {
+	display: inline-block;
 	font-size: 1.4em;
-	line-height: 22px;
+	margin: 0 7px;
+	vertical-align: middle;
 }
 
 .air-quality .unit {
@@ -243,7 +240,6 @@ p {
 
 .air-quality .metric .condition {
 	font-size: 15px;
-	line-height: 20px;
 }
 
 .air-quality .metric .condition { display: none; }
@@ -252,7 +248,7 @@ p {
 .air-quality .metric.unhealthy-sensitive .condition.unhealthy-sensitive,
 .air-quality .metric.unhealthy .condition.unhealthy,
 .air-quality .metric.very-unhealthy .condition.very-unhealthy,
-.air-quality .metric.hazardous .condition.hazardous { display: block; }
+.air-quality .metric.hazardous .condition.hazardous { display: inline-block; }
 
 
 .air-quality .metric.good .label { background-color: #00cc00; }
@@ -375,5 +371,9 @@ p {
 		transform: translate(0,-5px);
 		transition-timing-function: ease-out;
 		transition-duration: .1s;
+	}
+
+	.air-quality {
+		width: 350px;
 	}
 }
