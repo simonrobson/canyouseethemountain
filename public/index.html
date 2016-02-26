@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 		<link rel="stylesheet" href="leaflet/leaflet.css" />
-		<link rel="stylesheet" href="style.css?v=10" />
+		<link rel="stylesheet" href="style.css?v=12" />
 
 		<link rel="icon" href="/favicon.ico" type="image/x-icon">
 	</head>
@@ -79,14 +79,14 @@
 					<div class="condition hazardous">อันตราย</div>
 				</div>
 				<div class="meta">
-					ค่าเฉลี่ย &micro;g/m&sup3; ใน 24 ชั่วโมง ที่ผ่านมา เมื่อ<span class="date"></span>
+					ค่าเฉลี่ย &micro;g/m&sup3; ใน 24 ชั่วโมง ที่ผ่านมา <span class="date"></span>
 				</div>
 			</div>
 			<div class="social-buttons">
 				<a class="btn btn-social btn-face" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fcanyouseethemountain.com%2F">share</a>
 				<a class="btn btn-social btn-tweet" href="https://twitter.com/intent/tweet?text=Can%20you%20see%20Doi%20Suthep%20today%3F&url=http%3A%2F%2Fcanyouseethemountain.com%2F&hashtags=cnxsmoke">tweet</a>
 			</div>
-			<p>ขอบคุณค่ะ กลับมาให้ข้อมูลอีกนะคะ</p>
+			<p>กลับมาอีกนะคะ</p>
 		</div>
 
 		<script src="js/lib.js"></script>
@@ -201,7 +201,7 @@
 			}
 
 			function timestampFor(data) {
-				return [data.hour,':00, ',data.date,'.',data.month,'.', data.year].join('');
+				return [data.hour,':00, ',data.date,'.',data.month,'.', data.year - 2000].join('');
 			}
 
 			function pm25Level(value) {
