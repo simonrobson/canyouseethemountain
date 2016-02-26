@@ -42,6 +42,42 @@ p {
 	background-color: #fff;
 }
 
+.visibility-legend {
+	position: absolute;
+	z-index: 1000;
+	top: 10px;
+	right: 10px;
+	margin: 0;
+	padding: 5px 5px 0 5px;
+	list-style: none;
+	text-align: right;
+	background: rgba(255, 255, 255, 0.8);
+	font-size: 14px;
+}
+
+.visibility-legend li {
+	margin-bottom: 5px;
+}
+
+.legend-color {
+	vertical-align: middle;
+	display: inline-block;
+	background-color: pink;
+	width: 25px;
+	height: 25px;
+	margin-left: 5px;
+}
+
+.legend-color-green {
+	background: hsla(100, 70%, 40%, 100);
+	opacity: 0.4;
+}
+
+.legend-color-red {
+	background: hsla(0, 70%, 40%, 100);
+	opacity: 0.4;
+}
+
 .content, .response {
 	position: absolute;
 	bottom: 0;
