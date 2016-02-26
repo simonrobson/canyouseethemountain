@@ -53,6 +53,7 @@ p {
 	text-align: right;
 	background: rgba(255, 255, 255, 0.8);
 	font-size: 14px;
+	box-shadow: 0 1px 1px 1px #999;
 }
 
 .visibility-legend li {
@@ -221,11 +222,22 @@ p {
 }
 
 .air-quality .metric.good .label { background-color: #00cc00; }
+.air-quality .metric.good { background-color: hsla(120, 50%, 80%, 100); }
+
 .air-quality .metric.moderate .label { background-color: #ffff00; }
+.air-quality .metric.moderate { background-color: hsla(60, 60%, 80%, 100); }
+
 .air-quality .metric.unhealthy-sensitive .label { background-color: #eb8a14; }
+.air-quality .metric.unhealthy-sensitive { background-color: hsla(33, 54%, 80%, 100); }
+
 .air-quality .metric.unhealthy .label { background-color: #ff0000; }
+.air-quality .metric.unhealthy { background-color: hsla(0, 70%, 80%, 100); }
+
 .air-quality .metric.very-unhealthy .label { background-color: #a10649; }
-.air-quality .metric.hazerdous .label { background-color: #7e0023; }
+.air-quality .metric.very-unhealthy { background-color: hsla(334, 63%, 63%, 100); }
+
+.air-quality .metric.hazardous .label { background-color: #7e0023; }
+.air-quality .metric.hazardous { background-color: hsla(343, 60%, 55%, 100); }
 
 .social-buttons {
 	float: right;
