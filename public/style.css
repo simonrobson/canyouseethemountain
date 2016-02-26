@@ -170,9 +170,13 @@ p {
 	background-image: url(/images/level2-nb.png);
 }
 
-.btn-terrible {
+.btn-bad {
 	background-color: #f8c55d;
 	background-image: url(/images/level3-nb.png);
+}
+
+.btn-terrible {
+	background-color: #cccccc;
 }
 
 .air-quality {
@@ -181,15 +185,26 @@ p {
 	left: 0;
 	margin-left: 10px;
 	margin-bottom: 10px;
+	text-align: left;
 }
 
 .air-quality .metric {
 	display: inline-block;
 	background-color: #ddd;
-	padding: 0 10px 10px 10px;
-	width: 115px;
+	padding: 0 5px 5px 5px;
+	width: 130px;
 	border-radius: 8px;
 	box-shadow: 0 1px 1px 1px #999;
+	text-align: center;
+}
+
+.air-quality .meta {
+	display: block;
+	text-align: left;
+	margin-top: 7px;
+	padding: 2px 5px;
+	font-size: 15px;
+	background-color: rgba(255,255,255,0.8);
 }
 
 .air-quality .metric.hide {
@@ -203,8 +218,8 @@ p {
 .air-quality .label {
 	background-color: #f0f0f0;
 	margin-bottom: 7px;
-	margin-left: -10px;
-	width: 135px;
+	margin-left: -5px;
+	width: 140px;
 	border-top-left-radius: 8px;
 	border-top-right-radius: 8px;
 	padding: 3px 0;
@@ -213,8 +228,8 @@ p {
 }
 
 .air-quality .value {
-	font-size: 1.6em;
-	margin-bottom: 2px;
+	font-size: 1.5em;
+	line-height: 24px;
 }
 
 .air-quality .unit {
@@ -223,7 +238,8 @@ p {
 }
 
 .air-quality .metric .condition {
-	font-size: 16px;
+	font-size: 15px;
+	line-height: 20px;
 }
 
 .air-quality .metric .condition { display: none; }
@@ -333,7 +349,7 @@ p {
 	}
 
 	.buttons {
-		width: 520px;
+		width: 690px;
 	}
 
 	.btn-response {

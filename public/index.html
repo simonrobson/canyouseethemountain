@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 		<link rel="stylesheet" href="leaflet/leaflet.css" />
-		<link rel="stylesheet" href="style.css?v=4" />
+		<link rel="stylesheet" href="style.css?v=9" />
 
 		<link rel="icon" href="/favicon.ico" type="image/x-icon">
 	</head>
@@ -38,14 +38,17 @@
 		</div>
 
 		<div class="content hide">
-			<h1 class="question">วันนี้คุณมองเห็นดอยสุเทพไหม?</h1>
+			<h1 class="question">ตอนนี้คุณมองเห็นดอยสุเทพไหม?</h1>
 
 			<div class="buttons">
 				<button type="button" class="btn btn-response btn-clear" onclick="sendVisibility(100)">
 					ชัดเจน
 				</button>
-				<button type="button" class="btn btn-response btn-hazy" onclick="sendVisibility(50)">
+				<button type="button" class="btn btn-response btn-hazy" onclick="sendVisibility(66)">
 					เห็นบ้าง
+				</button>
+				<button type="button" class="btn btn-response btn-bad" onclick="sendVisibility(33)">
+					เลือนราง
 				</button>
 				<button type="button" class="btn btn-response btn-terrible" onclick="sendVisibility(0)">
 					ไม่เลย
@@ -55,30 +58,29 @@
 
 		<div class="response hide">
 			<div class="air-quality hide">
-					<div class="metric pm10 hide">
-						<div class="label">pm10</div>
-						<div class="value"></div>
-						<div class="condition good">good</div>
-						<div class="condition moderate">moderate</div>
-						<div class="condition unhealthy-sensitive">unhealthy for sensitive groups</div>
-						<div class="condition unhealthy">unhealthy</div>
-						<div class="condition very-unhealthy">very unhealthy</div>
-						<div class="condition hazardous">hazardous</div>
-						<!-- <div class="unit">&micro;g/m&sup3;</div> -->
-						<div class="date"></div>
-					</div>
-					<div class="metric pm25 hide">
-						<div class="label">pm2.5</div>
-						<div class="value"></div>
-						<div class="condition good">good</div>
-						<div class="condition moderate">moderate</div>
-						<div class="condition unhealthy-sensitive">unhealthy for sensitive groups</div>
-						<div class="condition unhealthy">unhealthy</div>
-						<div class="condition very-unhealthy">very unhealthy</div>
-						<div class="condition hazardous">hazardous</div>
-						<!-- <div class="unit">&micro;g/m&sup3;</div> -->
-						<div class="date"></div>
-					</div>
+				<div class="metric pm10 hide">
+					<div class="label">pm10</div>
+					<div class="value"></div>
+					<div class="condition good">ดี</div>
+					<div class="condition moderate">ปานกลาง</div>
+					<div class="condition unhealthy-sensitive">กระทบสุขภาพ</br>ผู้อ่อนไหว</div>
+					<div class="condition unhealthy">กระทบสุขภาพ</div>
+					<div class="condition very-unhealthy">กระทบสุขภาพมาก</div>
+					<div class="condition hazardous">อันตราย</div>
+				</div>
+				<div class="metric pm25 hide">
+					<div class="label">pm2.5</div>
+					<div class="value"></div>
+					<div class="condition good">ดี</div>
+					<div class="condition moderate">ปานกลาง</div>
+					<div class="condition unhealthy-sensitive">กระทบสุขภาพ</br>ผู้อ่อนไหว</div>
+					<div class="condition unhealthy">กระทบสุขภาพ</div>
+					<div class="condition very-unhealthy">กระทบสุขภาพมาก</div>
+					<div class="condition hazardous">อันตราย</div>
+				</div>
+				<div class="meta">
+					ค่าเฉลี่ย &micro;g/m&sup3; ใน 24 ชั่วโมง ที่ผ่านมา เมื่อ<span class="date"></span>
+				</div>
 			</div>
 			<div class="social-buttons">
 				<a class="btn btn-social btn-face" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fcanyouseethemountain.com%2F">share</a>
@@ -185,13 +187,13 @@
 				if( aq.pm10 !== undefined ) { displayAQMetric('.pm10', aq.pm10); }
 				if( aq.pm25 !== undefined ) { displayAQMetric('.pm25', aq.pm25); }
 				if( aq.pm10 !== undefined || aq.pm25 !== undefined ) {
+					document.querySelector('.air-quality .date').textContent = timestampFor(aq.pm25);
 					document.querySelector('.air-quality').classList.remove('hide');
 				}
 			}
 
 			function displayAQMetric(selector, data) {
 				var container = document.querySelector(selector);
-				// container.querySelector('.date').textContent = timestampFor(data);
 				container.querySelector('.value').textContent = Math.round(parseFloat(data.value));
 				container.classList.add(selector === '.pm10' ?  pm10Level(data.value) : pm25Level(data.value));
 				container.classList.add(selector === '.pm10' ? pm10Level(data.value) : pm25Level(data.value));
@@ -199,7 +201,7 @@
 			}
 
 			function timestampFor(data) {
-				return [data.hour,':00 ',data.date,'.',data.month,'.', data.year].join('');
+				return [data.hour,':00, ',data.date,'.',data.month,'.', data.year].join('');
 			}
 
 			function pm25Level(value) {
