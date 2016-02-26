@@ -58,13 +58,25 @@
 					<div class="metric pm10 hide">
 						<div class="label">pm10</div>
 						<div class="value"></div>
-						<div class="unit">&micro;g/m&sup3;</div>
+						<div class="condition good">good</div>
+						<div class="condition moderate">moderate</div>
+						<div class="condition unhealthy-sensitive">unhealthy for sensitive groups</div>
+						<div class="condition unhealthy">unhealthy</div>
+						<div class="condition very-unhealthy">very unhealthy</div>
+						<div class="condition hazardous">hazardous</div>
+						<!-- <div class="unit">&micro;g/m&sup3;</div> -->
 						<div class="date"></div>
 					</div>
 					<div class="metric pm25 hide">
 						<div class="label">pm2.5</div>
 						<div class="value"></div>
-						<div class="unit">&micro;g/m&sup3;</div>
+						<div class="condition good">good</div>
+						<div class="condition moderate">moderate</div>
+						<div class="condition unhealthy-sensitive">unhealthy for sensitive groups</div>
+						<div class="condition unhealthy">unhealthy</div>
+						<div class="condition very-unhealthy">very unhealthy</div>
+						<div class="condition hazardous">hazardous</div>
+						<!-- <div class="unit">&micro;g/m&sup3;</div> -->
 						<div class="date"></div>
 					</div>
 			</div>
@@ -181,8 +193,9 @@
 				var container = document.querySelector(selector);
 				// container.querySelector('.date').textContent = timestampFor(data);
 				container.querySelector('.value').textContent = Math.round(parseFloat(data.value));
-				container.classList.remove('hide');
+				container.classList.add(selector === '.pm10' ?  pm10Level(data.value) : pm25Level(data.value));
 				container.classList.add(selector === '.pm10' ? pm10Level(data.value) : pm25Level(data.value));
+				container.classList.remove('hide');
 			}
 
 			function timestampFor(data) {
