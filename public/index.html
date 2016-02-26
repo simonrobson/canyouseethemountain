@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 		<link rel="stylesheet" href="leaflet/leaflet.css" />
-		<link rel="stylesheet" href="style.css" />
+		<link rel="stylesheet" href="style.css?v=9" />
 
 		<link rel="icon" href="/favicon.ico" type="image/x-icon">
 	</head>
@@ -18,8 +18,17 @@
 
 		<div id="map" class="hide"></div>
 
+		<ul class="visibility-legend hide">
+			<li>
+				เห็นได้ <div class="legend-color legend-color-green"></div>
+			</li>
+			<li>
+				มองไม่เห็น <div class="legend-color legend-color-red"></div>
+			</li>
+		</ul>
+
 		<div class="splash">
-			<img class="geo-spinner" src="/images/Preloader_1	.gif"/>
+			<img class="geo-spinner" src="/images/Preloader_1.gif"/>
 			<p>กำลังค้นหาตำแหน่งของคุณ</p>
 		</div>
 
@@ -29,14 +38,17 @@
 		</div>
 
 		<div class="content hide">
-			<h1 class="question">วันนี้คุณมองเห็นดอยสุเทพไหม?</h1>
+			<h1 class="question">ตอนนี้คุณมองเห็นดอยสุเทพไหม?</h1>
 
 			<div class="buttons">
 				<button type="button" class="btn btn-response btn-clear" onclick="sendVisibility(100)">
 					ชัดเจน
 				</button>
-				<button type="button" class="btn btn-response btn-hazy" onclick="sendVisibility(50)">
+				<button type="button" class="btn btn-response btn-hazy" onclick="sendVisibility(66)">
 					เห็นบ้าง
+				</button>
+				<button type="button" class="btn btn-response btn-bad" onclick="sendVisibility(33)">
+					เลือนราง
 				</button>
 				<button type="button" class="btn btn-response btn-terrible" onclick="sendVisibility(0)">
 					ไม่เลย
@@ -45,11 +57,36 @@
 		</div>
 
 		<div class="response hide">
+			<div class="air-quality hide">
+				<div class="metric pm10 hide">
+					<div class="label">pm10</div>
+					<div class="value"></div>
+					<div class="condition good">ดี</div>
+					<div class="condition moderate">ปานกลาง</div>
+					<div class="condition unhealthy-sensitive">กระทบสุขภาพ</br>ผู้อ่อนไหว</div>
+					<div class="condition unhealthy">กระทบสุขภาพ</div>
+					<div class="condition very-unhealthy">กระทบสุขภาพมาก</div>
+					<div class="condition hazardous">อันตราย</div>
+				</div>
+				<div class="metric pm25 hide">
+					<div class="label">pm2.5</div>
+					<div class="value"></div>
+					<div class="condition good">ดี</div>
+					<div class="condition moderate">ปานกลาง</div>
+					<div class="condition unhealthy-sensitive">กระทบสุขภาพ</br>ผู้อ่อนไหว</div>
+					<div class="condition unhealthy">กระทบสุขภาพ</div>
+					<div class="condition very-unhealthy">กระทบสุขภาพมาก</div>
+					<div class="condition hazardous">อันตราย</div>
+				</div>
+				<div class="meta">
+					ค่าเฉลี่ย &micro;g/m&sup3; ใน 24 ชั่วโมง ที่ผ่านมา เมื่อ<span class="date"></span>
+				</div>
+			</div>
 			<div class="social-buttons">
 				<a class="btn btn-social btn-face" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fcanyouseethemountain.com%2F">share</a>
 				<a class="btn btn-social btn-tweet" href="https://twitter.com/intent/tweet?text=Can%20you%20see%20Doi%20Suthep%20today%3F&url=http%3A%2F%2Fcanyouseethemountain.com%2F&hashtags=cnxsmoke">tweet</a>
 			</div>
-			<p>ขอบคุณค่ะ</p>
+			<p>ขอบคุณค่ะ กลับมาให้ข้อมูลอีกนะคะ</p>
 		</div>
 
 		<script src="js/lib.js"></script>
@@ -81,10 +118,12 @@
 					},
 					success: function(response) {
 						var chiangMaiCenter = L.latLng(18.788218, 98.985872);
+						displayAirQuality(response.air_quality);
 						L.geoJson(response.visibility_layer, {style: styleFeature, clickable: false}).addTo(map);
 						document.querySelector('.content').classList.add('hide');
 						document.querySelector('.response').classList.remove('hide');
 						document.querySelector('#map').classList.add('response-state');
+						document.querySelector('.visibility-legend').classList.remove('hide');
 						map.invalidateSize();
 						map.setView(chiangMaiCenter, 12)
 						setTimeout(function(){ map.panBy([0, adjustedLat('.response')]); }, 500);
@@ -142,6 +181,47 @@
 			function isPortrait() {
 				// query needs to be kept in sync with css
 				return window.matchMedia("not all and (min-device-width: 375px) and (max-device-height: 667px) and (orientation: landscape)").matches;
+			}
+
+			function displayAirQuality(aq) {
+				if( aq.pm10 !== undefined ) { displayAQMetric('.pm10', aq.pm10); }
+				if( aq.pm25 !== undefined ) { displayAQMetric('.pm25', aq.pm25); }
+				if( aq.pm10 !== undefined || aq.pm25 !== undefined ) {
+					document.querySelector('.air-quality .date').textContent = timestampFor(aq.pm25);
+					document.querySelector('.air-quality').classList.remove('hide');
+				}
+			}
+
+			function displayAQMetric(selector, data) {
+				var container = document.querySelector(selector);
+				container.querySelector('.value').textContent = Math.round(parseFloat(data.value));
+				container.classList.add(selector === '.pm10' ?  pm10Level(data.value) : pm25Level(data.value));
+				container.classList.add(selector === '.pm10' ? pm10Level(data.value) : pm25Level(data.value));
+				container.classList.remove('hide');
+			}
+
+			function timestampFor(data) {
+				return [data.hour,':00, ',data.date,'.',data.month,'.', data.year].join('');
+			}
+
+			function pm25Level(value) {
+				value = parseFloat(value);
+				if( value <= 12.0  ) { return 'good'; }
+				if( value <= 35.4  ) { return 'moderate'; }
+				if( value <= 55.4  ) { return 'unhealthy-sensitive'; }
+				if( value <= 150.4 ) { return 'unhealthy'; }
+				if( value <= 250.4 ) { return 'very-unhealthy'; }
+				return 'hazardous';
+			}
+
+			function pm10Level(value) {
+				value = parseInt(value);
+				if( value <= 54  ) { return 'good'; }
+				if( value <= 154 ) { return 'moderate'; }
+				if( value <= 254 ) { return 'unhealthy-sensitive'; }
+				if( value <= 354 ) { return 'unhealthy'; }
+				if( value <= 424 ) { return 'very-unhealthy'; }
+				return 'hazardous';
 			}
 		</script>
 	</body>
