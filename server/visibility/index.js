@@ -9,16 +9,25 @@ var layerTmpl = {
 }
 
 function init(database) {
-  var now = Math.round((new Date()).getTime() / 1000);
   db = database;
+  genLayerHourly();
+}
 
-  initVisibilityLayer(now, 1, function(err, layer){
-    if( err ) {
-      console.log('error initializing visibility layer: ' + err);
-    } else {
-      console.log('visibility layer initialized');
-    }
-  });
+function genLayerHourly() {
+	var now = Math.round((new Date()).getTime() / 1000);
+
+	initVisibilityLayer(now, 1, function(err, layer){
+		if( err ) {
+			console.log('error generating visibility layer: ', new Date() , err);
+		} else {
+			console.log('generated fresh visibility layer', new Date());
+		}
+		setTimeout(genLayerHourly, next_update(0));
+	});
+}
+
+function next_update(delay) {
+	return (60 - (new Date().getMinutes()) + delay) * 60 * 1000;
 }
 
 function visibilityLayer(timestamp, landmark) {
