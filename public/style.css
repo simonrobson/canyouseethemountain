@@ -308,6 +308,26 @@ p {
 	padding-right: 10px;
 }
 
+/* special case for small screens eg. < iphone6 */
+
+@media (max-device-width: 320px) {
+	.air-quality .value {
+		margin: 0 3px;
+	}
+
+	.air-quality .metric .condition {
+		font-size: 13px;
+	}
+
+	.air-quality .meta {
+		font-size: 12px;
+	}
+
+	.response p {
+		font-size: 14px;
+	}
+}
+
 /* special case for short screens. eg landscape on a phone */
 
 @media (min-device-width: 375px) and (max-device-width: 667px) and (orientation: landscape) {
