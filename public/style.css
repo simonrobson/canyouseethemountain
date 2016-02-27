@@ -345,6 +345,11 @@ p {
 		font-size: 1em;
 		font-weight: normal;
 	}
+
+	.air-quality {
+		width: 335px;
+		margin-bottom: 10px;
+	}
 }
 
 /* tablet and desktop adjustments */
