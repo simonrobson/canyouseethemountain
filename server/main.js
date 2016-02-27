@@ -5,6 +5,8 @@ var api = require('./api'),
 
 process.env.TZ = 'UTC';
 
+console.log('server initialization begun');
+
 air_quality.init();
 visibility.init(db);
 api.startServer(15150, db, visibility, air_quality);
