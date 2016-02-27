@@ -89,7 +89,6 @@ function getCheckinsForDay(timestamp, landmark, next) {
 function nearLandmark(coords, id, next) {
   var processResult, values;
 
-  console.log
   field = "ST_Contains(area::geometry, ST_SetSRID(ST_Point($1, $2), 4326)::geometry) AS near";
 
   values = [parseFloat(coords.longitude), parseFloat(coords.latitude), id];
