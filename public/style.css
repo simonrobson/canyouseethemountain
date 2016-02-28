@@ -42,6 +42,19 @@ p {
 	background-color: #fff;
 }
 
+.leaflet-popup-close-button {
+	display: none;
+}
+
+.leaflet-popup-tip-container {
+	display: none;
+}
+
+.leaflet-popup-content {
+	font-size: 16px;
+	margin: 8px 14px
+}
+
 .visibility-legend {
 	position: absolute;
 	z-index: 1000;
@@ -311,6 +324,22 @@ p {
 /* special case for small screens eg. < iphone6 */
 
 @media (max-device-width: 320px) {
+	h1 {
+		font-size: 1em;
+	}
+
+	.btn {
+		font-size: 0.9em;
+	}
+
+	.btn-response {
+		height: 40px;
+	}
+
+	.buttons {
+		margin: 10px 0;
+	}
+
 	.air-quality .value {
 		margin: 0 3px;
 	}

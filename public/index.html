@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 		<link rel="stylesheet" href="leaflet/leaflet.css" />
-		<link rel="stylesheet" href="style.css?v=14" />
+		<link rel="stylesheet" href="style.css?v=16" />
 
 		<link rel="icon" href="/favicon.ico" type="image/x-icon">
 	</head>
@@ -38,7 +38,7 @@
 		</div>
 
 		<div class="content hide">
-			<h1 class="question">ตอนนี้คุณมองเห็นดอยสุเทพไหม?</h1>
+			<h1 class="question">ลองมองดอยสุเทพ คุณเห็นดอยชัดไหม</h1>
 
 			<div class="buttons">
 				<button type="button" class="btn btn-response btn-clear" onclick="sendVisibility(100)">
@@ -93,6 +93,7 @@
 
 		<script>
 			var map = L.map('map', {zoomControl: false, attributionControl: false});
+			var locationPopup = null;
 			var ajax = require('ajax');
 			var coords = {};
 
@@ -118,8 +119,9 @@
 					},
 					success: function(response) {
 						var chiangMaiCenter = L.latLng(18.788218, 98.985872);
-						displayAirQuality(response.air_quality);
+						map.closePopup(locationPopup);
 						L.geoJson(response.visibility_layer, {style: styleFeature, clickable: false}).addTo(map);
+						displayAirQuality(response.air_quality);
 						document.querySelector('.content').classList.add('hide');
 						document.querySelector('.response').classList.remove('hide');
 						document.querySelector('#map').classList.add('response-state');
@@ -148,8 +150,8 @@
 				var latLng = L.latLng(pos.coords.latitude, pos.coords.longitude);
 				coords = pos.coords;
 				map.setView(latLng, 14);
-				L.marker(latLng).addTo(map);
-				// L.circle(latLng, coords.accuracy / 2).addTo(map);
+				locationPopup = L.popup().setContent('<div>คุณอยู่ที่นี่</div>');
+				L.marker(latLng).bindPopup(locationPopup, {offset: [0, 50]}).addTo(map).openPopup();
 				document.querySelector('.splash').classList.add('hide');
 				document.querySelector('.content').classList.remove('hide');
 				map.panBy(centerAdjustment('.content'));
