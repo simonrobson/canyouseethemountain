@@ -6,26 +6,31 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 		<link rel="stylesheet" href="leaflet/leaflet.css" />
-		<link rel="stylesheet" href="style.css?v=16" />
+		<link rel="stylesheet" href="style.css?v=28" />
 
 		<link rel="icon" href="/favicon.ico" type="image/x-icon">
 	</head>
 	<body class="locale-th">
 
 		<div id="title-project">
-			<h1>Can you see the mountain?<span>Doi Suthep</span></h1>
+			<h1>ลองมองไปที่<span>ดอยสุเทพ</span></h1>
 		</div>
 
 		<div id="map" class="hide"></div>
 
-		<ul class="visibility-legend hide">
-			<li>
-				เห็นได้ <div class="legend-color legend-color-green"></div>
-			</li>
-			<li>
-				มองไม่เห็น <div class="legend-color legend-color-red"></div>
-			</li>
-		</ul>
+		<div class="about-visibility hide">
+			<p class="visibility-explanation">
+			พื้นที่ที่มองเห็น<br/>ดอยสุเทพ
+			</p>
+			<ul class="visibility-legend">
+				<li>
+					เห็นได้ <div class="legend-color legend-color-green"></div>
+				</li>
+				<li>
+					มองไม่เห็น <div class="legend-color legend-color-red"></div>
+				</li>
+			</ul>
+		</div>
 
 		<div class="splash">
 			<img class="geo-spinner" src="/images/Preloader_1.gif"/>
@@ -38,7 +43,7 @@
 		</div>
 
 		<div class="content hide">
-			<h1 class="question">ลองมองดอยสุเทพ คุณเห็นดอยชัดไหม</h1>
+			<h1 class="question">คุณเห็นดอยชัดไหม</h1>
 
 			<div class="buttons">
 				<button type="button" class="btn btn-response btn-clear" onclick="sendVisibility(100)">
@@ -58,14 +63,17 @@
 
 		<div class="response hide">
 			<div class="air-quality hide">
+				<div class="air-quality-explanation">
+				บางวันมองดอยไม่เห็น ฟ้าอาจเต็มไปด้วยฝุ่นละออง pm10(ขนาดเล็ก) pm2.5(เล็กมาก) ณ ข้อมูลปัจจุบัน
+				</div>
 				<div class="metric pm10 hide">
 					<div class="label">pm10</div>
 					<div class="value"></div>
 					<div class="condition good">คุณภาพดี</div>
 					<div class="condition moderate">คุณภาพปานกลาง</div>
-					<div class="condition unhealthy-sensitive">มีพลกระทบต่อสุขภาพผู้อ่อนไหว</div>
-					<div class="condition unhealthy">มีพลกระทบต่อสุขภาพ</div>
-					<div class="condition very-unhealthy">มีพลกระทบต่อสุขภาพมาก</div>
+					<div class="condition unhealthy-sensitive">กระทบต่อสุขภาพผู้แพ้อากาศ</div>
+					<div class="condition unhealthy">กระทบต่อสุขภาพ</div>
+					<div class="condition very-unhealthy">กระทบต่อสุขภาพมาก</div>
 					<div class="condition hazardous">อันตราย</div>
 				</div>
 				<div class="metric pm25 hide">
@@ -73,9 +81,9 @@
 					<div class="value"></div>
 					<div class="condition good">คุณภาพดี</div>
 					<div class="condition moderate">คุณภาพปานกลาง</div>
-					<div class="condition unhealthy-sensitive">มีพลกระทบต่อสุขภาพผู้อ่อนไหว</div>
-					<div class="condition unhealthy">มีพลกระทบต่อสุขภาพ</div>
-					<div class="condition very-unhealthy">มีพลกระทบต่อสุขภาพมาก</div>
+					<div class="condition unhealthy-sensitive">กระทบต่อสุขภาพผู้แพ้อากาศ</div>
+					<div class="condition unhealthy">กระทบต่อสุขภาพ</div>
+					<div class="condition very-unhealthy">กระทบต่อสุขภาพมาก</div>
 					<div class="condition hazardous">อันตราย</div>
 				</div>
 				<div class="meta">
@@ -125,7 +133,7 @@
 						document.querySelector('.content').classList.add('hide');
 						document.querySelector('.response').classList.remove('hide');
 						document.querySelector('#map').classList.add('response-state');
-						document.querySelector('.visibility-legend').classList.remove('hide');
+						document.querySelector('.about-visibility').classList.remove('hide');
 						map.invalidateSize();
 						map.setView(chiangMaiCenter, 12)
 						setTimeout(function(){ map.panBy([0, adjustedLat('.response')]); }, 500);
