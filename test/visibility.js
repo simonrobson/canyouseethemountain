@@ -7,8 +7,17 @@ describe('aggregateVisibility', function() {
 		assert.equal(result, 50);
 	});
 	it('returns a weighted average based or recency of visibilities', function() {
-		var result = visibility.aggregateVisibility([{age: 1, visibility: 100}, {age: 2, visibility: 50}]);
-		assert.equal(result, 65);
+		var result = visibility.aggregateVisibility([{age: 0, visibility: 100}, {age: 1, visibility: 50}]);
+		assert(result / 76.315 < 1.0009)
+	});
+	it('reindexes ages to 0 before calculating', function() {
+		var result = visibility.aggregateVisibility([{age: 3, visibility: 100}, {age: 4, visibility: 50}]);
+		assert(result / 76.315 < 1.0009)
+	});
+	it('does not mutate checkins', function() {
+		var checkins = [{age: 3, visibility: 100}, {age: 4, visibility: 50}];
+		var result = visibility.aggregateVisibility(checkins);
+		assert.deepEqual(checkins, [{age: 3, visibility: 100}, {age: 4, visibility: 50}]);
 	});
 });
 

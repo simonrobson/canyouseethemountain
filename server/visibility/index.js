@@ -121,8 +121,18 @@ function cellForCheckin(checkin, precision) {
 }
 
 function aggregateVisibility(checkins) {
-  var weights = [10, 9, 8 , 7, 6, 5, 4, 3, 2 , 1, 0, 0, 0];
-  return checkins.reduce(weightedSum(weights), 0) / checkins.length / 10;
+  var weights = [10, 9, 8 , 7, 6, 5, 4, 3, 2 , 1, 0];
+  var recent = Math.min.apply(null, checkins.map(function(c) { return c.age; }));
+
+  var values = checkins.map(function(c) {
+    return { visibility: c.visibility, age: c.age - recent };
+  }).reduce(function(memo, value) {
+    memo.visibility += value.visibility * weights[value.age];
+    memo.weight += weights[value.age];
+	return memo;
+  }, { visibility: 0, weight: 0 });
+
+  return values.visibility / values.weight;
 }
 
 function updateGeoJSON(layer, cell, visibility, accuracy) {
@@ -162,13 +172,6 @@ function objById(collection, id) {
     }
   });
   return result;
-}
-
-function weightedSum(weights) {
-  return function(memo, checkin) {
-    memo += (weights[checkin.age] || 0) * checkin.visibility;
-    return memo;
-  };
 }
 
 function roundDown(number, precision) {
