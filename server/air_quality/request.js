@@ -27,7 +27,9 @@ function fetch_aq(sensor, metric, next) {
 function fetch_aq_query() {
 	var now = moment();
 	var today = { year: now.year() , month: now.month() + 1, date: now.date() }
-	var yesterday = { year: now.year(), month: now.month() + 1, date: now.subtract(1, 'day').date()};
+	now.subtract(1, 'day');
+	var yesterday = { year: now.year(), month: now.month() + 1, date: now.date()};
+
 	return qs.stringify({ begin: yesterday, end: today, interval: 'hours' }, { encode: false });
 }
 
