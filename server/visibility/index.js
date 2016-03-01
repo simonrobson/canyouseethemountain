@@ -103,11 +103,8 @@ function updateVisibilityLayer(timestamp, landmark, checkin, next) {
 }
 
 function aggregateAccuracy(checkins){
-  var accuracy = checkins.reduce(function(memo, checkin) {
-    memo += 100 - (checkin.age * 10);
-    return memo;
-  }, 0);
-  return accuracy / checkins.length;
+  var acc = Math.max.apply(null, checkins.map(function(c) { return 100 - (c.age * 10); }));
+  return acc < 0 ? 0 : acc;
 }
 
 function cellForCheckin(checkin, precision) {
@@ -124,7 +121,7 @@ function cellForCheckin(checkin, precision) {
 }
 
 function aggregateVisibility(checkins) {
-  var weights = [10, 9, 8 , 7, 6, 5, 4, 3, 2 , 1, 0];
+  var weights = [10, 9, 8 , 7, 6, 5, 4, 3, 2 , 1, 0, 0, 0];
   return checkins.reduce(weightedSum(weights), 0) / checkins.length / 10;
 }
 
@@ -182,3 +179,5 @@ function roundDown(number, precision) {
 exports.init = init;
 exports.updateVisibilityLayer = updateVisibilityLayer;
 exports.cellForCheckin = cellForCheckin;
+exports.aggregateVisibility = aggregateVisibility;
+exports.aggregateAccuracy = aggregateAccuracy;

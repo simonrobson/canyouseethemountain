@@ -145,10 +145,11 @@
 			}
 
 			function styleFeature(feature) {
+				var accuracy = parseInt(feature.properties.accuracy) / 100;
 				return {
 					weight: 0,
 					opacity: 0,
-					fillColor: 'hsla(' + feature.properties.visibility + ', 70%, 40%, '+ feature.properties.accuracy +')',
+					fillColor: 'hsla(' + feature.properties.visibility + ', 70%, 40%, '+ accuracy + ')',
 					fillOpacity: 0.4
 				};
 			}
