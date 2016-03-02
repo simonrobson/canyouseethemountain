@@ -99,16 +99,15 @@ p {
 	width: 15px;
 	height: 15px;
 	margin-left: 5px;
+	opacity: 0.3;
 }
 
 .legend-color-green {
 	background: hsla(100, 70%, 40%, 100);
-	opacity: 0.4;
 }
 
 .legend-color-red {
 	background: hsla(0, 70%, 40%, 100);
-	opacity: 0.4;
 }
 
 .content, .response {
