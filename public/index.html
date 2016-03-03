@@ -61,35 +61,70 @@
 			</div>
 		</div>
 
-		<div class="response hide">
-			<div class="air-quality hide">
-				<div class="air-quality-explanation">
-				บางวันมองดอยไม่เห็น ฟ้าอาจเต็มไปด้วยฝุ่นละออง pm10(ขนาดเล็ก) pm2.5(เล็กมาก) ณ ข้อมูลปัจจุบัน
-				</div>
-				<div class="metric pm10 hide">
-					<div class="label">pm10</div>
-					<div class="value"></div>
-					<div class="condition good">คุณภาพดี</div>
-					<div class="condition moderate">คุณภาพปานกลาง</div>
-					<div class="condition unhealthy-sensitive">กระทบต่อสุขภาพผู้แพ้อากาศ</div>
-					<div class="condition unhealthy">กระทบต่อสุขภาพ</div>
-					<div class="condition very-unhealthy">กระทบต่อสุขภาพมาก</div>
-					<div class="condition hazardous">อันตราย</div>
-				</div>
-				<div class="metric pm25 hide">
-					<div class="label">pm2.5</div>
-					<div class="value"></div>
-					<div class="condition good">คุณภาพดี</div>
-					<div class="condition moderate">คุณภาพปานกลาง</div>
-					<div class="condition unhealthy-sensitive">กระทบต่อสุขภาพผู้แพ้อากาศ</div>
-					<div class="condition unhealthy">กระทบต่อสุขภาพ</div>
-					<div class="condition very-unhealthy">กระทบต่อสุขภาพมาก</div>
-					<div class="condition hazardous">อันตราย</div>
-				</div>
-				<div class="meta">
-					ค่าเฉลี่ย &micro;g/m&sup3; ใน 24 ชั่วโมงที่ผ่านมา <span class="date"></span>
-				</div>
+		<div class="air-quality hide" onclick="showAirQuality()">
+			<button type="button" class="btn btn-close" onclick="hideAirQuality()">X</button>
+			<div class="air-quality-explanation">
+			บางวันมองดอยไม่เห็น ฟ้าอาจเต็มไปด้วยฝุ่นละออง pm10(ขนาดเล็ก) pm2.5(เล็กมาก) ณ ข้อมูลปัจจุบัน
 			</div>
+			<div class="air-quality-intro">Two ways in which to measure air quality is by counting the amount of small
+				particulate matter in the air.</div>
+			<div class="metric pm10 hide">
+				<div class="label">pm10</div>
+				<div class="value"></div>
+				<div class="condition good">คุณภาพดี</div>
+				<div class="condition moderate">คุณภาพปานกลาง</div>
+				<div class="condition unhealthy-sensitive">กระทบต่อสุขภาพผู้แพ้อากาศ</div>
+				<div class="condition unhealthy">กระทบต่อสุขภาพ</div>
+				<div class="condition very-unhealthy">กระทบต่อสุขภาพมาก</div>
+				<div class="condition hazardous">อันตราย</div>
+			</div>
+			<div class="explainer pm10-explainer hide">
+				<span>The quantity of micro-grams of 10 micron particulate per cubic meter. At this
+				level </span>
+				<span class="expanded-condition good">air quality is considered satisfactory, and air pollution poses little or no risk.</span>
+				<span class="expanded-condition moderate">air quality is acceptable; however, for some pollutants there may be a moderate health concern for a very small number of people who are unusually sensitive to air pollution.  </span>
+				<span class="expanded-condition unhealthy-sensitive">members of sensitive groups may experience health effects. The general public is not likely to be affected.</span>
+				<span class="expanded-condition unhealthy">everyone may begin to experience health effects; members of sensitive groups may experience more serious health effects.</span>
+				<span class="expanded-condition very-unhealthy">health warnings of emergency conditions. The entire population is more likely to be affected.</span>
+				<span class="expanded-condition hazardous">health warnings of emergency conditions. The entire population is more likely to be affected.</span>
+			</div>
+			<div class="metric pm25 hide">
+				<div class="label">pm2.5</div>
+				<div class="value"></div>
+				<div class="condition good">คุณภาพดี</div>
+				<div class="condition moderate">คุณภาพปานกลาง</div>
+				<div class="condition unhealthy-sensitive">กระทบต่อสุขภาพผู้แพ้อากาศ</div>
+				<div class="condition unhealthy">กระทบต่อสุขภาพ</div>
+				<div class="condition very-unhealthy">กระทบต่อสุขภาพมาก</div>
+				<div class="condition hazardous">อันตราย</div>
+			</div>
+			<div class="explainer pm25-explainer hide">
+				<span>The quantity of micro-grams of 2.5 micron particulate per cubic meter. At this
+				level </span>
+				<span class="expanded-condition good">air quality is considered satisfactory, and air
+					pollution poses little or no risk.</span>
+				<span class="expanded-condition moderate">air quality is acceptable; however, for some
+					pollutants there may be a moderate health concern for a very small number of
+					people who are unusually sensitive to air pollution.</span>
+				<span class="expanded-condition unhealthy-sensitive">members of sensitive groups may
+					experience health effects. The general public is not likely to be
+					affected.</span>
+				<span class="expanded-condition unhealthy">everyone may begin to experience health effects;
+					members of sensitive groups may experience more serious health effects.</span>
+				<span class="expanded-condition very-unhealthy">health warnings of emergency conditions. The
+					entire population is more likely to be affected.</span>
+				<span class="expanded-condition hazardous">health warnings of emergency conditions. The entire
+				population is more likely to be affected.</span>
+			</div>
+			<div class="meta">
+				ค่าเฉลี่ย &micro;g/m&sup3; ใน 24 ชั่วโมงที่ผ่านมา <span class="date"></span>
+			</div>
+			<div class="meta-expanded">
+				Measured at the <a href="http://www.pcd.go.th/">PCD</a> Sriphum air quality <a href="http://aqmthai.com/">sensor</a>.
+			</div>
+		</div>
+
+		<div class="response hide">
 			<div class="social-buttons">
 				<a class="btn btn-social btn-face" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fcanyouseethemountain.com%2F">share</a>
 				<a class="btn btn-social btn-tweet" href="https://twitter.com/intent/tweet?text=Can%20you%20see%20Doi%20Suthep%20today%3F&url=http%3A%2F%2Fcanyouseethemountain.com%2F&hashtags=cnxsmoke">tweet</a>
@@ -209,6 +244,7 @@
 				container.classList.add(selector === '.pm10' ?  pm10Level(data.value) : pm25Level(data.value));
 				container.classList.add(selector === '.pm10' ? pm10Level(data.value) : pm25Level(data.value));
 				container.classList.remove('hide');
+				document.querySelector('.air-quality ' + selector + '-explainer').classList.remove('hide');
 			}
 
 			function timestampFor(data) {
@@ -233,6 +269,18 @@
 				if( value <= 354 ) { return 'unhealthy'; }
 				if( value <= 424 ) { return 'very-unhealthy'; }
 				return 'hazardous';
+			}
+
+			var closing = false;
+
+			function showAirQuality() {
+				if( closing ) { closing = false; return; }
+				document.querySelector('.air-quality').classList.add('expanded');
+			}
+
+			function hideAirQuality() {
+				closing = true;
+				document.querySelector('.air-quality').classList.remove('expanded');
 			}
 		</script>
 	</body>

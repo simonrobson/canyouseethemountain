@@ -229,6 +229,63 @@ p {
 	text-align: left;
 }
 
+.air-quality.expanded {
+	top: 0;
+	left: 0;
+	right: 0;
+	margin-bottom: 0;
+	z-index: 1000;
+	padding-top: 50px;
+	overflow-y: auto;
+}
+
+.air-quality.expanded .air-quality-explanation,
+.air-quality.expanded .meta {
+	display: none;
+}
+
+.air-quality .explainer,
+.air-quality.expanded .explainer.hide {
+	display: none;
+}
+
+.air-quality.expanded .explainer {
+	display: inline-block;
+}
+
+.air-quality .expanded-condition {
+	display: none;
+}
+
+.air-quality.expanded .metric.good + .explainer .expanded-condition.good,
+.air-quality.expanded .metric.moderate + .explainer .expanded-condition.moderate,
+.air-quality.expanded .metric.unhealthy-sensitive + .explainer .expanded-condition.unhealthy-sensitive,
+.air-quality.expanded .metric.unhealthy + .explainer .expanded-condition.unhealthy,
+.air-quality.expanded .metric.very-unhealthy + .explainer .expanded-condition.very-unhealthy,
+.air-quality.expanded .metric.hazardous + .explainer .expanded-condition.hazardous { display: block; }
+
+.btn-close {
+	display: none;
+}
+
+.expanded .btn-close {
+	display: block;
+	position: fixed;
+	top: 10px;
+	right: 10px;
+	background-color: transparent;
+	color: #777;
+	z-index: 1005;
+}
+
+.air-quality .air-quality-intro { display: none; }
+.air-quality.expanded .air-quality-intro { display: inline-block; }
+
+.air-quality .meta-expanded { display: none; }
+.air-quality.expanded .meta-expanded {
+	margin-top: 20px;
+	display: inline-block; }
+
 .air-quality-explanation {
 	font-size: 12px;
 	line-height: 19px;
@@ -238,11 +295,11 @@ p {
 
 .air-quality .metric {
 	background-color: #ddd;
-	border-radius: 8px;
+	border-radius: 3px;
 	box-shadow: 0 1px 1px 1px #999;
 	text-align: left;
 	margin-bottom: 10px;
-	line-height: 22px;
+	line-height: 24px;
 }
 
 .air-quality .meta {
@@ -252,6 +309,10 @@ p {
 	font-size: 14px;
 }
 
+.air-quality .meta.hide {
+	display: none;
+}
+
 .air-quality .metric.hide {
 	display: none;
 }
@@ -259,14 +320,14 @@ p {
 .air-quality .label {
 	display: inline-block;
 	background-color: #f0f0f0;
-	width: 45px;
-	border-top-left-radius: 8px;
-	border-bottom-left-radius: 8px;
-	padding: 0 12px;
+	width: 40px;
+	border-top-left-radius: 3px;
+	border-bottom-left-radius: 3px;
+	padding: 0 8px;
 	font-size: 14px;
 	color: black;
 	vertical-align: middle;
-	line-height: 24px;
+	line-height: 26px;
 }
 
 .air-quality .value {
@@ -274,6 +335,11 @@ p {
 	font-size: 15px;
 	margin: 0 7px;
 	vertical-align: middle;
+}
+
+.air-quality .learn-more {
+	display: block;
+	text-align: right;
 }
 
 .air-quality .unit {
