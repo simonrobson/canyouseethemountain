@@ -263,6 +263,17 @@ p {
 .air-quality.expanded .metric.very-unhealthy + .explainer .expanded-condition.very-unhealthy,
 .air-quality.expanded .metric.hazardous + .explainer .expanded-condition.hazardous { display: block; }
 
+.expand-air-quality {
+	text-align: right;
+	color: cornflowerblue;
+	font-size: 12px;
+	line-height: 14px;
+}
+
+.air-quality.expanded .expand-air-quality {
+	display:none;
+}
+
 .btn-close {
 	display: none;
 }
