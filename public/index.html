@@ -284,13 +284,23 @@
 				document.querySelector('.air-quality').classList.remove('expanded');
 			}
 
+			var english_cond = {
+				'good': 'good',
+				'moderate': 'moderate',
+				'unhealthy-sensitive': 'unhealthy for sensitive groups',
+				'unhealthy': 'unhealthy',
+				'very-unhealthy': 'very-unhealthy',
+				'hazardous': 'hazardous'
+			}
+
 			function tweetHREF(pm25) {
 				var base = 'https://twitter.com/intent/tweet?';
-				var text = 'text=Can%20you%20see%20Doi%20Suthep%20today%3F##aq##';
+				var text = 'text=##aq##Can%20you%20see%20Doi%20Suthep%20today%3F';
 				var tail = '&url=http%3A%2F%2Fcanyouseethemountain.com%2F&hashtags=clearskiescnx';
 
 				if( pm25 !== undefined ) {
-					text = text.replace('##aq##', ' pm2.5 = ' + Math.round(pm25.value) + ' at ' + pm25.hour + ':00');
+					text = text.replace('##aq##',
+						pm25.hour + ':00, pm2.5 = ' + Math.round(pm25.value) + ' (' + english_cond[pm25Level(pm25.value)] + ') ');
 				}
 
 				return base + text + tail;
