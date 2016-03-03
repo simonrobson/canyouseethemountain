@@ -239,8 +239,7 @@ p {
 	overflow-y: auto;
 }
 
-.air-quality.expanded .air-quality-explanation,
-.air-quality.expanded .meta {
+.air-quality.expanded .air-quality-explanation {
 	display: none;
 }
 
@@ -283,8 +282,8 @@ p {
 
 .air-quality .meta-expanded { display: none; }
 .air-quality.expanded .meta-expanded {
-	margin-top: 20px;
-	display: inline-block; }
+	display: inline-block;
+}
 
 .air-quality-explanation {
 	font-size: 12px;
