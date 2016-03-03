@@ -236,9 +236,17 @@ p {
 	right: 0;
 	margin-bottom: 0;
 	z-index: 1000;
-	padding-top: 50px;
+	padding-top: 30px;
 	overflow-y: auto;
 	cursor: default;
+}
+
+.air-quality.expanded .metric {
+	margin: 15px 0;
+}
+
+.air-quality.expanded .meta {
+	margin-top: 15px;
 }
 
 .air-quality.expanded .air-quality-explanation {
@@ -256,6 +264,7 @@ p {
 
 .air-quality .expanded-condition {
 	display: none;
+	margin-top: 15px;
 }
 
 .air-quality.expanded .metric.good + .explainer .expanded-condition.good,
@@ -264,6 +273,16 @@ p {
 .air-quality.expanded .metric.unhealthy + .explainer .expanded-condition.unhealthy,
 .air-quality.expanded .metric.very-unhealthy + .explainer .expanded-condition.very-unhealthy,
 .air-quality.expanded .metric.hazardous + .explainer .expanded-condition.hazardous { display: block; }
+
+.air-quality.expanded .expanded-condition,
+.air-quality.expanded .explainer-detail,
+.air-quality.expanded .meta,
+.air-quality.expanded .meta-expanded,
+.air-quality.expanded .air-quality-intro {
+	padding-right: 5px;
+	padding-left: 5px;
+}
+
 
 .expand-air-quality {
 	text-align: right;
@@ -298,6 +317,7 @@ p {
 .air-quality .meta-expanded { display: none; }
 .air-quality.expanded .meta-expanded {
 	display: inline-block;
+	margin-bottom: 15px;
 }
 
 .air-quality-explanation {
@@ -573,5 +593,6 @@ p {
 		right: auto;
 		float: right;
 		margin-bottom: 5px;
+		font-size: 14px;
 	}
 }
