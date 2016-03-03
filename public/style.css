@@ -227,6 +227,7 @@ p {
 	margin-bottom: 20px;
 	padding: 5px 5px;
 	text-align: left;
+	cursor: pointer;
 }
 
 .air-quality.expanded {
@@ -237,6 +238,7 @@ p {
 	z-index: 1000;
 	padding-top: 50px;
 	overflow-y: auto;
+	cursor: default;
 }
 
 .air-quality.expanded .air-quality-explanation {
@@ -286,7 +288,9 @@ p {
 	background-color: transparent;
 	color: #777;
 	z-index: 1005;
+	cursor: pointer;
 }
+
 
 .air-quality .air-quality-intro { display: none; }
 .air-quality.expanded .air-quality-intro { display: inline-block; }
@@ -547,5 +551,22 @@ p {
 
 	.air-quality {
 		width: 350px;
+	}
+
+	.air-quality.expanded {
+		top: auto;
+		left: 10px;
+		margin-bottom: 20px;
+		z-index: 1000;
+		padding-top: 10px;
+		overflow-y: auto;
+	}
+
+	.air-quality.expanded .btn-close {
+		position: relative;
+		top: auto;
+		right: auto;
+		float: right;
+		margin-bottom: 5px;
 	}
 }
