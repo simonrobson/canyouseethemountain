@@ -267,7 +267,7 @@ p {
 
 .expand-air-quality {
 	text-align: right;
-	color: cornflowerblue;
+	color: darkcyan;
 	font-size: 12px;
 	line-height: 14px;
 }
@@ -500,6 +500,11 @@ p {
 	.air-quality {
 		width: 335px;
 		margin-bottom: 10px;
+	}
+
+	.expanded .btn-close {
+		right: auto;
+		left: auto;
 	}
 }
 
