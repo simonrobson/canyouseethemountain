@@ -301,7 +301,7 @@
 
 				if( pm25 !== undefined ) {
 					text = text.replace('##aq##',
-						pm25.hour + ':00, pm2.5 = ' + Math.round(pm25.value) + ' (' + english_cond[pm25Level(pm25.value)] + ') ');
+						pm25.hour + ':00, pm2.5 = ' + Math.round(parseFloat(pm25.value)) + ' (' + english_cond[pm25Level(pm25.value)] + ') ');
 				}
 
 				return base + text + tail;
