@@ -64,10 +64,11 @@
 		<div class="air-quality hide" onclick="showAirQuality()">
 			<button type="button" class="btn btn-close" onclick="hideAirQuality()">X</button>
 			<div class="air-quality-explanation">
-			บางวันมองดอยไม่เห็น ฟ้าอาจเต็มไปด้วยฝุ่นละออง pm10(ขนาดเล็ก) pm2.5(เล็กมาก) ณ ข้อมูลปัจจุบัน
+				บางวันมองดอยไม่เห็น ฟ้าอาจเต็มไปด้วยฝุ่นละออง pm10(ขนาดเล็ก) pm2.5(เล็กมาก) ณ ข้อมูลปัจจุบัน
 			</div>
-			<div class="air-quality-intro">Two ways in which to measure air quality is by counting the amount of small
-				particulate matter in the air.</div>
+			<div class="air-quality-intro">
+				pm10 และ pm2.5 คือขนาดของฝุ่นในหน่วยไมโครกรัมต่อลูกบาศก์เมตรที่อยู่ในอากาศ
+			</div>
 			<div class="metric pm10 hide">
 				<div class="label">pm10</div>
 				<div class="value"></div>
@@ -79,21 +80,25 @@
 				<div class="condition hazardous">อันตราย</div>
 			</div>
 			<div class="explainer pm10-explainer hide">
-				<div class="explainer-detail">Micro-grams of 10 micron particulate per cubic meter. At this level </div>
-				<div class="expanded-condition good">air quality is considered satisfactory, and air
-				pollution poses little or no risk.</div>
-				<div class="expanded-condition moderate">air quality is acceptable; however, for some
-				pollutants there may be a moderate health concern for a very small number of people
-				who are unusually sensitive to air pollution.  </div>
-				<div class="expanded-condition unhealthy-sensitive">members of sensitive groups may
-				experience health effects. The general public is not likely to be affected.</div>
-				<div class="expanded-condition unhealthy">everyone may begin to experience health
-				effects; members of sensitive groups may experience more serious health
-				effects.</div>
-				<div class="expanded-condition very-unhealthy">health warnings of emergency
-				conditions. The entire population is more likely to be affected.</div>
-				<div class="expanded-condition hazardous">health warnings of emergency conditions. The
-				entire population is more likely to be affected.</div>
+				<div class="expanded-condition good">
+					ฝุ่นที่ pm10 เป็นระดับปกติ ไม่ก่อให้เกิดมลพิษที่เกิดขึ้นทางอากาศ หรือเกิดขึ้นน้อย หรือมีระดับความเสี่ยงที่เป็นอันตรายต่อสุขภาพต่ำ
+				</div>
+				<div class="expanded-condition moderate">
+					ฝุ่นขนาด pm10 ในระดับนี้ เป็นระดับที่ยอมรับได้ แต่ก็ยังมีความเสี่ยงสำหรับบางคนที่แพ้อากาศหรือเป็นภูมิแพ้บางส่วนได้
+				</div>
+				<div class="expanded-condition unhealthy-sensitive">
+					ฝุ่นขนาด pm10 ในระดับนี้ มีโอกาสที่จะกระทบต่อสุขภาพสำหรับคนที่แพ้อากาศ แต่สำหรับคนทั่วไปก็ถือว่าไม่มีผลกระทบต่อสุขภาพมากนัก
+				</div>
+				<div class="expanded-condition unhealthy">
+					ฝุ่นขนาด pm10 ในระดับนี้ เริ่มมีส่งผลกระทบต่อสุขภาพ โดยเฉพาะคนที่มีภาวะภูมิแพ้ทางอากาศจะได้รับผลกระทบอย่างรุนแรง ลักษณะอากาศแบบนี้ ทุกคนควรจะลดระยะเวลาออกนอกบ้านเป็นเวลานานหรือทำกิจกรรมที่ใช้พลังงานมากในขณะอยู่นอกบ้าน
+				</div>
+				<div class="expanded-condition very-unhealthy">
+					ฝุ่นขนาด pm10 ในระดับนี้ ถือว่าเป็นสภาพอากาศที่อันตรายต่อสุขภาพอย่างยิ่ง มลภาวะทางอากาศที่อยู่ในระดับนี้มีผลต่อสุขภาพของทุกคน
+					ควรหลีกเลี่ยงการอยู่นอกบ้านเป็นเวลานานและควรงดการใช้พลังงานมาก
+					นอกจากนี้ควรทำกิจกรรมทุกอย่างในบ้านหรือในบริเวณปลอดภัยต่อมลภาวะ หรือรอจนกระทั่งอากาศดีขึ้น</div>
+				<div class="expanded-condition hazardous">คำเตือน อากาศเป็นอันตรายมาก
+					หลีกเลี่ยงการออกนอกบ้านอย่างจริงจัง
+				</div>
 			</div>
 			<div class="metric pm25 hide">
 				<div class="label">pm2.5</div>
@@ -106,28 +111,31 @@
 				<div class="condition hazardous">อันตราย</div>
 			</div>
 			<div class="explainer pm25-explainer hide">
-				<div class="explainer-detail">Micro-grams of 2.5 micron particulate per cubic meter. At this
-				level </div>
-				<div class="expanded-condition good">air quality is considered satisfactory, and air
-					pollution poses little or no risk.</div>
-				<div class="expanded-condition moderate">air quality is acceptable; however, for some
-					pollutants there may be a moderate health concern for a very small number of
-					people who are unusually sensitive to air pollution.</div>
-				<div class="expanded-condition unhealthy-sensitive">members of sensitive groups may
-					experience health effects. The general public is not likely to be
-					affected.</div>
-				<div class="expanded-condition unhealthy">everyone may begin to experience health effects;
-					members of sensitive groups may experience more serious health effects.</div>
-				<div class="expanded-condition very-unhealthy">health warnings of emergency conditions. The
-					entire population is more likely to be affected.</div>
-				<div class="expanded-condition hazardous">health warnings of emergency conditions. The entire
-				population is more likely to be affected.</div>
+				<div class="expanded-condition good">
+					ฝุ่นที่ pm2.5 เป็นระดับปกติ ไม่ก่อให้เกิดมลพิษที่เกิดขึ้นทางอากาศ หรือเกิดขึ้นน้อย หรือมีระดับความเสี่ยงที่เป็นอันตรายต่อสุขภาพต่ำ
+				</div>
+				<div class="expanded-condition moderate">
+					ฝุ่นขนาด pm2.5 ในระดับนี้ เป็นระดับที่ยอมรับได้ แต่ก็ยังมีความเสี่ยงสำหรับบางคนที่แพ้อากาศหรือเป็นภูมิแพ้บางส่วนได้
+				</div>
+				<div class="expanded-condition unhealthy-sensitive">
+					ฝุ่นขนาด pm2.5 ในระดับนี้ มีโอกาสที่จะกระทบต่อสุขภาพสำหรับคนที่แพ้อากาศ แต่สำหรับคนทั่วไปก็ถือว่าไม่มีผลกระทบต่อสุขภาพมากนัก
+				</div>
+				<div class="expanded-condition unhealthy">
+					ฝุ่นขนาด pm2.5 ในระดับนี้ เริ่มมีส่งผลกระทบต่อสุขภาพ โดยเฉพาะคนที่มีภาวะภูมิแพ้ทางอากาศจะได้รับผลกระทบอย่างรุนแรง ลักษณะอากาศแบบนี้ ทุกคนควรจะลดระยะเวลาออกนอกบ้านเป็นเวลานานหรือทำกิจกรรมที่ใช้พลังงานมากในขณะอยู่นอกบ้าน
+				</div>
+				<div class="expanded-condition very-unhealthy">
+					ฝุ่นขนาด pm2.5 ในระดับนี้ ถือว่าเป็นสภาพอากาศที่อันตรายต่อสุขภาพอย่างยิ่ง มลภาวะทางอากาศที่อยู่ในระดับนี้มีผลต่อสุขภาพของทุกคน
+					ควรหลีกเลี่ยงการอยู่นอกบ้านเป็นเวลานานและควรงดการใช้พลังงานมาก
+					นอกจากนี้ควรทำกิจกรรมทุกอย่างในบ้านหรือในบริเวณปลอดภัยต่อมลภาวะ หรือรอจนกระทั่งอากาศดีขึ้น</div>
+				<div class="expanded-condition hazardous">คำเตือน อากาศเป็นอันตรายมาก
+					หลีกเลี่ยงการออกนอกบ้านอย่างจริงจัง
+				</div>
 			</div>
 			<div class="meta">
 				ค่าเฉลี่ย &micro;g/m&sup3; ใน 24 ชั่วโมงที่ผ่านมา <span class="date"></span>
 			</div>
 			<div class="meta-expanded">
-				Measured at the <a href="http://www.pcd.go.th/">PCD</a> Sriphum air quality <a href="http://aqmthai.com/">sensor</a>.
+				วัดข้อมูลโดย <a href="http://www.pcd.go.th/">PCD</a> ต.ศรีภูมิ air quality <a href="http://aqmthai.com/">sensor</a>.
 			</div>
 			<div class="expand-air-quality">กดดูรายละเอียด...</div>
 		</div>
