@@ -296,6 +296,7 @@ p {
 	color: darkcyan;
 	font-size: 12px;
 	line-height: 14px;
+	margin-right: 5px;
 }
 
 .air-quality.expanded .expand-air-quality {
@@ -337,7 +338,7 @@ p {
 
 .air-quality .metric {
 	background-color: #ddd;
-	border-radius: 3px;
+	border-radius: 8x;
 	box-shadow: 0 1px 1px 1px #999;
 	text-align: left;
 	margin-bottom: 10px;
@@ -363,8 +364,8 @@ p {
 	display: inline-block;
 	background-color: #f0f0f0;
 	width: 40px;
-	border-top-left-radius: 3px;
-	border-bottom-left-radius: 3px;
+	border-top-left-radius: 8px;
+	border-bottom-left-radius: 8px;
 	padding: 0 8px;
 	font-size: 14px;
 	color: black;
