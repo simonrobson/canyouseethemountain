@@ -16,7 +16,7 @@ function init(database) {
 function genLayerHourly() {
 	var now = Math.round((new Date()).getTime() / 1000);
 
-    layers['1'] = null;
+    layers['1'] = {type: 'FeatureCollection', features: []};
 
 	initVisibilityLayer(now, 1, function(err, layer){
 		if( err ) {
