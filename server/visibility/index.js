@@ -16,6 +16,8 @@ function init(database) {
 function genLayerHourly() {
 	var now = Math.round((new Date()).getTime() / 1000);
 
+    layers['1'] = null;
+
 	initVisibilityLayer(now, 1, function(err, layer){
 		if( err ) {
 			console.log('error generating visibility layer: ', new Date() , err);
