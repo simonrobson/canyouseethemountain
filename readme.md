@@ -1,6 +1,6 @@
 #Setup
 
-* Install postgres and postgis. `apt-get isntall postgres postgis`
+* Install postgres and postgis. `apt-get install postgres postgis`
 * Create a database in postgres. `createdb a_database_name`
 * Enable postgis extensions. `psql -d a_database_name -c "CREATE EXTENSION postgis;"`
 * Initialize the database. `psql -d a_database_name < db/schema.sql`
@@ -13,8 +13,11 @@ POST /checkins
 ```
 
 **Payload**
-```
-{checkin: { coords:
+```js
+{
+  checkin: 
+  { 
+    coords:
     {
       accuracy: 25000,
       altitude: null,
