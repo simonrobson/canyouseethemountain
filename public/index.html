@@ -9,8 +9,11 @@
 		<link rel="stylesheet" href="style.css?v=34" />
 
 		<link rel="icon" href="/favicon.ico" type="image/x-icon">
-		<meta property="og:image" content="http://canyouseethemountain.com/images/level1.png" />
-		<meta property="og:url" content="http://canyouseethemountain.com/" />
+
+		<meta property="og:title" content="Can you see Doi Suthep?" />
+		<meta property="og:url" content="https://www.canyouseethemountain.com/" />
+		<meta property="og:description" content="all the smoke you can see, or not" />
+		<meta property="og:image" content="https://www.canyouseethemountain.com/images/level1.png" />
 	</head>
 	<body class="locale-th">
 
@@ -142,8 +145,8 @@
 
 		<div class="response hide">
 			<div class="social-buttons">
-				<a class="btn btn-social btn-face" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fcanyouseethemountain.com%2F">share</a>
-				<a class="btn btn-social btn-tweet" href="https://twitter.com/intent/tweet?text=Can%20you%20see%20Doi%20Suthep%20today%3F&url=http%3A%2F%2Fcanyouseethemountain.com%2F&hashtags=cnxsmoke">tweet</a>
+				<a class="btn btn-social btn-face" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.canyouseethemountain.com%2F">share</a>
+				<a class="btn btn-social btn-tweet" href="https://twitter.com/intent/tweet?text=Can%20you%20see%20Doi%20Suthep%20today%3F&url=https%3A%2F%2Fwww.canyouseethemountain.com%2F&hashtags=cnxsmoke">tweet</a>
 			</div>
 			<p>กลับมาอีกนะคะ</p>
 		</div>
@@ -312,7 +315,7 @@
 			function tweetHREF(pm25) {
 				var base = 'https://twitter.com/intent/tweet?';
 				var text = 'text=##aq##Can%20you%20see%20Doi%20Suthep%20today%3F';
-				var tail = '&url=http%3A%2F%2Fcanyouseethemountain.com%2F&hashtags=clearskiescnx';
+				var tail = '&url=https%3A%2F%2Fwww.canyouseethemountain.com%2F&hashtags=clearskiescnx';
 
 				if( pm25 !== undefined ) {
 					text = text.replace('##aq##',
